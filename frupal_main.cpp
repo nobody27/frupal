@@ -12,6 +12,7 @@ using namespace std;
 int main(int argc, char* argv[]) {
 	cout << "Hello Frupal" << endl;
 	cout << "Fantastic Adventures!" <<endl;
+  cout << "team A's adventure game" << endl;
 	return 0;
 }
 
