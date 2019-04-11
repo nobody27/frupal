@@ -11,6 +11,7 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
 	cout << "Hello Frupal" << endl;
+	cout << "Fantastic Adventures!" <<endl;
 	return 0;
 }
 
