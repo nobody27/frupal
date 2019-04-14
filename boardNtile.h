@@ -8,11 +8,12 @@
 #ifndef BOARD_N_TILE_H
 #define BOARD_N_TILE_H
 
-//using namespace std;
+using namespace std;
 #include <iostream>
 //#include <cctype>
-//#include <cstring>
+#include <cstring>
 //#include <cstdlib>
+#include <string>
 
 class Tile
 {
@@ -29,7 +30,8 @@ class Tile
 		int xValue;
 		int yValue;
 		int terrain;
-		int treasure;
+		string treasure;
+		
 };
 
 

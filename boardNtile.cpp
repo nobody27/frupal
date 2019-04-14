@@ -15,7 +15,7 @@ Tile::Tile(int x, int y)
 	xValue=x;
 	yValue=y;
 	terrain=0; //grassy meadow (later enum)
-	treasure=1; //no treasure - later string with description
+	treasure=("Nothing here! Better luck next time."); //no treasure - later string with description
 }
 
 void Tile::tileDisplay()
