@@ -6,8 +6,9 @@
 
 //constructors destructors and functions of Board and Tile classes
 
-#include "frupal.h"
+#include "boardNtile.h"
 
+using namespace std;
 
 Tile::Tile(int x, int y)
 {

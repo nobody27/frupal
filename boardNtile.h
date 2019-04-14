@@ -3,14 +3,16 @@
 //ATeam Jessica, Elyse, Max, Leior, John
 //cs300
 //April 10, 2019
-//frupal.h
+//boardNtile.h
 
+//#ifndef BOARD_N_TILE_H
+//#define BOARD_N_TILE_H
 
-using namespace std;
+//using namespace std;
 #include <iostream>
-#include <cctype>
-#include <cstring>
-#include <cstdlib>
+//#include <cctype>
+//#include <cstring>
+//#include <cstdlib>
 
 class Tile
 {
@@ -39,3 +41,4 @@ class Board
 		int boardSize;
 		Tile***boardArray;
 };
+//#endif //BOARD_N_TILE_H
