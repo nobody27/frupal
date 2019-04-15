@@ -1,7 +1,7 @@
 # NOTE: All indented lines are indented with a tab character.
 
 .PHONY: clean
-CFLAGS= -pedantic -O0 -Wall
+CFLAGS= -pedantic -O0 -Wall -std=c++14
 DFLAGS= -g
 HEADER_FILES= boardNtile.h
 SOURCE_FILES= frupal_main.cpp boardNtile.cpp 
