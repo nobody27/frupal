@@ -8,22 +8,37 @@
 
 #include "boardNtile.h"
 
+#include <assert.h>
+
 using namespace std;
 
-Tile::Tile(int x, int y)
+Terrain::Terrain(string theName) : name(theName)
 {
-	xValue=x;
-	yValue=y;
-	terrain=0; //grassy meadow (later enum)
-	treasure=("Nothing here! Better luck next time."); //no treasure - later string with description
+}
+
+void Terrain::display()
+{
+	cout << "	Terrain: " << name << endl;
+}
+
+//by default set terrain to grassy meadow for now
+Tile::Tile(int x, int y, Terrain* theTerrain): xValue(x), 
+					yValue(y),
+					terrain(theTerrain),
+					visited(false)
+{
+	//make sure that terrain is not a null pointer
+	assert(terrain);
+	treasure=("Nothing here! Better luck next time."); //no treasure - later string withe description
 }
 
 void Tile::tileDisplay()
 {
 	cout << "	Position: (" << xValue << "," <<
 				yValue << ")" << endl;
-	cout << "	Terrain: " << terrain<<endl;
+	terrain->display();
 	cout << "	Treasure: " << treasure<<endl;
+	cout << "	" << (visited ? "visited by seeker" : "undiscovered") << endl;
 }
 
 
@@ -37,6 +52,12 @@ Board::Board()
 
 Board::Board(int size)
 {
+	//init the terrain TODO - repleace with real configuration
+	//for now add a default grassy meadow terrain
+	string terrainName = "grassy_meadow";
+	terrainMap[terrainName] = new Terrain(terrainName);
+	
+	//init the board
 	boardSize = size;
 	boardArray = new Tile**[size];	
 	for(int i=0; i<size; ++i)
@@ -44,7 +65,7 @@ Board::Board(int size)
 		boardArray[i]= new Tile*[size];
 		for(int j=0; j<size; ++j)
 		{
-			boardArray[i][j]=new Tile(i,j);
+			boardArray[i][j]=new Tile(i,j, terrainMap["grassy_meadow"]);
 		}
 	}
 }
@@ -52,6 +73,11 @@ Board::Board(int size)
 Board::~Board()
 {
 	delete[] boardArray;
+	//delete all saved terrain types
+	for (auto terrainPair : terrainMap)
+	{
+		delete terrainPair.second;
+	}
 }
 
 void Board::displayIsland() const
