@@ -55,6 +55,10 @@ void Tile::printIslandTile()
 				cout << "EX";
 }
 
+void Tile::visitTile()
+{
+				visited=true;
+}
 
 /*
 Board::Board()

@@ -42,7 +42,8 @@ class Tile
 		//~Tile();
 		void tileDisplay();
     void printIslandTile();
-		
+		void visitTile();
+
 	private:
 		int xValue;
 		int yValue;
