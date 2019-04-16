@@ -54,7 +54,7 @@ Board::~Board()
 	delete[] boardArray;
 }
 
-void Board::display() const
+void Board::displayIsland() const
 {
 	cout << "Displaying your island: " <<endl;
 	for(int i=0; i<boardSize; ++i)
@@ -67,6 +67,34 @@ void Board::display() const
 		cout <<endl;
 	}
 }
+
+void Board::displayLocation(int x, int y) const
+{
+	boardArray[y][x]->displayLocation();
+	cout << endl << "To the north is a ";
+	boardArray[(BOARD_SIZE*x + y) - BOARD_SIZE]->getTerrain();
+	cout << endl << "To the south is a ";
+	boardArray[(BOARD_SIZE*x + y) + BOARD_SIZE]-getTerrain();
+	cout << endl << "To the east is a ";
+	boardArray[y][x+1]->getTerrain();
+	cout << endl << "To the west is a ";
+	boardArray[y][x-1]->getTerrain();
+
+}
+
+void Tile::displayLocation() const
+{
+	cout << "You are standing in a " << terrain;
+	if (treasure == 1)
+		cout << "You see treasure nearby." << endl;
+}
+
+int Tile::getTerrain {return terrain;}
+
+int Tile::getX {return xValue;}
+
+int Tile::getY {return yValue;}
+	
 
 
 

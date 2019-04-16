@@ -20,6 +20,10 @@ class Tile
 		Tile(int xValue, int yValue); //constructor
 		//~Tile();
 		void tileDisplay();
+		void displayLocation() const;
+		int getTerrain();
+		int getX();
+		int getY();
 
 	private:
 		int xValue;
@@ -36,7 +40,9 @@ class Board
 		Board(int size=10); //constructor - argument from user sizeBoardxsizeBoard
 		//destructor is needed because we allocate the array of tiles
 		~Board();
-		void display() const;
+		void displayIsland() const;
+		void displayLocation(int x, int y) const;
+
 	
 	private:
 		int boardSize;
