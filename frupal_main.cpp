@@ -23,7 +23,6 @@ int main(int argc, char* argv[]) {
 	if (i == -1)
 		return 0;
 	interface.game_interface();
-
 	return 0;
 }
 
