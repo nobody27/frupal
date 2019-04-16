@@ -10,7 +10,7 @@
 
 //include our files
 #include "boardNtile.h"
-#include "Seeker.h"
+#include "seeker.h"
 #include "interface.h"
 
 extern const int BOARD_SIZE = 10;
