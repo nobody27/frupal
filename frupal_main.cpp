@@ -21,8 +21,9 @@ int main(int argc, char* argv[]) {
 	cout << "This is Max's contribution" << endl;
 
 	Board theIsland;
-	theIsland.display();
-	
+	//theIsland.display();
+  cout << "Here is the island." <<endl;
+	theIsland.displayIsland(10);
 
 	return 0;
 }

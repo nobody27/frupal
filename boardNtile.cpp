@@ -12,7 +12,7 @@
 
 using namespace std;
 
-Terrain::Terrain(string theName) : name(theName)
+Terrain::Terrain(string theName, string theShortName) : name(theName), shortName(theShortName)
 {
 }
 
@@ -41,6 +41,19 @@ void Tile::tileDisplay()
 	cout << "	" << (visited ? "visited by seeker" : "undiscovered") << endl;
 }
 
+void Tile::printIslandTile()
+{
+				if(!visited)
+				{
+								cout<< "XX";
+				}
+				else
+				{
+								cout<< terrain->getShortName();
+				}
+				cout << "_";
+				cout << "EX";
+}
 
 
 /*
@@ -55,7 +68,8 @@ Board::Board(int size)
 	//init the terrain TODO - repleace with real configuration
 	//for now add a default grassy meadow terrain
 	string terrainName = "grassy_meadow";
-	terrainMap[terrainName] = new Terrain(terrainName);
+	string terrainShortName = "GM";
+	terrainMap[terrainName] = new Terrain(terrainName, terrainShortName);
 	
 	//init the board
 	boardSize = size;
@@ -94,7 +108,26 @@ void Board::display() const
 	}
 }
 
+void Board::displayIsland(int size) const
+{
+				for(int j=(size-1); j>=0; --j)
+				{
+								displayRow(j, size);
+				}
+}
 
+void Board::displayRow(int rowNumber, int size) const
+{
+				cout << endl;
+				cout << "		"; //left margin
+				int j=rowNumber;
+				for(int i=0; i<size; ++i)
+				{ 
+								boardArray[i][j]->printIslandTile();
+								cout << "  "; //space between tiles
+				}
+				cout << endl;
+}
 
 
 

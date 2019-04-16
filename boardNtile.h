@@ -22,11 +22,14 @@ using namespace std;
 class Terrain {
 	public:
 		//constructor
-		Terrain(string theName);
+		Terrain(string theName, string theShortName);
 		//TODO - add constructor that configures all variables
 		void display();
+		const string& getName() const {return name;}
+		const string& getShortName() const {return shortName;}
 	private:
 		string name;
+		string shortName;
 };
 
 //a tile takes up a single location on the board and includes all the
@@ -38,7 +41,8 @@ class Tile
 		Tile(int xValue, int yValue, Terrain* theTerrain); //constructor
 		//~Tile();
 		void tileDisplay();
-
+    void printIslandTile();
+		
 	private:
 		int xValue;
 		int yValue;
@@ -58,7 +62,9 @@ class Board
 		//destructor is needed because we allocate the array of tiles
 		~Board();
 		void display() const;
-	
+    void displayIsland(int size) const;
+		void displayRow(int rowNumber, int size) const;
+	  	
 	private:
 		int boardSize;
 		Tile*** boardArray;
