@@ -24,7 +24,8 @@ int main(int argc, char* argv[]) {
 	//theIsland.display();
   cout << "Here is the island." <<endl;
 	theIsland.displayIsland(10);
-
+	theIsland.visitAllTiles();
+	theIsland.displayIsland(10);
 	return 0;
 }
 

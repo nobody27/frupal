@@ -21,6 +21,13 @@ void Terrain::display()
 	cout << "	Terrain: " << name << endl;
 }
 
+
+void Terrain::setTerrainType(string theName, string theShortName)
+{
+				name=theName;
+				shortName=theShortName;
+}
+
 //by default set terrain to grassy meadow for now
 Tile::Tile(int x, int y, Terrain* theTerrain): xValue(x), 
 					yValue(y),
@@ -114,6 +121,7 @@ void Board::display() const
 
 void Board::displayIsland(int size) const
 {
+				cout<< "Current island display: " <<endl<<endl;
 				for(int j=(size-1); j>=0; --j)
 				{
 								displayRow(j, size);
@@ -133,5 +141,16 @@ void Board::displayRow(int rowNumber, int size) const
 				cout << endl;
 }
 
+
+void Board::visitAllTiles()
+{
+				for(int i=0; i<boardSize; ++i)
+				{
+								for(int j=0; j<boardSize; ++j)
+								{
+									boardArray[i][j]->visitTile();
+								}
+				}
+}
 
 

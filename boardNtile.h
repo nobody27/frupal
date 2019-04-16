@@ -27,6 +27,8 @@ class Terrain {
 		void display();
 		const string& getName() const {return name;}
 		const string& getShortName() const {return shortName;}
+		void setTerrainType(string theName, string theShortName);
+
 	private:
 		string name;
 		string shortName;
@@ -60,11 +62,11 @@ class Board
 	public:
 		//Board(); //constructor - this default creates a 10x10 board. Calls Board(10)
 		Board(int size=10); //constructor - argument from user sizeBoardxsizeBoard
-		//destructor is needed because we allocate the array of tiles
 		~Board();
 		void display() const;
     void displayIsland(int size) const;
 		void displayRow(int rowNumber, int size) const;
+		void visitAllTiles(); //reveal all for working display for coders
 	  	
 	private:
 		int boardSize;
