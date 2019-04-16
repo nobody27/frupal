@@ -18,6 +18,7 @@ int main(int argc, char* argv[]) {
 	cout << "Fantastic Adventures!" <<endl;
 	cout << "team A's adventure game" << endl;
 	cout << "This is Elyse's contribution" << endl;
+	cout << "This is Max's contribution" << endl;
 
 	Board theIsland;
 	theIsland.display();
