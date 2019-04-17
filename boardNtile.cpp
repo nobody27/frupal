@@ -52,14 +52,14 @@ void Tile::printIslandTile()
 {
 				if(!visited)
 				{
-								cout<< "XX";
+								cout<< "X";
 				}
 				else
 				{
 								cout<< terrain->getShortName();
 				}
 				cout << "_";
-				cout << "EX";
+				cout << "E";
 }
 
 void Tile::visitTile()
@@ -79,7 +79,7 @@ Board::Board(int size)
 	//init the terrain TODO - repleace with real configuration
 	//for now add a default grassy meadow terrain
 	string terrainName = "grassy_meadow";
-	string terrainShortName = "GM";
+	string terrainShortName = "G";
 	terrainMap[terrainName] = new Terrain(terrainName, terrainShortName);
 	
 	//init the board
@@ -139,6 +139,13 @@ void Board::displayRow(int rowNumber, int size) const
 								cout << "  "; //space between tiles
 				}
 				cout << endl;
+				cout << "		";//left margin
+				for(int i=0; i<size; ++i)
+				{
+								cout << "XXX";
+								cout << "  ";
+				}
+				cout <<endl;
 }
 
 
