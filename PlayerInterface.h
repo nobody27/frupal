@@ -17,6 +17,27 @@ using namespace std;
 //pointer to the singleton instance of the player interface
 namespace player_interface {
 
+//commands from the main menue
+//TODO should configuring terrain, tools, obstacles, etc. be part of the board 
+//or their own sections?
+enum mainMenuCommand_t {UNDEFINED_MAIN_MENU_COMMAND,
+						CONFIGURE_BOARD, 
+						CONFIGURE_SEEKER, 
+						LOAD_GAME, 
+						PLAY_GAME,
+						SAVE_GAME, 
+						QUIT};
+
+//commands for playing the game
+enum gameCommand_t {UNDEFINED_GAME_COMMAND,
+					LOOK, 
+					MOVE, 
+					BUY_TOOL, 
+					USE_TOOL, 
+					RETURN_TO_MAIN_MENU};
+
+enum direction_t {NORTH, SOUTH, EAST, WEST};
+
 //this class contains the necessary methods to interact with the
 //human player. Specifically to request commands
 class PlayerInterface {
@@ -25,7 +46,37 @@ public:
 	//if necessary create the instance
 	static PlayerInterface* instance();
 	
-	void display();
+	//print options and ask player for main menu commands
+	//until player decides to quit the game
+	void executeMainMenuCommands();	
+
+	//execute a single main menu command and return to main menu
+	void executeMainMenuCommand(mainMenuCommand_t command);	
+
+	//display main menu command options to user
+	void displayMainMenuCommandOptions() const;
+
+	//get user input for which main menu command to run
+	mainMenuCommand_t getValidMainMenuCommand() const;
+
+	//convert char input to command type
+	mainMenuCommand_t charToMainMenuCommand(char choice) const;
+
+	//execute commands in the game until the player requests
+	//to return to the main menu
+	//TODO - void executeGameCommands();
+
+	//get desired direction from player for relevant command
+	//i.e. move or look command
+	//TODO - should we only list possible directions?
+	//TODO -void selectDirection() const;
+
+	//get desired tool from the player for relevant command
+	//i.e. buy or use command
+	//select from tools belonging to the seeker
+	//TODO - void selectTool() const;
+	
+	void display() const;
 
 private:
 	//private constructor can only be called from instance() method

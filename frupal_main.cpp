@@ -28,7 +28,15 @@ int main(int argc, char* argv[]) {
 	theIsland.visitAllTiles();
 	theIsland.displayIsland(10);
 	
-	player_interface::PlayerInterface::instance()->display();
+	player_interface::PlayerInterface::instance()->executeMainMenuCommands();
+
+	//call the main menue and get commands
+	//this is where we play the game
+
+
+	//clean up -  need to make sure it is done in the correct order
+	delete player_interface::PlayerInterface::instance();
+
 	return 0;
 }
 
