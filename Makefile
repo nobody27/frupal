@@ -3,8 +3,8 @@
 .PHONY: clean
 CFLAGS= -pedantic -O0 -Wall -std=c++14
 DFLAGS= -g
-HEADER_FILES= boardNtile.h
-SOURCE_FILES= frupal_main.cpp boardNtile.cpp 
+HEADER_FILES= boardNtile.h PlayerInterface.h
+SOURCE_FILES= frupal_main.cpp boardNtile.cpp PlayerInterface.cpp 
 
 
 all: frupal  

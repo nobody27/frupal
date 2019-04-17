@@ -10,6 +10,7 @@
 
 //include our files
 #include "boardNtile.h"
+#include "PlayerInterface.h"
 
 using namespace std;
 
@@ -22,10 +23,12 @@ int main(int argc, char* argv[]) {
 
 	Board theIsland;
 	//theIsland.display();
-  cout << "Here is the island." <<endl;
+	cout << "Here is the island." <<endl;
 	theIsland.displayIsland(10);
 	theIsland.visitAllTiles();
 	theIsland.displayIsland(10);
+	
+	player_interface::PlayerInterface::instance()->display();
 	return 0;
 }
 
