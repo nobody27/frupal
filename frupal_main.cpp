@@ -13,8 +13,6 @@
 #include "seeker.h"
 #include "interface.h"
 
-extern const int BOARD_SIZE = 10;
-
 using namespace std;
 
 int main(int argc, char* argv[]) {

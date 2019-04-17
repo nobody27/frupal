@@ -1,6 +1,7 @@
 #include "boardNtile.h"
-#include "Seeker.h"
+#include "seeker.h"
 #include <iostream>
+#include <iomanip>
 
 const int BOARD_SIZE = 10;
 
@@ -11,7 +12,7 @@ class Interface
 		Seeker* character;	
 
 	public:	
-		void main_menu();
+		int main_menu();
 		void game_interface();
-}
+};
 

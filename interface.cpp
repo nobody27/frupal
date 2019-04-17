@@ -8,6 +8,7 @@ Interface::Interface() {
 }
 
 int Interface::main_menu() {
+	int size = 10;
 	char choice = '0';
 	cout << "Welcome to Frupal Island!" << endl;
 	cout << "Make Your Choice: " << endl;
@@ -19,8 +20,8 @@ int Interface::main_menu() {
 	
 	switch (choice) {
 		case 'P':
-			theIsland = new Board(BOARD_SIZE);
-			character = new Seeker;
+			theIsland = new Board(size);
+			character = new Seeker(theIsland);
 			break;
 		case 'O':
 			break;
@@ -29,28 +30,31 @@ int Interface::main_menu() {
 		default:
 			cout << "reached end of switch";
 	}
+	return 0;
 }
 
-int Interface::game_interface() {
-	character.display();
+void Interface::game_interface() {
+	character->display();
 	char choice = '0';
 	cout << "Please select from the following:" << endl;
 	cout << "(N)Go North, (S)Go South, (E)Go East, (W)Go West" << endl;
 	cin >> choice;
 	//TODO check for legal input and capitalize
+	int x = character->getLocation()->getX();
+	int y = theIsland->getLocation()->getY();
 	while (choice != 'Q') {
 		switch (choice) {
 			case 'N':
-				character.move(-BOARD_SIZE);
+				character->move(x, y+1);
 				break;
 			case 'S':
-				character.move(+BOARD_SIZE);
+				character->move(x, y-1);
 				break;
 			case 'E':
-				character.move(1);
+				character->move(x+1, y);
 				break;
 			case 'W':
-				character.move(-1);
+				character->move(x-1, y);
 				break;
 			default:
 				cout << "reached end of switch";

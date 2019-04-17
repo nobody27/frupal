@@ -25,6 +25,7 @@ class Terrain {
 		Terrain(string theName);
 		//TODO - add constructor that configures all variables
 		void display();
+		string getTerrain() {return name;}
 	private:
 		string name;
 };
@@ -39,9 +40,9 @@ class Tile
 		//~Tile();
 		void tileDisplay();
 		void displayLocation() const;
-		int getTerrain();
-		int getX();
-		int getY();
+		string getTerrain() {return terrain->getTerrain();}
+		int getX() {return xValue;}
+		int getY() {return yValue;}
 
 	private:
 		int xValue;
@@ -58,11 +59,11 @@ class Board
 {
 	public:
 		//Board(); //constructor - this default creates a 10x10 board. Calls Board(10)
-		Board(int size=10); //constructor - argument from user sizeBoardxsizeBoard
+		Board(int size); //constructor - argument from user sizeBoardxsizeBoard
 		//destructor is needed because we allocate the array of tiles
 		~Board();
 		void displayIsland() const;
-		void displayLocation(int x, int y) const;
+		void displayLocation(Tile* location) const;
 
 	
 	private:

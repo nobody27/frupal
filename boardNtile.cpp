@@ -94,32 +94,44 @@ void Board::displayIsland() const
 	}
 }
 
-void Board::displayLocation(int x, int y) const
+void Board::displayLocation(Tile* location) const
 {
-	boardArray[y][x]->displayLocation();
-	cout << endl << "To the north is a ";
-	boardArray[(BOARD_SIZE*x + y) - BOARD_SIZE]->getTerrain();
-	cout << endl << "To the south is a ";
-	boardArray[(BOARD_SIZE*x + y) + BOARD_SIZE]-getTerrain();
-	cout << endl << "To the east is a ";
-	boardArray[y][x+1]->getTerrain();
-	cout << endl << "To the west is a ";
-	boardArray[y][x-1]->getTerrain();
+	int x = location->getX();
+	int y = location->getY();
+	location->displayLocation();
+	if (y+1 >= boardSize)
+		cout << endl << "To the north lies ocean";
+	else {
+		cout << endl << "To the north is a ";
+		boardArray[x][y+1]->getTerrain();
+	}
+	if (y-1 < 0)
+		cout << endl << "To the south lies ocean";
+	else {
+		cout << endl << "To the south is a ";
+		boardArray[x][y-1]->getTerrain();
+	}
+	if (x+1 >= boardSize)
+		cout << endl << "To the east lies ocean";
+	else {
+		cout << endl << "To the east is a ";
+		boardArray[x+1][y]->getTerrain();
+	}
+	if (x-1 < 0)
+		cout << endl << "To the west lies ocean";
+	else {
+		cout << endl << "To the west is a ";
+		boardArray[x-1][y]->getTerrain();
+	}
 
 }
 
 void Tile::displayLocation() const
 {
-	cout << "You are standing in a " << terrain;
-	if (treasure == 1)
-		cout << "You see treasure nearby." << endl;
+	cout << "You are standing in a " << terrain->getTerrain();
+	//TODO add in more features of location
 }
 
-int Tile::getTerrain {return terrain;}
-
-int Tile::getX {return xValue;}
-
-int Tile::getY {return yValue;}
 	
 
 
