@@ -1,4 +1,7 @@
 *.o
 .*.swp
 frupal_main
+Session.vim
+.nfs*
+a.out
 
