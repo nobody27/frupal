@@ -39,7 +39,8 @@ void Interface::game_interface() {
     cout << "You have landed on Frupal Island!" << endl;
     cout << "As you explore, you will uncover treasure as well as tools to help you on your quest." << endl;
     cout << "Use caution! Moving around the island consumes energy. When you run out of energy, the game will end.";
-    cout << "*****************************" << endl;
+    cout << endl << "*****************************" << endl;
+    //TODO As we add more features, outline rules here (including win condition)
 
     char choice = '0';
     while (choice != 'Q')
