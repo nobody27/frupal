@@ -5,7 +5,6 @@
 //frupalMain.cpp
 
 //constructors destructors and functions of Board and Tile classes
-
 #include "boardNtile.h"
 
 #include <assert.h>
@@ -19,6 +18,11 @@ Terrain::Terrain(string theName) : name(theName)
 void Terrain::display()
 {
 	cout << "	Terrain: " << name << endl;
+}
+
+void Terrain::interfaceDisplay()
+{
+    cout << name;
 }
 
 //by default set terrain to grassy meadow for now
@@ -128,7 +132,8 @@ void Board::displayLocation(Tile* location) const
 
 void Tile::displayLocation() const
 {
-	cout << "You are standing in a " << terrain->getTerrain();
+	cout << "You are standing in a ";
+    terrain->interfaceDisplay();
 	//TODO add in more features of location
 }
 

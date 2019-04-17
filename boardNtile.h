@@ -26,6 +26,7 @@ class Terrain {
 		//TODO - add constructor that configures all variables
 		void display();
 		string getTerrain() {return name;}
+        void interfaceDisplay();
 	private:
 		string name;
 };
@@ -40,7 +41,7 @@ class Tile
 		//~Tile();
 		void tileDisplay();
 		void displayLocation() const;
-		string getTerrain() {return terrain->getTerrain();}
+		void getTerrain() {terrain->interfaceDisplay();}
 		int getX() {return xValue;}
 		int getY() {return yValue;}
 
@@ -64,6 +65,8 @@ class Board
 		~Board();
 		void displayIsland() const;
 		void displayLocation(Tile* location) const;
+        Tile* getLocation(int x, int y) {return boardArray[x][y];}
+        int getSize() {return boardSize;}
 
 	
 	private:

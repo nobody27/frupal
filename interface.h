@@ -12,6 +12,7 @@ class Interface
 		Seeker* character;	
 
 	public:	
+        Interface();
 		int main_menu();
 		void game_interface();
 };

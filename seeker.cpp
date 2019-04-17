@@ -4,29 +4,29 @@ using namespace std;
 
 Seeker::Seeker(Board* theIsland)
 {
-	gold = 10;
+	money = 10;
 	energy = 10;
-	theIsland = theIsland;
-	location = theIsland[0][0]; 
+	this->theIsland = theIsland;
+	location = theIsland->getLocation(0,0);
 }
 
 void Seeker::display() {
-	theIsland.displayLocation(location);
-	cout << endl << "You currently have " << energy << " energy and " << money << " gold pieces." << endl;
+	theIsland->displayLocation(location);
+	cout << endl << endl << "You currently have " << energy << " energy and " << money << " gold pieces." << endl;
 }
 
 void Seeker::move(int x, int y) {
-	if (x => theIsland->getSize())
-		cout << "Cannot move to the east";
-	else if (y => theIsland->getSize())
-		cout << "Cannot move to the north";
+	if (x >= theIsland->getSize())
+		cout << endl << "You cannot move east!";
+	else if (y >= theIsland->getSize())
+		cout << endl << "You cannot move north!";
 	else if (x < 0)
-		cout << "Cannot move to the west";
+		cout << endl << "You cannot move west!";
 	else if (y < 0)
-		cout << "Cannot move to the south";
+		cout << endl << "You cannot move south!";
 	else
 	{
-		location = theIsland->boardArray[x][y];
+		location = theIsland->getLocation(x,y);
 		energy = energy - 1; //TODO re-implement this based on terrain
 	}
 

@@ -7,6 +7,7 @@
 #define SEEKER_H
 
 #include <iostream>
+#include "boardNtile.h"
 
 using namespace std;
 
@@ -41,7 +42,7 @@ class Seeker
     //TBD we may need to add an optional quantity of each tool
     //typedef unordered_map<string,Tool> ToolMap;
     //constructor
-    Seeker(Board* theIsland); //default constructor
+    Seeker(Board*); //default constructor
     //Seeker(Tile* theLocation, int theEnergy, int theMoney, ToolMap theTools);
    
     //movement functions
@@ -51,6 +52,8 @@ class Seeker
     //void look/*direction*/(); //TODO set enum for North, South, East, West
     void move(int x, int y); //
     Tile* getLocation() {return location;}
+    int getEnergy() {return energy;}
+    
 
 
     //TODO if we need getters and setters for everything why not just make it public
