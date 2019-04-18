@@ -19,6 +19,7 @@ using namespace std;
 //the tool can be used on an obstacle (TBD maybe for a list of obstacles in the future)
 //the tool may be a one time use - e.g. a power bar - or multiple use object
 /*
+
 class Tool {
 	public:
 		//constructor
@@ -54,8 +55,6 @@ class Seeker
     Tile* getLocation() {return location;}
     int getEnergy() {return energy;}
     
-
-
     //TODO if we need getters and setters for everything why not just make it public
     //Don't worry, Karla isn't watching ;)
     //get/set energy

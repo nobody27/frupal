@@ -20,15 +20,19 @@ using namespace std;
 //types with (for example) obstacle types. 
 //but more fields will be needed and it will be easy to add them 
 class Terrain {
-	public:
-		//constructor
-		Terrain(string theName);
+    public:
+		Terrain(string theName, string theShortName);
 		//TODO - add constructor that configures all variables
 		void display();
+		const string& getName() const {return name;}
+		const string& getShortName() const {return shortName;}
+		void setTerrainType(string theName, string theShortName);
 		string getTerrain() {return name;}
         void interfaceDisplay();
+
 	private:
 		string name;
+		string shortName;
 };
 
 //a tile takes up a single location on the board and includes all the
@@ -44,6 +48,8 @@ class Tile
 		void getTerrain() {terrain->interfaceDisplay();}
 		int getX() {return xValue;}
 		int getY() {return yValue;}
+        void printIslandTile();
+		void visitTile();
 
 	private:
 		int xValue;
@@ -63,11 +69,13 @@ class Board
 		Board(int size); //constructor - argument from user sizeBoardxsizeBoard
 		//destructor is needed because we allocate the array of tiles
 		~Board();
-		void displayIsland() const;
+		void display() const;
+        void displayIsland(int size) const;
+		void displayRow(int rowNumber, int size) const;
+		void visitAllTiles(); //reveal all for working display for coders
 		void displayLocation(Tile* location) const;
         Tile* getLocation(int x, int y) {return boardArray[x][y];}
         int getSize() {return boardSize;}
-
 	
 	private:
 		int boardSize;
