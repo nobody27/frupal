@@ -62,9 +62,12 @@ public:
 	//convert char input to command type
 	mainMenuCommand_t charToMainMenuCommand(char choice) const;
 
+	//display text introuding the player to the game
+	void displayGameIntroduction() const;
+
 	//execute commands in the game until the player requests
 	//to return to the main menu
-	//TODO - void executeGameCommands();
+	void executeGameCommands();
 
 	//get desired direction from player for relevant command
 	//i.e. move or look command
@@ -82,6 +85,9 @@ private:
 	//private constructor can only be called from instance() method
 	PlayerInterface();
 	static PlayerInterface* instance_;
+	//store whether pr not we need to display the game introduction
+	//before moving to the game menu
+	bool displayGameIntro;
 };
 
 //PlayerInterface* getInstance() {return PlayerInterface::instance();}

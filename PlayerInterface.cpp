@@ -17,7 +17,7 @@ using namespace std;
 namespace player_interface {
 PlayerInterface* PlayerInterface::instance_ = nullptr;
 
-PlayerInterface::PlayerInterface() {
+PlayerInterface::PlayerInterface() : displayGameIntro(true) {
 	//TODO initialize the singlton
 }
 
@@ -52,8 +52,12 @@ void PlayerInterface::executeMainMenuCommand(mainMenuCommand_t command) {
 			cout << "Thank you for playing." << endl;
 			break;
 		case PLAY_GAME:
-			cout << "get ready to play the game!" << endl;
 			//TODO call game command menu
+			if(displayGameIntro) {
+				displayGameIntroduction();
+				displayGameIntro = false;
+			}
+			executeGameCommands();
 			break;
 		default:
 			cout << "Sorry, this command has not yet been implemented." << endl;
@@ -106,6 +110,28 @@ mainMenuCommand_t PlayerInterface::charToMainMenuCommand(char choice) const {
 			command = UNDEFINED_MAIN_MENU_COMMAND;
 	}
 	return command;
+}
+
+void PlayerInterface::displayGameIntroduction() const {
+	
+    cout << endl << endl << "*****************************" << endl;
+    cout << "You have landed on Frupal Island!" << endl;
+    cout << "As you explore, you will uncover treasure as well as tools to help you on your quest." << endl;
+    cout << "Use caution! Moving around the island consumes energy. When you run out of energy, the game will end.";
+    cout << endl << "*****************************" << endl;
+}
+
+//TODO - can this be combined with the main menu cammand for code reuse
+void PlayerInterface::executeGameCommands() {
+	gameCommand_t command = UNDEFINED_GAME_COMMAND;
+	
+	while (command != RETURN_TO_MAIN_MENU) {
+		//TODO command = getValidGameCommand();
+		//TODO executeGameCommand(command);
+		command = RETURN_TO_MAIN_MENU;
+	}
+	//return to main menu
+	
 }
 
 } //end namespace player_interface
