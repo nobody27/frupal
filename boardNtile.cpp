@@ -1,10 +1,11 @@
-//
-//ATeam Jessica, Elyse, Max, Leior, John
-//cs300
-//April 10, 2019
-//frupalMain.cpp
+/////////////////////////////////////////////////
+// ATeam Jessica, Elyse, Max, Leior, John
+// CS 300
+// Spring 2019
+// boardNtile.cpp
+////////////////////////////////////////////////
 
-//constructors destructors and functions of Board and Tile classes
+//constructors destructors and functions of Board Terrain, and Tile classes
 
 #include "boardNtile.h"
 
@@ -67,14 +68,8 @@ void Tile::visitTile()
 				visited=true;
 }
 
-/*
-Board::Board()
-{
-				Board(10);
-}
-*/
 
-Board::Board(int size)
+Board::Board(int size)    //default constructor 
 {
 	//init the terrain TODO - repleace with real configuration
 	//for now add a default grassy meadow terrain
@@ -122,6 +117,14 @@ void Board::display() const
 void Board::displayIsland(int size) const
 {
 				cout<< "Current island display: " <<endl<<endl;
+				cout<< "key:  top left space is terrain type: "<<endl;
+				cout << "(G=Grassy Meadow, B=Bog, F=Forrest, X=terrain not yet revealed)" <<endl;
+				cout << "top center space: empty unless Seeker is on it."<<endl;
+				cout << "top right center space: E=Excavation site, until searched" <<endl;
+				cout << "bottom three Xs have no current meaning."<< endl;
+				cout << "could hold info about, obstacles, or ?" <<endl;
+				//TODO note to team - spaces could hold info about tile, (obstacles, tools, food etc) 
+
 				for(int j=(size-1); j>=0; --j)
 				{
 								displayRow(j, size);
