@@ -1,0 +1,9 @@
+1,size
+2,energy
+3,money
+4,binocularCost
+5,meadow
+6,forest
+7,bog
+8,rocks
+9,trees
