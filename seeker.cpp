@@ -35,8 +35,10 @@ theInventory) : energy(theEnergy) , money(theMoney) , inventory(theInventory)
 	location = theLocation;
 }
 
-void apply(string relevantObstacle)
+void Seeker::applyTool(string relevantObstacle)
 {
+  
+  
   return;
 }
 
