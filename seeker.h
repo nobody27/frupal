@@ -19,16 +19,17 @@ class obstacle;
 //the tool may be a one time use - e.g. a power bar - or multiple use object
 class Tool {
 	public:
-		//constructor
-		Tool(string theName, obstacle* relevantObstacle, int energySaved, bool
+		//constructors
+    Tool(string theName, string obstacleName);
+		Tool(string theName, string obstacleName, int energySaved, bool
     singleUse, int price, int quantity);
 		//use the tool
 		//check that it can be used on the relevant obstacle type
 		//if the tool is singleUse make sure to remove it from the seeker
-		void apply(obstacle* obstacle);
+		void apply(obstacle* currentObstacle);
 	private:
 		string name;
-		obstacle* relevantObstacle;
+		string relevantObstacle;
     int energySaved;
 		bool singleUse;
     int price;
@@ -39,8 +40,8 @@ class Seeker
 {
   public:
     //constructor
-    Seeker(Tile* theLocation, int theEnergy, int theMoney, vector<Tool>
-    inventory);
+    Seeker();
+    Seeker(Tile* theLocation, int theEnergy, int theMoney, vector<Tool> theInventory);
    
     //movement functions
     Tile* getLocation() const;
@@ -50,24 +51,12 @@ class Seeker
     void look/*direction*/(); //TODO set enum for North, South, East, West
     void move(/*direction*/); //
 
-
-    //TODO if we need getters and setters for everything why not just make it public
-    //Don't worry, Karla isn't watching ;)
-    //get/set energy
-    int getNrg();
-    bool setNrg(int nrg);
-
-    //get/set money
-    int getMoney();
-    bool setMoney(int money);
-
     //items
     //TODO need access to tools in the event of a single use tool
-    bool useTool(Tool theTool);
+    bool useTool();
     //check we have enough money and discount the total money according to price
-    bool buyTool(Tool theTool);
+    bool buyTool();
 
-  private:
     Tile* location;
     int energy;
     int money;
