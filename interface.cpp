@@ -19,7 +19,7 @@ int Interface::main_menu() {
 	cin >> choice;
 	//TODO capitalize and check for legal input
 	
-	switch (choice) {
+	switch (toupper(choice)) {
 		case 'P':
 			theIsland = new Board(size);
 			character = new Seeker(theIsland);
@@ -54,6 +54,7 @@ void Interface::game_interface() {
         cout << endl << ">";
 
         cin >> choice;
+		choice = toupper(choice);
         //TODO check for legal input and capitalize
 
         int x = character->getLocation()->getX();
