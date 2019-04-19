@@ -13,7 +13,7 @@
 #include "PlayerInterface.h"
 
 using namespace std;
-
+using namespace player_interface;
 int main(int argc, char* argv[]) {
 	cout << "Hello Frupal" << endl;
 	cout << "Fantastic Adventures!" <<endl;
@@ -28,14 +28,14 @@ int main(int argc, char* argv[]) {
 	theIsland.visitAllTiles();
 	theIsland.displayIsland(10);
 	
-	player_interface::PlayerInterface::instance()->executeMainMenuCommands();
+	getIF()->executeMainMenuCommands();
 
 	//call the main menue and get commands
 	//this is where we play the game
 
 
 	//clean up -  need to make sure it is done in the correct order
-	delete player_interface::PlayerInterface::instance();
+	delete	getIF();
 
 	return 0;
 }

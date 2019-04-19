@@ -17,6 +17,10 @@ using namespace std;
 namespace player_interface {
 PlayerInterface* PlayerInterface::instance_ = nullptr;
 
+PlayerInterface* getIF() {
+	return PlayerInterface::instance();
+}
+
 PlayerInterface::PlayerInterface() : displayGameIntro(true) {
 	//TODO initialize the singlton
 }

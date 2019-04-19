@@ -90,7 +90,8 @@ private:
 	bool displayGameIntro;
 };
 
-//PlayerInterface* getInstance() {return PlayerInterface::instance();}
+//shortcut to reach player interface singleton
+PlayerInterface* getIF();
 
 
 } //namespace player_interface
