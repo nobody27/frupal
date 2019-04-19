@@ -6,6 +6,8 @@
 #ifndef SEEKER_H
 #define SEEKER_H
 
+#include <vector>
+
 using namespace std;
 
 //forward declaration of obstacle class
@@ -18,26 +20,27 @@ class obstacle;
 class Tool {
 	public:
 		//constructor
-		Tool(string theName, int thePrice, obstacle* relevantObstacle, bool singleUse);
+		Tool(string theName, obstacle* relevantObstacle, int energySaved, bool
+    singleUse, int price, int quantity);
 		//use the tool
 		//check that it can be used on the relevant obstacle type
 		//if the tool is singleUse make sure to remove it from the seeker
 		void apply(obstacle* obstacle);
 	private:
 		string name;
-		int price;
 		obstacle* relevantObstacle;
+    int energySaved;
 		bool singleUse;
+    int price;
+    int quantity;
 };
 
 class Seeker
 {
   public:
-    //for easy lookup and access of tools by configurable name
-    //TBD we may need to add an optional quantity of each tool
-    typedef unordered_map<string,Tool> ToolMap;
     //constructor
-    Seeker(Tile* theLocation, int theEnergy, int theMoney, ToolMap theTools);
+    Seeker(Tile* theLocation, int theEnergy, int theMoney, vector<Tool>
+    inventory);
    
     //movement functions
     Tile* getLocation() const;
@@ -68,7 +71,7 @@ class Seeker
     Tile* location;
     int energy;
     int money;
-    ToolMap tools;
+    vector<Tool> inventory;
 };
  
 #endif

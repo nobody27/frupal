@@ -7,14 +7,5 @@
 
 using namespace std;
 
-Seeker::Seeker() : pos(Tile* pos), nrg(int nrg), money(int money)
-{
-  items[] = {0};
-}
-
-Tile* seeker::getPos() const
-{
-  return pos;
-}
 
 
