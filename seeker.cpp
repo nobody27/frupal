@@ -37,11 +37,22 @@ theInventory) : energy(theEnergy) , money(theMoney) , inventory(theInventory)
 
 void Seeker::applyTool(string relevantObstacle)
 {
-  
+ //check if seeker tile obstacle == relevant obstacle 
+
+    //remove obstacle from tile
+
+    //if its single use remove tool from inventory
+
+  //print doesnt work message
   
   return;
 }
 
+void Seeker::addTool(
+  //push tool into inventory
+
+
+}
 void Seeker::display() {
 	theIsland->displayLocation(location);
 	cout << endl << endl << "You currently have " << energy << " energy and " << money << " gold pieces." << endl;

@@ -8,7 +8,8 @@
 //constructors destructors and functions of Board Terrain, and Tile classes
 
 #include "boardNtile.h"
-
+#include <vector>
+#include "seeker.h"
 #include <assert.h>
 
 using namespace std;
@@ -163,4 +164,19 @@ void Board::visitAllTiles()
 				}
 }
 
+//add resources to repo either in options or initialization
+void Board::addResource()
+{
+        //basic add to resource repository, cant test until gameplays merge
+        string name;
+        string relevantObstacle;
 
+        cout << "tool name: ";
+        cin >> name;
+        cout << "relevant obstacle: ";
+        cin >> relevantObstacle;
+
+        Tool newTool = Tool(name, relevantObstacle);
+        resources.push_back(newTool);  
+        return;
+}
