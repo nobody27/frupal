@@ -15,6 +15,8 @@ using namespace std;
 //#include <cstdlib>
 #include <string> //why is this needed?
 #include <unordered_map>
+#include <vector>
+#include "seeker.h"
 
 //for now this class is used for type safety not to confuse terrain
 //types with (for example) obstacle types. 
@@ -75,7 +77,12 @@ class Board
     void displayIsland(int size) const;
 		void displayRow(int rowNumber, int size) const;
 		void visitAllTiles(); //reveal all for working display for coders
-	  	
+	  void addResource(); 
+
+    //should this be public?
+    vector<Tool> resources;
+    
+
 	private:
 		int boardSize;
 		Tile*** boardArray;
