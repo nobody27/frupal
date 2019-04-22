@@ -22,6 +22,9 @@ using namespace std;
 
 class GameInterface {
 public:
+	//enum for board directions
+	enum direction_t {NORTH, SOUTH, EAST, WEST};
+	
 	//constructor
 	GameInterface();
 	//destructor is needed to delete the board seaker, etc.
@@ -31,18 +34,24 @@ public:
 	void displayStartupScreen() const;
 	void displayExitScreen() const;
 
+	//initialize everything needed in order to play the game
+	//called by main menu before starting the game
+	//initialize based on configurations (default if necessary)
+	//TODO verify the game is only initialized once unless we implement 
+	//a reset command
+	void initializeGame();	
+
 	////global data////
 	//TODO is there a reason to hide as private and use set/get methods?
 	/*
-	 * Player Interface handles the interface between what happens 
-	 * in the game and instructions from the user.
+	 * MainMenu handles the top level interface with the player
 	 * The main part of this is handling the user menus including:
 	 * 	The main menu: switch between configurations, the game, quitting
 	 *	The game menu: comands given in the game (perhaps with sub-menus
 	 *	The configurations menu: load/save configurations file.
 	 *		There may need to be separate files for configurations and game state
 	 */
-	PlayerInterface* playerIF;
+	MainMenu mainMenu; //TODO should this be a pointer or a default field?
 
 	/*
 	 * I think it makes sense to store data structures here, though it is possible
@@ -52,6 +61,7 @@ public:
 
 	//	The board: (need to configure the size and terrain)
 	Board* theIsland;
+	BoardOptions boardOptions;
 
 	//	The seeker: (need to configure the starting energy, money, etc.)
 	Seeker* theSeeker;
@@ -67,6 +77,10 @@ public:
 	//	Tools: just like obstacles, but in addition to each tile, the seaker will 
 	//		also have a set (or vector, or map) of tools they are carrying
 	vector<Tool> tools;
+	
+	//indicate if we have initialized the game (board, seeker, etc.)
+	//init to false
+	bool initialized;
 
 };
 

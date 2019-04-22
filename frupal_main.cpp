@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
 	 * 		and/or save the game (if the game is not over)
 	 */
 	gameIF->displayStartupScreen();
-	gameIF->playerIF->callMainMenu();	
+	gameIF->mainMenu.callMainMenu();	
 
 	////clean up and exit////	
 	GameInterface->displayExitScreen();

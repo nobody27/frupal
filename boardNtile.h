@@ -55,6 +55,14 @@ class Tile
 		
 };
 
+////options for configuring the board////
+class BoardOptions {
+public:
+	BoardOptions();
+	int size;
+};
+
+
 //the game has a single board that represents the island of frupal
 //this board is a grid of locations or "tiles"
 class Board 

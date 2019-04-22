@@ -68,6 +68,11 @@ void Tile::visitTile()
 				visited=true;
 }
 
+//init by default to size of 10 but allow users to override the default
+BoardOptions::BoardOptions() : size(10) 
+{
+}
+
 
 Board::Board(int size)    //default constructor 
 {
@@ -85,6 +90,8 @@ Board::Board(int size)    //default constructor
 		boardArray[i]= new Tile*[size];
 		for(int j=0; j<size; ++j)
 		{
+			//perparation for options: if location exists in options
+			//set according to it, otherwise set default
 			boardArray[i][j]=new Tile(i,j, terrainMap["grassy_meadow"]);
 		}
 	}

@@ -36,6 +36,16 @@ class Tool {
     int quantity;
 };
 
+class SeekerConfigurations {
+public:
+	SeekerConfigurations()
+	Tile* theLocation;
+	int theEnergy;
+	int themoney;
+	vector<Tool> theInventory;
+
+};
+
 class Seeker
 {
   public:
