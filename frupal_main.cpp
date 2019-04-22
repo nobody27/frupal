@@ -9,34 +9,42 @@
 #include <iostream>
 
 //include our files
-#include "boardNtile.h"
-#include "PlayerInterface.h"
+#include "GameIterface.h"
 
 using namespace std;
-using namespace player_interface;
+
 int main(int argc, char* argv[]) {
-	cout << "Hello Frupal" << endl;
-	cout << "Fantastic Adventures!" <<endl;
-	cout << "team A's adventure game" << endl;
-	cout << "This is Elyse's contribution" << endl;
-	cout << "This is Max's contribution" << endl;
 
-	Board theIsland;
-	//theIsland.display();
-	cout << "Here is the island." <<endl;
-	theIsland.displayIsland(10);
-	theIsland.visitAllTiles();
-	theIsland.displayIsland(10);
-	
-	getIF()->executeMainMenuCommands();
+	////initialize the game interface////
+	/* 
+	 * this will be a kind of "god view" of the system that includes
+	 * pointers to: 
+	 * 	player_interface:	print output and collect input from the human players
+	 * 	configurations:		store all configurable data including lists of tools, 
+							obstacle, serrain types, board size, etc.
+	 *	board:				The island of frupal, a matrix of locations with tiles 
+	 *	seeker: 			our hero/heroine
+	 */
+	gameIF = new GameInterface();
 
-	//call the main menue and get commands
-	//this is where we play the game
+	////call the main menu////
+	/* 
+	 * this is where everything happens.
+	 * I envision some kind of startup message like the flash screen Max prepared
+	 * then call the main menu to set up configurations etc.
+	 *
+	 * if the player chooses to start playing without setting configurations
+	 * we need to construct everything with a default constructor (or default configurations)
+	 *
+	 * note: before quitting we should ask the player if they want to save the configurations
+	 * 		and/or save the game (if the game is not over)
+	 */
+	gameIF->displayStartupScreen();
+	gameIF->playerIF->callMainMenu();	
 
-
-	//clean up -  need to make sure it is done in the correct order
-	delete	getIF();
-
+	////clean up and exit////	
+	GameInterface->displayExitScreen();
+	delete gameIF;
 	return 0;
 }
 
