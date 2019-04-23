@@ -7,10 +7,11 @@
 
 //constructors destructors and functions of Board Terrain, and Tile classes
 
+#include "seeker.h"
 #include "boardNtile.h"
 #include <vector>
-#include "seeker.h"
 #include <assert.h>
+#include <string>
 
 using namespace std;
 
@@ -176,7 +177,7 @@ void Board::addResource()
         cout << "relevant obstacle: ";
         cin >> relevantObstacle;
 
-        Tool newTool = Tool(name, relevantObstacle);
-        resources.push_back(newTool);  
+//        Tool newTool = Tool(name, relevantObstacle);
+ //       resources.push_back(newTool);  
         return;
 }

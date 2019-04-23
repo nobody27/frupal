@@ -21,7 +21,7 @@ singleUse(isSingleUse) , price(thePrice) , quantity(theQuantity)
 }
 
 //default constructor
-Seeker::Seeker() : energy(10) , money(10)
+Seeker::Seeker() : energy(10) , money(10) , vector<Tool>()
 {
   this->theIsland = theIsland;
   location = theIsland->getLocation(0,0);
@@ -48,16 +48,13 @@ void Seeker::applyTool(string relevantObstacle)
   return;
 }
 
-void Seeker::addTool(
-  //push tool into inventory
 
-
-}
 void Seeker::display() {
 	theIsland->displayLocation(location);
 	cout << endl << endl << "You currently have " << energy << " energy and " << money << " gold pieces." << endl;
 }
 
+//TODO check terrain ahead for each call
 void Seeker::move(int x, int y) {
 	if (x >= theIsland->getSize())
 		cout << endl << "You cannot move east!";
@@ -72,7 +69,17 @@ void Seeker::move(int x, int y) {
 		location = theIsland->getLocation(x,y);
 		energy = energy - 1; //TODO re-implement this based on terrain
 	}
+}
+void Seeker::addTool(Tool newTool) {
+  
+  //push tool into inventory
+  inventory.push_back(newTool);  
 
+}
 void Seeker::useTool() {
 
 }
+
+
+
+
