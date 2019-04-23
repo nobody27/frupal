@@ -13,7 +13,7 @@ using namespace std;
 //#include <cctype>
 #include <cstring> //why is this needed?
 //#include <cstdlib>
-#include <string> //why is this needed?
+#include <string> //this is here for string fields in some classes
 #include <unordered_map>
 #include <vector>
 #include "seeker.h"

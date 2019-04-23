@@ -5,10 +5,11 @@
 
 #ifndef SEEKER_H
 #define SEEKER_H
-
+#include <string>
 #include <vector>
 
 using namespace std;
+
 
 //forward declaration of obstacle class
 class Obstacle;
