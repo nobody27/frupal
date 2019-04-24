@@ -16,23 +16,22 @@
 
 using namespace std;
 
-GameMenu::GameMenu() : state(START) {
+GameMenu::GameMenu(GameManager* gameManager) : gameMgr(gameManager) quit(false){
 	//sub-menu default constructors should be enough
 }
 
+//we might be shooting ourselves in the foot implementing a non-essential feature
+//but what the heck, why not :)
+//done - indicates that we are done with this menu and we should return to the main menu
+//quit - indicates that we are performing a quick quit to exit the game immediately
 bool GameMenu::call() {
-	bool retVal = false;
-	state = START;
-	
-	while (state != QUIT) {
-		getAndExecuteCommand();
+	bool done = false;
+	quit = false;
+
+	while (!done && !quit) {
+		done = getAndExecuteCommand();
 	}
-	//exit game -- TODO if not saved, ask to save first
-	if(state == QUIT) {
-		//TODO - is there any other option?
-		retVal = true;
-	}
-	return retVal;
+	return quit;
 }
 
 void GameMenu::display() const {
@@ -45,10 +44,12 @@ void GameMenu::display() const {
 	//TODO load, save
 }
 
-void GameMenu::getAndExecuteCommand() {
-	bool commandExecuted = false;
+bool GameMenu::getAndExecuteCommand() {
+	bool done = false;
+	bool again = true;
 	
-	while(!commandExecuted) {
+	while(again) {
+		again = false;
 		char choice = 0;
 		//display the menu options
 		display();
@@ -56,23 +57,29 @@ void GameMenu::getAndExecuteCommand() {
 		cin >> choice;
 		//capitalize and check for legal input
 		switch (toupper(choice)) {
-			case 'P':
-				//before playing we must make sure everything is initialized
-				if(!gameMgr->initialized) {
-					gameMgr->initialize();
-				}
-				commandExecuted = gameMenu.call();
+			case 'I':
+				gameMgr->theSeeker->move(GameManager::NORTH);
 				break;
-			case 'O':
-				commandExecuted = optionsMenu.call();
+			case 'J':
+				gameMgr->theSeeker->move(GameManager::WEST);
 				break;
+			case 'K':
+				gameMgr->theSeeker->move(GameManager::SOUTH);
+				break;
+			case 'L':
+				gameMgr->theSeeker->move(GameManager::EAST);
+				break;
+			//TODO buy tool, use tool, view board
 			case 'Q':
-				state = QUIT;
-				commandExecuted = true;
+				done = true;
 				break;
+			case 'E':
+				//exit - quick quit 
+				quit = true;
 			default:
-				cout << "'" << choice << "' is not a valid command in the main menu..." << endl;
-				//commandExecuted remains false
+				cout << "'" << choice << "' is not a valid command in the game menu..." << endl;
+				again = true;
 		}
 	}
+	return done;
 }

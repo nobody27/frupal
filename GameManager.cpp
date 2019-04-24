@@ -23,7 +23,10 @@
 
 
 //constructor
-GameManager::GameManager() : theIsland(nullptr), theSeeker(nullptr), initialized(false) {
+GameManager::GameManager() : MainMenu(this), 
+							theIsland(nullptr), 
+							theSeeker(nullptr), 
+							initialized(false) {
 	//TODO configure at least on terrain or arrange for a default terrain
 }
 
@@ -35,7 +38,7 @@ GameManager::~GameManager() {
 
 GameManager::initializeGame() {
 	assert(!initialized);
-	theIsland = new Board(boardOptions);
-	theSeeker = new Seeker(seekerOptions);
+	theIsland = new Board(this, boardOptions);
+	theSeeker = new Seeker(this, seekerOptions);
 	initialized = true;
 }

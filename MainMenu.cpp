@@ -18,7 +18,10 @@
 using namespace std;
 
 //TODO add error handling
-MainMenu::MainMenu() : state(START), splashText("splash.txt") {
+MainMenu::MainMenu(GameManager* gameManager) : gameMgr(gameManager), 
+												gameMenu(gameManager),
+												optionsMenu(gameManager),
+												splashText("splash.txt") {
 }
 
 bool MainMenu::call() {
@@ -26,10 +29,10 @@ bool MainMenu::call() {
 	state = START;
 	
 	while (!quit) {
-		getAndExecuteCommand();
+		quit = getAndExecuteCommand();
 	}
 	displayExitScreen();
-	return true;
+	return quit;
 }
 
 void MainMenu::displayExitScreen() {
@@ -54,8 +57,9 @@ void MainMenu::display() const {
 
 bool MainMenu::getAndExecuteCommand() {
 	bool quit = false;
-	bool done = false;
-	while(!done) {
+	bool again = true;
+	while(again) {
+		again = false;
 		char choice = 0;
 		//display the menu options
 		display();
@@ -74,12 +78,11 @@ bool MainMenu::getAndExecuteCommand() {
 				quit = optionsMenu.call();
 				break;
 			case 'Q':
-				done = true;
 				quit = true;
 				break;
 			default:
 				cout << "'" << choice << "' is not a valid command in the main menu..." << endl;
-				//done remains false
+				again = true;
 		}
 	}
 	return quit;

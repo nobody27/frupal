@@ -17,9 +17,10 @@
 class GameMenu {
 public:
 	//constructor
-	GameMenu::GameMenu();
+	GameMenu::GameMenu(GameManager* gameManager);
 	
 	//call and enter the menu
+	//return true for a quick quit
 	bool call();	
 
 private:
@@ -27,7 +28,21 @@ private:
 	void display() const;
 
 	//execute a main menu command
+	//current implementation is directly in the cpp file
+	//TODO consider greating an enum with commands to place in this header file
+	//for now try to keep this comment up to date:
+	// I - move north
+	// J - move west
+	// K - move south
+	// L - move east
+	// Q - go back to main menu
+	// E - exit (quit quit)
 	void getAndExecuteCommand();
+
+	GameManager* gameMgr;
+
+	//option to quickly quit the game instead of just returning to MainMenu
+	bool quit;
 
 	//nested menu for playing the game
 	//TODO do we need any configuration options for the menu?

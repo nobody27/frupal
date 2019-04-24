@@ -22,7 +22,7 @@
 class MainMenu {
 public:
 	//constructor
-	MainMenu::MainMenu();
+	MainMenu::MainMenu(GameManager* gameManager);
 	//when we support an input argument of input/output streams we will need a destructor	
 	//call and enter the menu
 	bool call();	
@@ -36,9 +36,9 @@ private:
 
 	//display a nice exit message
 	void displayExitScreen();
-
-	//string for storing the splash screen text
-	fstream splashText;
+	
+	//pointer to game manager
+	GameManager* gameMgr;
 
 	//nested menu for playing the game
 	//TODO do we need any configuration options for the menu?
@@ -47,6 +47,9 @@ private:
 	//nested menu for setting options
 	//TODO do we need any configuration options for the menu?
 	OptionsMenu optionsMenu;
+
+	//string for storing the splash screen text
+	fstream splashText;
 };
 
 #endif // MAIN_MENU_H
