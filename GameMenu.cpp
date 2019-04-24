@@ -16,11 +16,11 @@
 
 using namespace std;
 
-MainMenu::MainMenu() : state(START) {
+GameMenu::GameMenu() : state(START) {
 	//sub-menu default constructors should be enough
 }
 
-bool MainMenu::call() {
+bool GameMenu::call() {
 	bool retVal = false;
 	state = START;
 	
@@ -35,7 +35,7 @@ bool MainMenu::call() {
 	return retVal;
 }
 
-void MainMenu::display() const {
+void GameMenu::display() const {
 	//print the options
 	cout << "Welcome to Frupal Island!" << endl;
 	cout << "Make Your Choice: " << endl;
@@ -45,7 +45,7 @@ void MainMenu::display() const {
 	//TODO load, save
 }
 
-void MainMenu::getAndExecuteCommand() {
+void GameMenu::getAndExecuteCommand() {
 	bool commandExecuted = false;
 	
 	while(!commandExecuted) {
