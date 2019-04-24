@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <unordered_map>
+#include "GameManager.h"
 #include "seeker.h"
 
 using namespace std;
@@ -56,8 +57,10 @@ class Tile
 ////options for configuring the board////
 class BoardOptions {
 public:
-	BoardOptions();
+	BoardOptions(GameManager* gameManager);
 	int size;
+private:
+	GameMAnager* gameMgr;
 };
 
 
@@ -67,7 +70,7 @@ class Board
 {
 	public:
 		//Board(); //constructor - this default creates a 10x10 board. Calls Board(10)
-		Board(int size=10); //constructor - argument from user sizeBoardxsizeBoard
+		Board(GameManager* gameManager, BoardOptions& options); //constructor - argument from user sizeBoardxsizeBoard
 		~Board();
 		void display() const;
     void displayIsland(int size) const;
@@ -80,6 +83,7 @@ class Board
     
 
 	private:
+		GameManager* gameMgr;
 		int boardSize;
 		Tile*** boardArray;
 		unordered_map<string, Terrain*> terrainMap;

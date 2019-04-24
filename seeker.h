@@ -41,9 +41,9 @@ class Tool {
     int quantity;
 };
 
-class SeekerConfigurations {
+class SeekerOptions {
 public:
-	SeekerConfigurations()
+	SeekerOptions()
 	Tile* theLocation;
 	int theEnergy;
 	int themoney;
@@ -55,12 +55,11 @@ class Seeker
 {
   public:
     //constructor
-    Seeker();
-    Seeker(Tile* theLocation, int theEnergy, int theMoney, vector<Tool> theInventory);
+    Seeker(GameManager* gameManager, const SeekerOptions& seekerOptions);
    
     //movement functions
     Tile* getLocation() const;
-    bool setLocation(int xVaule, int yValue);
+    bool setLocation(int xValue, int yValue);
     void displayLocation();
     void display(); 
     void look/*direction*/(); //TODO set enum for North, South, East, West
@@ -77,6 +76,9 @@ class Seeker
     int energy;
     int money;
     vector<Tool> inventory;
+  private:
+	GameManager* gameMgr;
+	Board* theIsland;
 };
  
 #endif

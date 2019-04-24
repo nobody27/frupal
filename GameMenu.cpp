@@ -37,6 +37,8 @@ bool GameMenu::call() {
 void GameMenu::display() const {
 	//print the options
 	system("clear");
+	gameMgr->theIsland->displayIsland();
+	gameMgr->theSeeker->display();
 	//TODO display the board and your locations
 	cout << "Make Your Choice: " << endl;
 	cout << setw(15) << left << "(I) move North" << endl;
@@ -84,6 +86,11 @@ bool GameMenu::getAndExecuteCommand() {
 			default:
 				cout << "'" << choice << "' is not a valid command in the game menu..." << endl;
 				again = true;
+		}
+		if(gameMgr->theSeeker->energy <= 0) {
+			gameMgr->theSeeker->display();
+			cout << "GAME OVER" << endl;
+			quit = true;
 		}
 	}
 	return done;

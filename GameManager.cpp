@@ -25,7 +25,9 @@
 //constructor
 GameManager::GameManager() : MainMenu(this), 
 							theIsland(nullptr), 
+							boardOptions(this),
 							theSeeker(nullptr), 
+							seekerOptions(this),
 							initialized(false) {
 	//TODO configure at least on terrain or arrange for a default terrain
 }

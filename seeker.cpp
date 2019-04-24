@@ -20,19 +20,24 @@ singleUse(isSingleUse) , price(thePrice) , quantity(theQuantity)
   relevantObstacle = obstacleName;
 }
 
-//default constructor
-Seeker::Seeker() : energy(10) , money(10) , vector<Tool>()
+SeekerOptions::SeekerOptions(GameManager* gameManager) : 
+										gameMgr(gameManager),
+										theLocation(gameManager->theIsland[0][0]),
+										theEnergy(10),
+										theMoney(10)
 {
-  this->theIsland = theIsland;
-  location = theIsland->getLocation(0,0);
 }
 
+
 //constructor with user input
-Seeker::Seeker(Tile* theLocation, int theEnergy, int theMoney, vector<Tool>
-theInventory) : energy(theEnergy) , money(theMoney) , inventory(theInventory)
+Seeker(GameManager* gameManager, const SeekerOptions& options) :
+												location(options.theLocation),
+												energy(options.energy),
+												money(options.money),
+												inventory(options.theInventory),)
+												gameMgr(GameManager),
+												theIsland(GameManager->theIsland)
 {
-	this->theIsland = theIsland;
-	location = theLocation;
 }
 
 void Seeker::applyTool(string relevantObstacle)
@@ -50,25 +55,30 @@ void Seeker::applyTool(string relevantObstacle)
 
 
 void Seeker::display() {
-	theIsland->displayLocation(location);
+	//theIsland->displayLocation(location);
 	cout << endl << endl << "You currently have " << energy << " energy and " << money << " gold pieces." << endl;
 }
 
 //TODO check terrain ahead for each call
-void Seeker::move(int x, int y) {
-	if (x >= theIsland->getSize())
-		cout << endl << "You cannot move east!";
-	else if (y >= theIsland->getSize())
+void Seeker::move(GameManager::direction_t direction) {
+	//TODO we need a better interface
+	int x = theLocation->xValue + (direction == GameManager::EAST) - (direction == GameManager::WEST);
+	int y = theLocation->yValue + (direction == GameManager::NORTH) - (direction == GameManager::SOUTH);
+	
+	if (y >= theIsland->getSize() )
 		cout << endl << "You cannot move north!";
-	else if (x < 0)
-		cout << endl << "You cannot move west!";
-	else if (y < 0)
+	else if (y < 0 )
 		cout << endl << "You cannot move south!";
+	else if (x >= theIsland->getSize() )
+		cout << endl << "You cannot move east!";
+	else if (x < 0 )
+		cout << endl << "You cannot move west!";
 	else
 	{
-		location = theIsland->getLocation(x,y);
+		location = theIsland->setLocation(x,y);
 		energy = energy - 1; //TODO re-implement this based on terrain
 	}
+	//TODO if energy == 0 GAME OVER
 }
 void Seeker::addTool(Tool newTool) {
   

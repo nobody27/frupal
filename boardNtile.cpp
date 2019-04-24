@@ -7,6 +7,7 @@
 
 //constructors destructors and functions of Board Terrain, and Tile classes
 
+#include "GameManager.h"
 #include "seeker.h"
 #include "boardNtile.h"
 #include <vector>
@@ -71,12 +72,14 @@ void Tile::visitTile()
 }
 
 //init by default to size of 10 but allow users to override the default
-BoardOptions::BoardOptions() : size(10) 
+BoardOptions::BoardOptions(GameManager* gameManager) : size(10), gameMgr(gameManager)
 {
 }
 
 
-Board::Board(int size)    //default constructor 
+Board::Board(BameManager* gameManager, const BoardOptions& options) : 
+												gameMgr(gameManager),
+												boardSize(options.size)
 {
 	//init the terrain TODO - repleace with real configuration
 	//for now add a default grassy meadow terrain
@@ -85,12 +88,11 @@ Board::Board(int size)    //default constructor
 	terrainMap[terrainName] = new Terrain(terrainName, terrainShortName);
 	
 	//init the board
-	boardSize = size;
-	boardArray = new Tile**[size];	
-	for(int i=0; i<size; ++i)
+	boardArray = new Tile**[boardSize];	
+	for(int i=0; i<boardSize; ++i)
 	{
-		boardArray[i]= new Tile*[size];
-		for(int j=0; j<size; ++j)
+		boardArray[i]= new Tile*[boardSize];
+		for(int j=0; j<boardSize; ++j)
 		{
 			//perparation for options: if location exists in options
 			//set according to it, otherwise set default
