@@ -8,15 +8,11 @@
 #ifndef BOARD_N_TILE_H
 #define BOARD_N_TILE_H
 
-using namespace std;
 #include <iostream>
-//#include <cctype>
-#include <cstring> //why is this needed?
-//#include <cstdlib>
-#include <string> //this is here for string fields in some classes
 #include <unordered_map>
-#include <vector>
 #include "seeker.h"
+
+using namespace std;
 
 //for now this class is used for type safety not to confuse terrain
 //types with (for example) obstacle types. 
