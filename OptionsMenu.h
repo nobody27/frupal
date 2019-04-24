@@ -9,7 +9,11 @@
 #define OPTIONS_MENU_H
 
 //include local files
-#include "GameManager.h"
+//#include "GameManager.h"
+
+//forward declarations
+class GameManager;
+
 
 //this class contains the necessary methods to interact with the
 //human player. Specifically to request commands
@@ -17,7 +21,7 @@
 class OptionsMenu {
 public:
 	//constructor
-	OptionsMenu::OptionsMenu(GameManager* gameManager);
+	OptionsMenu(GameManager* gameManager);
 	
 	//call and enter the menu
 	//return true for a quick quit
@@ -44,7 +48,7 @@ private:
 
 	//read size_t arg and set the power
 	//TODO range enforsement and error handling
-	bool setSeekerPower();
+	bool setSeekerEnergy();
 
 	//read size_t arg and set the power
 	//TODO range enforsement and error handling

@@ -9,7 +9,7 @@
 #include <iostream>
 
 //include our files
-#include "GameIterface.h"
+#include "GameManager.h"
 
 using namespace std;
 
@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
 	 *	board:				The island of frupal, a matrix of locations with tiles 
 	 *	seeker: 			our hero/heroine
 	 */
-	gameMgr = new GameManager();
+	GameManager* gameMgr = new GameManager();
 
 	////call the main menu////
 	/* 
@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
 	 * note: before quitting we should ask the player if they want to save the configurations
 	 * 		and/or save the game (if the game is not over)
 	 */
-	gameMgr->mainMenu.callMainMenu();	
+	gameMgr->mainMenu->call();	
 
 	////clean up and exit////	
 	delete gameMgr;

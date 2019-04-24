@@ -6,7 +6,7 @@
 /////////////////////////////////////////////////////
 
 //include local headers
-#include "PlayerInterface.h"
+#include "GameManager.h"
 #include "OptionsMenu.h"
 #include "seeker.h"
 #include "boardNtile.h"
@@ -17,7 +17,7 @@
 
 using namespace std;
 
-OptionsMenu::OptionsMenu(GameManager* gameManager) : gameMgr(gameManager) quit(false){
+OptionsMenu::OptionsMenu(GameManager* gameManager) : gameMgr(gameManager), quit(false){
 	//sub-menu default constructors should be enough
 }
 
@@ -87,38 +87,38 @@ bool OptionsMenu::getAndExecuteCommand() {
 
 //TODO create utility method that does the repetative work
 bool OptionsMenu::setBoardSize() {
-	size_t size;
+	size_t size = 0;
 	cout << "Please enter desired board size" << endl;
 	//TODO error handling and check for good range
 	if (!cin >> size) {
 		cout << "invalid size -- aborting command" << endl; 
 		return false; //failure
 	}
-	gameMgr->boardOptions.size=size;
+	gameMgr->boardOptions->size=size;
 	return true; //success
 }
 
-bool OptionsMenu::setSeekerEnergy) {
-	size_t energy;
+bool OptionsMenu::setSeekerEnergy() {
+	size_t energy = 0;
 	cout << "Please enter how much energy the seeker will start with" << endl;
 	//TODO error handling and check for good range
 	if (!cin >> energy) {
 		cout << "invalid energy -- aborting command" << endl; 
 		return false; //failure
 	}
-	gameMgr->seekerOptions.energy=energy;
+	gameMgr->seekerOptions->theEnergy=energy;
 	return true; //success
 }
 
-bool OptionsMenu::setSeekerMoney) {
-	size_t money;
+bool OptionsMenu::setSeekerMoney() {
+	size_t money = 0;
 	cout << "Please enter how much money the seeker will start with" << endl;
 	//TODO error handling and check for good range
 	if (!cin >> money) {
 		cout << "invalid energy -- aborting command" << endl; 
 		return false; //failure
 	}
-	gameMgr->seekerOptions.money=money;
+	gameMgr->seekerOptions->theMoney=money;
 	return true; //success
 }
 

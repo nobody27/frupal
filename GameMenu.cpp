@@ -6,7 +6,7 @@
 /////////////////////////////////////////////////////
 
 //include local headers
-#include "PlayerInterface.h"
+#include "GameManager.h"
 #include "GameMenu.h"
 #include "OptionsMenu.h"
 #include "seeker.h"
@@ -18,7 +18,7 @@
 
 using namespace std;
 
-GameMenu::GameMenu(GameManager* gameManager) : gameMgr(gameManager) quit(false){
+GameMenu::GameMenu(GameManager* gameManager) : gameMgr(gameManager), quit(false){
 	//sub-menu default constructors should be enough
 }
 
@@ -67,16 +67,16 @@ bool GameMenu::getAndExecuteCommand() {
 		//capitalize and check for legal input
 		switch (toupper(choice)) {
 			case 'I':
-				gameMgr->theSeeker->move(GameManager::NORTH);
+				gameMgr->theSeeker->move(Seeker::NORTH);
 				break;
 			case 'J':
-				gameMgr->theSeeker->move(GameManager::WEST);
+				gameMgr->theSeeker->move(Seeker::WEST);
 				break;
 			case 'K':
-				gameMgr->theSeeker->move(GameManager::SOUTH);
+				gameMgr->theSeeker->move(Seeker::SOUTH);
 				break;
 			case 'L':
-				gameMgr->theSeeker->move(GameManager::EAST);
+				gameMgr->theSeeker->move(Seeker::EAST);
 				break;
 			//TODO buy tool, use tool, view board
 			case 'R':

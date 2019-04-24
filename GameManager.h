@@ -14,17 +14,21 @@
 								//TODO in the future we may want to separate 
 								//board and tile to separate files
 #include "seeker.h"				//owned by John
-#include "PlayerInterface.h"	//owned by Elyse
-#include "configurations.h"		//owned by Max
-#include "tools.h"				//owned by John (maybe help from Leior)
-#include "obstacles.h"			//TBD (maybe John or Leior)
+#include "MainMenu.h"			//owned by Elyse
+//#include "configurations.h"		//owned by Max
+//#include "tools.h"				//owned by John (maybe help from Leior)
+//#include "obstacles.h"			//TBD (maybe John or Leior)
 using namespace std;
+
+//forward declarations of classes used by GameManager
+class Board;
+class BoardOptions;
+class Seeker;
+class SeekerOptions;
+class MainMenu;
 
 class GameManager {
 public:
-	//enum for board directions
-	enum direction_t {NORTH, SOUTH, EAST, WEST};
-	
 	//constructor
 	GameManager();
 	//destructor is needed to delete the board seaker, etc.
@@ -47,7 +51,7 @@ public:
 	 *	The configurations menu: load/save configurations file.
 	 *		There may need to be separate files for configurations and game state
 	 */
-	MainMenu mainMenu; //TODO should this be a pointer or a default field?
+	MainMenu* mainMenu; //TODO should this be a pointer or a default field?
 
 	/*
 	 * I think it makes sense to store data structures here, though it is possible
@@ -57,24 +61,24 @@ public:
 
 	//	The board: (need to configure the size and terrain)
 	Board* theIsland;
-	BoardOptions boardOptions;
+	BoardOptions* boardOptions;
 	//TODO do we need tile options?
 
 	//	The seeker: (need to configure the starting energy, money, etc.)
 	Seeker* theSeeker;
-	SeekerOptions seekerOptions;
+	SeekerOptions* seekerOptions;
 
 	//	Terrain:	a list of known terrain types. each tile in the board will
 	// 		point to one of the items in this vector
-	vector<Terrain> terrains;
+//TODO	vector<Terrain> terrains;
 
 	//	Obstacles: Just like terrain, this will include all possible obstacles
 	//		and each tile will point to one of them (or to a null pointer)
-	vector<Obstacle> obstacles;
+//TODO	vector<Obstacle> obstacles;
 
 	//	Tools: just like obstacles, but in addition to each tile, the seaker will 
 	//		also have a set (or vector, or map) of tools they are carrying
-	vector<Tool> tools;
+//TODO	vector<Tool> tools;
 	
 	//indicate if we have initialized the game (board, seeker, etc.)
 	//init to false

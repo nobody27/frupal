@@ -9,12 +9,16 @@
 #define MAIN_MENU_H
 
 //include local files
-#include "GameManager.h"
+//#include "GameManager.h"
 #include "GameMenu.h"
 #include "OptionsMenu.h"
 
 //include libraries
 #include <fstream> //TODO is this needed?
+
+//forward declarations
+class GameManager;
+
 
 //this class contains the necessary methods to interact with the
 //human player. Specifically to request commands
@@ -22,7 +26,7 @@
 class MainMenu {
 public:
 	//constructor
-	MainMenu::MainMenu(GameManager* gameManager);
+	MainMenu(GameManager* gameManager);
 	//when we support an input argument of input/output streams we will need a destructor	
 	//call and enter the menu
 	bool call();	
@@ -49,7 +53,7 @@ private:
 	OptionsMenu optionsMenu;
 
 	//string for storing the splash screen text
-	fstream splashText;
+	ifstream splashText;
 };
 
 #endif // MAIN_MENU_H

@@ -77,7 +77,7 @@ BoardOptions::BoardOptions(GameManager* gameManager) : size(10), gameMgr(gameMan
 }
 
 
-Board::Board(BameManager* gameManager, const BoardOptions& options) : 
+Board::Board(GameManager* gameManager, const BoardOptions& options) : 
 												gameMgr(gameManager),
 												boardSize(options.size)
 {
@@ -125,7 +125,7 @@ void Board::display() const
 	}
 }
 
-void Board::displayIsland(int size) const
+void Board::displayIsland() const
 {
 				cout<< "Current island display: " <<endl<<endl;
 				cout<< "key:  top left space is terrain type: "<<endl;
@@ -136,25 +136,25 @@ void Board::displayIsland(int size) const
 				cout << "could hold info about, obstacles, or ?" <<endl;
 				//TODO note to team - spaces could hold info about tile, (obstacles, tools, food etc) 
 
-				for(int j=(size-1); j>=0; --j)
+				for(int j=(boardSize-1); j>=0; --j)
 				{
-								displayRow(j, size);
+								displayRow(j);
 				}
 }
 
-void Board::displayRow(int rowNumber, int size) const
+void Board::displayRow(int rowNumber) const
 {
 				cout << endl;
 				cout << "		"; //left margin
 				int j=rowNumber;
-				for(int i=0; i<size; ++i)
+				for(int i=0; i<boardSize; ++i)
 				{ 
 								boardArray[i][j]->printIslandTile();
 								cout << "  "; //space between tiles
 				}
 				cout << endl;
 				cout << "		";//left margin
-				for(int i=0; i<size; ++i)
+				for(int i=0; i<boardSize; ++i)
 				{
 								cout << "XXX";
 								cout << "  ";
@@ -190,3 +190,15 @@ void Board::addResource()
  //       resources.push_back(newTool);  
         return;
 }
+
+Tile* Board::getLocation(int x, int y) const {
+	if(x<0 || y<0 || x>=boardSize || y>=boardSize) {
+		assert(false);
+		return nullptr;
+	}
+	return boardArray[x][y];
+}
+
+
+
+

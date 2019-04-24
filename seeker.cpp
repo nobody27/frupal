@@ -1,11 +1,14 @@
-#include <string>
 #include "seeker.h"
+#include "GameManager.h"
+#include "boardNtile.h"
+
+#include <iostream>
 
 using namespace std;
 
 //"default" constructor, only name and relevant obstacle provided
 Tool::Tool(string theName, string obstacleName) : energySaved(1) ,
-singleUse(TRUE) , price(1) , quantity(1)
+singleUse(true) , price(1) , quantity(1)
 {
   name = theName;
   relevantObstacle = obstacleName; 
@@ -21,27 +24,29 @@ singleUse(isSingleUse) , price(thePrice) , quantity(theQuantity)
 }
 
 SeekerOptions::SeekerOptions(GameManager* gameManager) : 
-										gameMgr(gameManager),
-										theLocation(gameManager->theIsland[0][0]),
+										x(0),
+										y(0),
 										theEnergy(10),
-										theMoney(10)
+										theMoney(10),
+										gameMgr(gameManager)
 {
 }
 
 
 //constructor with user input
-Seeker(GameManager* gameManager, const SeekerOptions& options) :
-												location(options.theLocation),
-												energy(options.energy),
-												money(options.money),
-												inventory(options.theInventory),)
-												gameMgr(GameManager),
-												theIsland(GameManager->theIsland)
+Seeker::Seeker(GameManager* gameManager, const SeekerOptions& options) :
+												location(nullptr),
+												energy(options.theEnergy),
+												money(options.theMoney),
+												inventory(options.theInventory),
+												gameMgr(gameManager),
+												theIsland(gameManager->theIsland)
 {
+	location = theIsland->getLocation(options.x, options.y);
 }
 
-void Seeker::applyTool(string relevantObstacle)
-{
+//void Seeker::useTool(string relevantObstacle)
+//{
  //check if seeker tile obstacle == relevant obstacle 
 
     //remove obstacle from tile
@@ -50,8 +55,8 @@ void Seeker::applyTool(string relevantObstacle)
 
   //print doesnt work message
   
-  return;
-}
+//  return;
+//}
 
 
 void Seeker::display() {
@@ -60,22 +65,22 @@ void Seeker::display() {
 }
 
 //TODO check terrain ahead for each call
-void Seeker::move(GameManager::direction_t direction) {
+void Seeker::move(direction_t direction) {
 	//TODO we need a better interface
-	int x = theLocation->xValue + (direction == GameManager::EAST) - (direction == GameManager::WEST);
-	int y = theLocation->yValue + (direction == GameManager::NORTH) - (direction == GameManager::SOUTH);
+	int x = getLocation()->xValue + (direction == EAST) - (direction == WEST);
+	int y = getLocation()->yValue + (direction == NORTH) - (direction == SOUTH);
 	
-	if (y >= theIsland->getSize() )
+	if (y >= theIsland->size() )
 		cout << endl << "You cannot move north!";
 	else if (y < 0 )
 		cout << endl << "You cannot move south!";
-	else if (x >= theIsland->getSize() )
+	else if (x >= theIsland->size() )
 		cout << endl << "You cannot move east!";
 	else if (x < 0 )
 		cout << endl << "You cannot move west!";
 	else
 	{
-		location = theIsland->setLocation(x,y);
+		location = theIsland->getLocation(x,y);
 		energy = energy - 1; //TODO re-implement this based on terrain
 	}
 	//TODO if energy == 0 GAME OVER
@@ -86,10 +91,6 @@ void Seeker::addTool(Tool newTool) {
   inventory.push_back(newTool);  
 
 }
-void Seeker::useTool() {
-
-}
-
 
 
 

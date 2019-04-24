@@ -6,6 +6,7 @@
 /////////////////////////////////////////////////////
 
 //include local headers
+#include "GameManager.h"
 #include "MainMenu.h"
 #include "GameMenu.h"
 #include "OptionsMenu.h"
@@ -21,12 +22,12 @@ using namespace std;
 MainMenu::MainMenu(GameManager* gameManager) : gameMgr(gameManager), 
 												gameMenu(gameManager),
 												optionsMenu(gameManager),
-												splashText("splash.txt") {
+												splashText("splash.txt") 
+{
 }
 
 bool MainMenu::call() {
 	bool quit = false;
-	state = START;
 	
 	while (!quit) {
 		quit = getAndExecuteCommand();
@@ -37,22 +38,22 @@ bool MainMenu::call() {
 
 void MainMenu::displayExitScreen() {
 	system("clear");
-	cout << splashText << "\n\n\n\n\n";
+	cout << splashText.rdbuf() << "\n\n\n\n\n";
 	cout << "Thank you for playing Frupal Island!" << endl;
-	cout << "Please leave a rating in your app store. << endl;
+	cout << "Please leave a rating in your app store." << endl;
 }
 
 void MainMenu::display() const {
 	//prepare the screen
 	system("clear");
-	cout << splashText << "\n\n\n\n\n";
+	cout << splashText.rdbuf() << "\n\n\n\n\n";
 	cout << "Welcome to Frupal Island!" << endl;
 	//print the options
 	cout << "Make Your Choice: " << endl;
 	cout << setw(15) << left << "(P)lay" << "Play the game. If no options have been configured use a randomized map and default character" << endl;
-	cout << setw(15) << left <<  "(O)ptions" << "Configuration options" << endl;
+	cout << setw(15) << left << "(O)ptions" << "Configuration options" << endl;
 	cout << setw(15) << left << "(Q)uit" << endl;
-	cout << "\n\n\n\";
+	cout << "\n\n\n";
 }
 
 bool MainMenu::getAndExecuteCommand() {
@@ -70,7 +71,7 @@ bool MainMenu::getAndExecuteCommand() {
 			case 'P':
 				//before playing we must make sure everything is initialized
 				if(!gameMgr->initialized) {
-					gameMgr->initialize();
+					gameMgr->initializeGame();
 				}
 				quit = gameMenu.call();
 				break;
