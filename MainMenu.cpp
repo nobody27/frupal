@@ -58,8 +58,8 @@ void MainMenu::getAndExecuteCommand() {
 		switch (toupper(choice)) {
 			case 'P':
 				//before playing we must make sure everything is initialized
-				if(!gameIF->initialized) {
-					gameIF->initialize();
+				if(!gameMgr->initialized) {
+					gameMgr->initialize();
 				}
 				commandExecuted = gameMenu.call();
 				break;

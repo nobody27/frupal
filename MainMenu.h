@@ -9,7 +9,7 @@
 #define MAIN_MENU_H
 
 //include local files
-#include "GameInterface.h"
+#include "GameManager.h"
 #include "GameMenu.h"
 #include "OptionsMenu.h"
 

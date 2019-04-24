@@ -20,15 +20,15 @@
 #include "obstacles.h"			//TBD (maybe John or Leior)
 using namespace std;
 
-class GameInterface {
+class GameManager {
 public:
 	//enum for board directions
 	enum direction_t {NORTH, SOUTH, EAST, WEST};
 	
 	//constructor
-	GameInterface();
+	GameManager();
 	//destructor is needed to delete the board seaker, etc.
-	~GameInterface();
+	~GameManager();
 
 	//methods for displaying constant printout
 	void displayStartupScreen() const;

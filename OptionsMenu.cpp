@@ -91,7 +91,7 @@ bool OptionsMenu::setBoardSize() {
 	}
 	
 	//success
-	gameIF->boardOptions.size = size;
+	gameMgr->boardOptions.size = size;
 	return true;
 }
 

@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
 	 *	board:				The island of frupal, a matrix of locations with tiles 
 	 *	seeker: 			our hero/heroine
 	 */
-	gameIF = new GameInterface();
+	gameMgr = new GameManager();
 
 	////call the main menu////
 	/* 
@@ -39,12 +39,12 @@ int main(int argc, char* argv[]) {
 	 * note: before quitting we should ask the player if they want to save the configurations
 	 * 		and/or save the game (if the game is not over)
 	 */
-	gameIF->displayStartupScreen();
-	gameIF->mainMenu.callMainMenu();	
+	gameMgr->displayStartupScreen();
+	gameMgr->mainMenu.callMainMenu();	
 
 	////clean up and exit////	
-	GameInterface->displayExitScreen();
-	delete gameIF;
+	GameManager->displayExitScreen();
+	delete gameMgr;
 	return 0;
 }
 
