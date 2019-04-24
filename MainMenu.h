@@ -32,7 +32,7 @@ private:
 	void display() const;
 
 	//execute a main menu command
-	void getAndExecuteCommand();
+	bool getAndExecuteCommand();
 
 	//display a nice exit message
 	void displayExitScreen();

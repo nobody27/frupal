@@ -36,12 +36,17 @@ bool GameMenu::call() {
 
 void GameMenu::display() const {
 	//print the options
-	cout << "Welcome to Frupal Island!" << endl;
+	system("clear");
+	//TODO display the board and your locations
 	cout << "Make Your Choice: " << endl;
-	cout << setw(15) << left << "(P)lay" << "Play the game. If no options have been configured use a randomized map and default character" << endl;
-	cout << setw(15) << left <<  "(O)ptions" << "Configuration options" << endl;
-	cout << setw(15) << left << "(Q)uit" << endl;
-	//TODO load, save
+	cout << setw(15) << left << "(I) move North" << endl;
+	cout << setw(15) << left << "(J) move West" << endl;
+	cout << setw(15) << left << "(K) move South" << endl;
+	cout << setw(15) << left << "(L) move East" << endl;
+	cout << setw(15) << left << "(R)eturn to the Main Menu" << endl;
+	cout << setw(15) << left << "(Q)uit the program" << endl;
+	cout << "\n\n\n";
+	//TODO buy tool, use tool
 }
 
 bool GameMenu::getAndExecuteCommand() {
@@ -70,10 +75,10 @@ bool GameMenu::getAndExecuteCommand() {
 				gameMgr->theSeeker->move(GameManager::EAST);
 				break;
 			//TODO buy tool, use tool, view board
-			case 'Q':
+			case 'R':
 				done = true;
 				break;
-			case 'E':
+			case 'Q':
 				//exit - quick quit 
 				quit = true;
 			default:

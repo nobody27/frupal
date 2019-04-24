@@ -52,7 +52,7 @@ void MainMenu::display() const {
 	cout << setw(15) << left << "(P)lay" << "Play the game. If no options have been configured use a randomized map and default character" << endl;
 	cout << setw(15) << left <<  "(O)ptions" << "Configuration options" << endl;
 	cout << setw(15) << left << "(Q)uit" << endl;
-	cout << "\n\n\";
+	cout << "\n\n\n\";
 }
 
 bool MainMenu::getAndExecuteCommand() {

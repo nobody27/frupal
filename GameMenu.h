@@ -35,20 +35,15 @@ private:
 	// J - move west
 	// K - move south
 	// L - move east
-	// Q - go back to main menu
-	// E - exit (quit quit)
-	void getAndExecuteCommand();
+	// R - return to main menu
+	// Q - exit (quit quit)
+	bool getAndExecuteCommand();
 
 	GameManager* gameMgr;
 
 	//option to quickly quit the game instead of just returning to MainMenu
 	bool quit;
 
-	//nested menu for playing the game
-	//TODO do we need any configuration options for the menu?
-
-	//nested menu for setting options
-	//TODO do we need any configuration options for the menu?
 };
 
-#endif // PLAYER_INTERFACE_H
+#endif // GAME_MENU_H

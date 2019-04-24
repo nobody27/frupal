@@ -6,9 +6,9 @@
 /////////////////////////////////////////////////////
 
 //include local headers
+#include "PlayerInterface.h"
 #include "OptionsMenu.h"
-#include "BoardOptionsMenu.h"
-//TODO #include "SeekerOptionsMenu.h"
+#include "OptionsMenu.h"
 
 //include libraries
 #include <iostream>
@@ -16,38 +16,43 @@
 
 using namespace std;
 
-OptionsMenu::OptionsMenu() : state(START) {
+OptionsMenu::OptionsMenu(GameManager* gameManager) : gameMgr(gameManager) quit(false){
 	//sub-menu default constructors should be enough
 }
 
+//we might be shooting ourselves in the foot implementing a non-essential feature
+//but what the heck, why not :)
+//done - indicates that we are done with this menu and we should return to the main menu
+//quit - indicates that we are performing a quick quit to exit the game immediately
 bool OptionsMenu::call() {
-	bool retVal = false;
-	state = START;
-	
-	while (state != QUIT) {
-		getAndExecuteCommand();
+	bool done = false;
+	quit = false;
+
+	while (!done && !quit) {
+		done = getAndExecuteCommand();
 	}
-	//exit game -- TODO if not saved, ask to save first
-	if(state == QUIT) {
-		//TODO - is there any other option?
-		retVal = true;
-	}
-	return retVal;
+	return quit;
 }
 
 void OptionsMenu::display() const {
 	//print the options
+	system("clear");
 	cout << "Make Your Choice: " << endl;
-	cout << setw(15) << left << "(B)oard size" << endl
-	//cout << setw(15) << left << "(S)eeker Options" << endl;
-	cout << setw(15) << left << "(Q)uit" << endl;
+	cout << setw(15) << left << "(S) set board size" << endl;
+	cout << setw(15) << left << "(E) set seeker's initial energy level" << endl;
+	cout << setw(15) << left << "(M) set seeker's initial money" << endl;
+	cout << setw(15) << left << "(R)eturn to the Main Menu" << endl;
+	cout << setw(15) << left << "(Q)uit the program" << endl;
+	cout << "\n\n\n";
 	//TODO load, save
 }
 
-void OptionsMenu::getAndExecuteCommand() {
-	bool commandExecuted = false;
+bool OptionsMenu::getAndExecuteCommand() {
+	bool done = false;
+	bool again = true;
 	
-	while(!commandExecuted) {
+	while(again) {
+		again = false;
 		char choice = 0;
 		//display the menu options
 		display();
@@ -55,51 +60,66 @@ void OptionsMenu::getAndExecuteCommand() {
 		cin >> choice;
 		//capitalize and check for legal input
 		switch (toupper(choice)) {
-			case 'B':
-				commandExecuted = setBoardSize();
+			case 'S':
+				again = !setBoardSize(); //try again if command fails
 				break;
-			//TODO 
-			//case 'S':
-			//	commandExecuted = seekerOptionsMenu.call();
-			//	break;
+			case 'E':
+				again = !setSeekerEnergy(); //try again if command fails
+				break;
+			case 'M':
+				again = !setSeekerMoney(); //try again if command fails
+				break;
+			//TODO other options
+			case 'R':
+				done = true;
+				break;
 			case 'Q':
-				state = QUIT;
-				commandExecuted = true;
-				break;
+				//exit - quick quit 
+				quit = true;
 			default:
-				cout << "'" << choice << "' is not a valid command in the options menu..." << endl;
-				//commandExecuted remains false
+				cout << "'" << choice << "' is not a valid command in the game menu..." << endl;
+				again = true;
 		}
 	}
+	return done;
 }
 
+//TODO create utility method that does the repetative work
 bool OptionsMenu::setBoardSize() {
-	int size;
-	int min = 2;
-	int max = 20;
-				
-	cout << "Please enter Board size [" << min << ".." << max << "]" << endl;
-	cin >> size;
-	if cin.fail() {
-		cout << "ERROR: bad input..." << endl;
-		cin.clear();
-		return false;
+	size_t size;
+	cout << "Please enter desired board size" << endl;
+	//TODO error handling and check for good range
+	if (!cin >> size) {
+		cout << "invalid size -- aborting command" << endl; 
+		return false; //failure
 	}
-	if(size < min || size > max) {
-		cout << "ERROR: out of range." << endl;
-		return false;
-	}
-	
-	//success
-	gameMgr->boardOptions.size = size;
-	return true;
+	gameMgr->boardOptions.size=size;
+	return true; //success
 }
 
+bool OptionsMenu::setSeekerEnergy) {
+	size_t energy;
+	cout << "Please enter how much energy the seeker will start with" << endl;
+	//TODO error handling and check for good range
+	if (!cin >> energy) {
+		cout << "invalid energy -- aborting command" << endl; 
+		return false; //failure
+	}
+	gameMgr->seekerOptions.energy=energy;
+	return true; //success
+}
 
-
-
-
-
+bool OptionsMenu::setSeekerMoney) {
+	size_t money;
+	cout << "Please enter how much money the seeker will start with" << endl;
+	//TODO error handling and check for good range
+	if (!cin >> money) {
+		cout << "invalid energy -- aborting command" << endl; 
+		return false; //failure
+	}
+	gameMgr->seekerOptions.money=money;
+	return true; //success
+}
 
 
 
