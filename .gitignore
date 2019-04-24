@@ -1,5 +1,6 @@
 *.o
 .*.swp
+.*.swo
 frupal_main
 Session.vim
 .nfs*
