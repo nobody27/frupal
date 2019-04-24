@@ -39,11 +39,9 @@ int main(int argc, char* argv[]) {
 	 * note: before quitting we should ask the player if they want to save the configurations
 	 * 		and/or save the game (if the game is not over)
 	 */
-	gameMgr->displayStartupScreen();
 	gameMgr->mainMenu.callMainMenu();	
 
 	////clean up and exit////	
-	GameManager->displayExitScreen();
 	delete gameMgr;
 	return 0;
 }

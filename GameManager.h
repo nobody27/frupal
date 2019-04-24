@@ -5,7 +5,7 @@
 // The Island of Frupal
 /////////////////////////////////////////////////////
 
-//GameInterFace.h -- header file for the global game I/F
+//GameInterFace.h -- header file for the global game manager
 
 #ifndef GAME_INTERFACE_H
 #define GAME_INTERFACE_H
@@ -29,10 +29,6 @@ public:
 	GameManager();
 	//destructor is needed to delete the board seaker, etc.
 	~GameManager();
-
-	//methods for displaying constant printout
-	void displayStartupScreen() const;
-	void displayExitScreen() const;
 
 	//initialize everything needed in order to play the game
 	//called by main menu before starting the game
@@ -62,9 +58,11 @@ public:
 	//	The board: (need to configure the size and terrain)
 	Board* theIsland;
 	BoardOptions boardOptions;
+	//TODO do we need tile options?
 
 	//	The seeker: (need to configure the starting energy, money, etc.)
 	Seeker* theSeeker;
+	SeekerOptions seekerOptions;
 
 	//	Terrain:	a list of known terrain types. each tile in the board will
 	// 		point to one of the items in this vector

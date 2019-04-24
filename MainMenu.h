@@ -13,26 +13,32 @@
 #include "GameMenu.h"
 #include "OptionsMenu.h"
 
+//include libraries
+#include <fstream> //TODO is this needed?
+
 //this class contains the necessary methods to interact with the
 //human player. Specifically to request commands
 //nested menus will be fields nested inside this class
 class MainMenu {
 public:
-	enum state_t {START, QUIT};
-	
 	//constructor
 	MainMenu::MainMenu();
-	
+	//when we support an input argument of input/output streams we will need a destructor	
 	//call and enter the menu
 	bool call();	
+
+private:
 	//display the command options
 	void display() const;
+
 	//execute a main menu command
 	void getAndExecuteCommand();
 
-private:
-	//the state of the system. currently this tells whether or not it is time to quit
-	state_t state;
+	//display a nice exit message
+	void displayExitScreen();
+
+	//string for storing the splash screen text
+	fstream splashText;
 
 	//nested menu for playing the game
 	//TODO do we need any configuration options for the menu?

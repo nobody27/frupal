@@ -12,43 +12,50 @@
 
 //include libraries
 #include <iostream>
+#include <fstream>
 #include <iomanip>
 
 using namespace std;
 
-MainMenu::MainMenu() : state(START) {
-	//sub-menu default constructors should be enough
+//TODO add error handling
+MainMenu::MainMenu() : state(START), splashText("splash.txt") {
 }
 
 bool MainMenu::call() {
-	bool retVal = false;
+	bool quit = false;
 	state = START;
 	
-	while (state != QUIT) {
+	while (!quit) {
 		getAndExecuteCommand();
 	}
-	//exit game -- TODO if not saved, ask to save first
-	if(state == QUIT) {
-		//TODO - is there any other option?
-		retVal = true;
-	}
-	return retVal;
+	displayExitScreen();
+	return true;
+}
+
+void MainMenu::displayExitScreen() {
+	system("clear");
+	cout << splashText << "\n\n\n\n\n";
+	cout << "Thank you for playing Frupal Island!" << endl;
+	cout << "Please leave a rating in your app store. << endl;
 }
 
 void MainMenu::display() const {
-	//print the options
+	//prepare the screen
+	system("clear");
+	cout << splashText << "\n\n\n\n\n";
 	cout << "Welcome to Frupal Island!" << endl;
+	//print the options
 	cout << "Make Your Choice: " << endl;
 	cout << setw(15) << left << "(P)lay" << "Play the game. If no options have been configured use a randomized map and default character" << endl;
 	cout << setw(15) << left <<  "(O)ptions" << "Configuration options" << endl;
 	cout << setw(15) << left << "(Q)uit" << endl;
-	//TODO load, save
+	cout << "\n\n\";
 }
 
-void MainMenu::getAndExecuteCommand() {
-	bool commandExecuted = false;
-	
-	while(!commandExecuted) {
+bool MainMenu::getAndExecuteCommand() {
+	bool quit = false;
+	bool done = false;
+	while(!done) {
 		char choice = 0;
 		//display the menu options
 		display();
@@ -61,18 +68,19 @@ void MainMenu::getAndExecuteCommand() {
 				if(!gameMgr->initialized) {
 					gameMgr->initialize();
 				}
-				commandExecuted = gameMenu.call();
+				quit = gameMenu.call();
 				break;
 			case 'O':
-				commandExecuted = optionsMenu.call();
+				quit = optionsMenu.call();
 				break;
 			case 'Q':
-				state = QUIT;
-				commandExecuted = true;
+				done = true;
+				quit = true;
 				break;
 			default:
 				cout << "'" << choice << "' is not a valid command in the main menu..." << endl;
-				//commandExecuted remains false
+				//done remains false
 		}
 	}
+	return quit;
 }
