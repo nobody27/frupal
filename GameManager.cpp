@@ -20,7 +20,7 @@
 #include "obstacles.h"			//TBD (maybe John or Leior)
 
 #include <assert.h>
-
+#include <iostream>
 
 //constructor
 GameManager::GameManager() : MainMenu(this), 
@@ -43,4 +43,14 @@ GameManager::initializeGame() {
 	theIsland = new Board(this, boardOptions);
 	theSeeker = new Seeker(this, seekerOptions);
 	initialized = true;
+	//print introduction
+	system("clear");
+    cout << endl << endl << "*****************************" << endl;
+    cout << "You have landed on Frupal Island!" << endl;
+    cout << "As you explore, you will uncover treasure as well as tools to help you on your quest." << endl;
+    cout << "Use caution! Moving around the island consumes energy. When you run out of energy, the game will end.";
+    cout << endl << "*****************************" << endl;
+	cout << "\n\n\n";
+	cout << "press ENTER to continue"";
+	cin.get();
 }

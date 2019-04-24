@@ -8,7 +8,8 @@
 //include local headers
 #include "PlayerInterface.h"
 #include "OptionsMenu.h"
-#include "OptionsMenu.h"
+#include "seeker.h"
+#include "boardNtile.h"
 
 //include libraries
 #include <iostream>

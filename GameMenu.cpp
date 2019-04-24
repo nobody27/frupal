@@ -9,6 +9,8 @@
 #include "PlayerInterface.h"
 #include "GameMenu.h"
 #include "OptionsMenu.h"
+#include "seeker.h"
+#include "boardNtile.h"
 
 //include libraries
 #include <iostream>
@@ -89,7 +91,8 @@ bool GameMenu::getAndExecuteCommand() {
 		}
 		if(gameMgr->theSeeker->energy <= 0) {
 			gameMgr->theSeeker->display();
-			cout << "GAME OVER" << endl;
+            cout << endl << "You are out of energy!";
+            cout << endl << endl << "GAME OVER" << endl << endl;
 			quit = true;
 		}
 	}
