@@ -65,7 +65,7 @@ class Seeker
 	enum direction_t {NORTH, SOUTH, EAST, WEST};
 	
     //constructor
-    Seeker(GameManager* gameManager, const SeekerOptions& seekerOptions);
+  Seeker(GameManager* gameManager, const SeekerOptions& seekerOptions);
    
     //movement functions
     Tile* getLocation() const {return location;}

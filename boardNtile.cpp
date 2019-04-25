@@ -127,19 +127,21 @@ void Board::display() const
 
 void Board::displayIsland() const
 {
-				cout<< "Current island display: " <<endl<<endl;
-				cout<< "key:  top left space is terrain type: "<<endl;
-				cout << "(G=Grassy Meadow, B=Bog, F=Forrest, X=terrain not yet revealed)" <<endl;
-				cout << "top center space: empty unless Seeker is on it."<<endl;
-				cout << "top right center space: E=Excavation site, until searched" <<endl;
-				cout << "bottom three Xs have no current meaning."<< endl;
-				cout << "could hold info about, obstacles, or ?" <<endl;
-				//TODO note to team - spaces could hold info about tile, (obstacles, tools, food etc) 
 
 				for(int j=(boardSize-1); j>=0; --j)
 				{
 								displayRow(j);
 				}
+				
+				cout << "Key:"<<endl;
+				cout << "	Top left space is terrain type: "<<endl;
+				cout << "		G=Grassy Meadow, B=Bog, F=Forrest, W=Water, X=Unrevealed"<<endl;
+				cout << "	Top center is _ unless seeker is there. SEEKER is '@'." <<endl; 
+				cout << "	Top right is for treasure. E=Excavation site until searched" <<endl;
+				cout << "	Bottom left is for obstacles." <<endl<<endl;
+				//TODO note to team - spaces could hold info about tile, (obstacles, tools, food etc) 
+				// display seeker
+
 }
 
 void Board::displayRow(int rowNumber) const
@@ -156,7 +158,7 @@ void Board::displayRow(int rowNumber) const
 				cout << "		";//left margin
 				for(int i=0; i<boardSize; ++i)
 				{
-								cout << "XXX";
+								cout << "OXX";
 								cout << "  ";
 				}
 				cout <<endl;
