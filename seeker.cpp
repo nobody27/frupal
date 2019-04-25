@@ -81,7 +81,10 @@ void Seeker::move(direction_t direction) {
 	else
 	{
 		location = theIsland->getLocation(x,y);
-		energy = energy - 1; //TODO re-implement this based on terrain
+    
+    theIsland->getLocation(x,y)->visitTile();
+		
+    energy = energy - 1; //TODO re-implement this based on terrain
 	}
 	//TODO if energy == 0 GAME OVER
 }
