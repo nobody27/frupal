@@ -26,8 +26,8 @@ singleUse(isSingleUse) , price(thePrice) , quantity(theQuantity)
 SeekerOptions::SeekerOptions(GameManager* gameManager) : 
 										x(0),
 										y(0),
-										theEnergy(10),
-										theMoney(10),
+										theEnergy(20),
+										theMoney(20),
 										gameMgr(gameManager)
 {
 }
@@ -87,7 +87,7 @@ void Seeker::move(direction_t direction) {
 		
     energy = energy - 1; //TODO re-implement this based on terrain
 	}
-	//TODO if energy == 0 GAME OVER
+
 }
 void Seeker::addTool(Tool newTool) {
   
