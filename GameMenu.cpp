@@ -93,6 +93,9 @@ bool GameMenu::getAndExecuteCommand() {
 				break;
       case 'B':
         cout << "entering shop" << endl;
+        //TODO display tools and available money
+        //TODO command to buy an item
+        break;
       case 'T':
         gameMgr->theSeeker->displayTools();
         break;
