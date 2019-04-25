@@ -10,7 +10,12 @@
 
 #include <iostream>
 #include <unordered_map>
-#include "seeker.h"
+//#include "GameManager.h"
+//#include "seeker.h"
+
+//forward declarations
+class GameManager;
+class seeker; //TODO is this needed?
 
 using namespace std;
 
@@ -43,37 +48,45 @@ class Tile
 		void tileDisplay();
     void printIslandTile();
 		void visitTile();
-
-	private:
 		int xValue;
 		int yValue;
+
+	private:
 		Terrain* terrain;
 		string treasure;
 		bool visited; //has the seeker visited this tile
 		
 };
 
+////options for configuring the board////
+class BoardOptions {
+public:
+	BoardOptions(GameManager* gameManager);
+	int size;
+private:
+	GameManager* gameMgr;
+};
+
+
 //the game has a single board that represents the island of frupal
 //this board is a grid of locations or "tiles"
 class Board 
 {
-	public:
-		//Board(); //constructor - this default creates a 10x10 board. Calls Board(10)
-		Board(int size=10); //constructor - argument from user sizeBoardxsizeBoard
-		~Board();
-		void display() const;
-    void displayIsland(int size) const;
-		void displayRow(int rowNumber, int size) const;
-		void visitAllTiles(); //reveal all for working display for coders
-	  void addResource(); 
-
-    //should this be public?
-    vector<Tool> resources;
-    
-
-	private:
-		int boardSize;
-		Tile*** boardArray;
-		unordered_map<string, Terrain*> terrainMap;
+public:
+	//Board(); //constructor - this default creates a 10x10 board. Calls Board(10)
+	Board(GameManager* gameManager, const BoardOptions& options); //constructor - argument from user sizeBoardxsizeBoard
+	~Board();
+	void display() const;
+    void displayIsland() const;
+	void displayRow(int rowNumber) const;
+	void visitAllTiles(); //reveal all for working display for coders
+	void addResource(); 
+	Tile*  getLocation(int x, int y) const;
+	int size() const {return boardSize;}
+private:
+	GameManager* gameMgr;
+	int boardSize;
+	Tile*** boardArray;
+	unordered_map<string, Terrain*> terrainMap;
 };
 #endif //BOARD_N_TILE_H

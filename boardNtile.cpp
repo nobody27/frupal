@@ -7,6 +7,7 @@
 
 //constructors destructors and functions of Board Terrain, and Tile classes
 
+#include "GameManager.h"
 #include "seeker.h"
 #include "boardNtile.h"
 #include <vector>
@@ -70,8 +71,15 @@ void Tile::visitTile()
 				visited=true;
 }
 
+//init by default to size of 10 but allow users to override the default
+BoardOptions::BoardOptions(GameManager* gameManager) : size(10), gameMgr(gameManager)
+{
+}
 
-Board::Board(int size)    //default constructor 
+
+Board::Board(GameManager* gameManager, const BoardOptions& options) : 
+												gameMgr(gameManager),
+												boardSize(options.size)
 {
 	//init the terrain TODO - repleace with real configuration
 	//for now add a default grassy meadow terrain
@@ -80,13 +88,14 @@ Board::Board(int size)    //default constructor
 	terrainMap[terrainName] = new Terrain(terrainName, terrainShortName);
 	
 	//init the board
-	boardSize = size;
-	boardArray = new Tile**[size];	
-	for(int i=0; i<size; ++i)
+	boardArray = new Tile**[boardSize];	
+	for(int i=0; i<boardSize; ++i)
 	{
-		boardArray[i]= new Tile*[size];
-		for(int j=0; j<size; ++j)
+		boardArray[i]= new Tile*[boardSize];
+		for(int j=0; j<boardSize; ++j)
 		{
+			//perparation for options: if location exists in options
+			//set according to it, otherwise set default
 			boardArray[i][j]=new Tile(i,j, terrainMap["grassy_meadow"]);
 		}
 	}
@@ -116,7 +125,7 @@ void Board::display() const
 	}
 }
 
-void Board::displayIsland(int size) const
+void Board::displayIsland() const
 {
 				cout<< "Current island display: " <<endl<<endl;
 				cout<< "key:  top left space is terrain type: "<<endl;
@@ -127,25 +136,25 @@ void Board::displayIsland(int size) const
 				cout << "could hold info about, obstacles, or ?" <<endl;
 				//TODO note to team - spaces could hold info about tile, (obstacles, tools, food etc) 
 
-				for(int j=(size-1); j>=0; --j)
+				for(int j=(boardSize-1); j>=0; --j)
 				{
-								displayRow(j, size);
+								displayRow(j);
 				}
 }
 
-void Board::displayRow(int rowNumber, int size) const
+void Board::displayRow(int rowNumber) const
 {
 				cout << endl;
 				cout << "		"; //left margin
 				int j=rowNumber;
-				for(int i=0; i<size; ++i)
+				for(int i=0; i<boardSize; ++i)
 				{ 
 								boardArray[i][j]->printIslandTile();
 								cout << "  "; //space between tiles
 				}
 				cout << endl;
 				cout << "		";//left margin
-				for(int i=0; i<size; ++i)
+				for(int i=0; i<boardSize; ++i)
 				{
 								cout << "XXX";
 								cout << "  ";
@@ -181,3 +190,14 @@ void Board::addResource()
  //       resources.push_back(newTool);  
         return;
 }
+
+Tile* Board::getLocation(int x, int y) const {
+	if(x<0 || y<0 || x>=boardSize || y>=boardSize) {
+		assert(false);
+		return nullptr;
+	}
+	return boardArray[x][y];
+}
+
+
+
