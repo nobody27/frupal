@@ -10,6 +10,7 @@
 
 //#include "GameManager.h"
 #include "boardNtile.h"
+#include "resources.h"
 
 //forward declarations
 class GameManager;
@@ -19,33 +20,6 @@ class Tile;
 
 using namespace std;
 
-
-//a class for tools that exist on frupal and that the seeker may take/purchace
-//TODO should this be moved to the board configuration along with the obstacles?
-//the tool can be used on an obstacle (TBD maybe for a list of obstacles in the future)
-//the tool may be a one time use - e.g. a power bar - or multiple use object
-class Tool {
-	public:
-		//constructors
-    Tool(string theName, string obstacleName);
-		Tool(string theName, string obstacleName, int energySaved, bool
-    singleUse, int price, int quantity);
-
-    //TODO add copy constructor for tools for adding and reomving from vectors
-
-		//use the tool
-		//check that it can be used on the relevant obstacle type
-		//if the tool is singleUse make sure to remove it from the seeker
-		void apply(Obstacle* currentObstacle);
-	private:
-		string name;
-		string relevantObstacle;
-    int energySaved;
-		bool singleUse;
-    int price;
-    int quantity;
-};
-
 class SeekerOptions {
 public:
 	SeekerOptions(GameManager* gameManager);
@@ -53,7 +27,7 @@ public:
 	int y;
 	int theEnergy;
 	int theMoney;
-	vector<Tool> theInventory;
+	vector<Tool*> theInventory;
 private:
 	GameManager* gameMgr;
 };
@@ -72,9 +46,10 @@ class Seeker
     bool setLocation(int xValue, int yValue);
     void displayLocation();
     void display(); 
+    void displayTools();
     void move(direction_t direction); //
 
-	void addTool(Tool newTool);
+	void addTool(Tool* newTool);
     //items
     //TODO need access to tools in the event of a single use tool
     //TODO bool useTool();
@@ -85,7 +60,7 @@ class Seeker
     Tile* location;
     int energy;
     int money;
-    vector<Tool> inventory;
+    vector<Tool*> inventory;
   private:
 	GameManager* gameMgr;
 	Board* theIsland;

@@ -16,16 +16,18 @@
 //#include "configurations.h"		//owned by Max
 //#include "tools.h"				//owned by John (maybe help from Leior)
 //#include "obstacles.h"			//TBD (maybe John or Leior)
-
 #include <assert.h>
 #include <iostream>
+#include "resources.h"
 
 //constructor
-GameManager::GameManager() : theIsland(nullptr), theSeeker(nullptr), initialized(false) 
+GameManager::GameManager() : theIsland(nullptr), theSeeker(nullptr),
+theResources(nullptr) ,   initialized(false) 
 {
 	//TODO configure at least on terrain or arrange for a default terrain
 	mainMenu = new MainMenu(this);
 	boardOptions = new BoardOptions(this);
+  resourcesOptions = new ResourcesOptions(this);
 	seekerOptions = new SeekerOptions(this);
 }
 
@@ -36,11 +38,13 @@ GameManager::~GameManager() {
 	delete mainMenu;
 	delete boardOptions;
 	delete seekerOptions;
+ // delete resourcesOptions;
 }
 
 void GameManager::initializeGame() {
 	assert(!initialized);
 	theIsland = new Board(this, *boardOptions);
+  theResources = new Resources(this, *resourcesOptions);
 	theSeeker = new Seeker(this, *seekerOptions);
 	initialized = true;
 	//print introduction

@@ -49,4 +49,29 @@ private:
 
 };
 
+/*class ShopMenu {
+public:
+  //constructor
+  ShopMenu(GameManager* gameManager);
+
+private:
+  //display command options
+  void display() const;
+  //
+*/
 #endif // GAME_MENU_H
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

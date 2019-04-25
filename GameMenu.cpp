@@ -47,6 +47,8 @@ void GameMenu::display() const {
 	cout << setw(15) << left << "(J) move West" << endl;
 	cout << setw(15) << left << "(K) move South" << endl;
 	cout << setw(15) << left << "(L) move East" << endl;
+  cout << setw(15) << left << "(B)uy an item" << endl;
+  cout << setw(15) << left << "(T)ools list" << endl;
 	cout << setw(15) << left << "(R)eturn to the Main Menu" << endl;
 	cout << setw(15) << left << "(Q)uit the program" << endl;
 	cout << "\n\n\n";
@@ -89,6 +91,11 @@ bool GameMenu::getAndExecuteCommand() {
 				done = true;
 				quit = true;
 				break;
+      case 'B':
+        cout << "entering shop" << endl;
+      case 'T':
+        gameMgr->theSeeker->displayTools();
+        break;
 			default:
 				cout << "'" << choice << "' is not a valid command in the game menu..." << endl;
 				again = true;
@@ -102,3 +109,15 @@ bool GameMenu::getAndExecuteCommand() {
 	}
 	return done;
 }
+
+/*bool ShopMenu() {
+ 
+  gameMgr->theSeeker->display();
+	cout << "Make Your Choice: " << endl;
+	gameMgr->
+
+}*/
+
+
+
+

@@ -18,6 +18,8 @@
 //#include "configurations.h"		//owned by Max
 //#include "tools.h"				//owned by John (maybe help from Leior)
 //#include "obstacles.h"			//TBD (maybe John or Leior)
+#include "resources.h"
+
 using namespace std;
 
 //forward declarations of classes used by GameManager
@@ -26,6 +28,8 @@ class BoardOptions;
 class Seeker;
 class SeekerOptions;
 class MainMenu;
+class Resources;
+class ResourcesOptions;
 
 class GameManager {
 public:
@@ -67,6 +71,10 @@ public:
 	//	The seeker: (need to configure the starting energy, money, etc.)
 	Seeker* theSeeker;
 	SeekerOptions* seekerOptions;
+  
+  // The resource repository, need to configure the items at startup
+  Resources* theResources;
+  ResourcesOptions* resourcesOptions;
 
 	//	Terrain:	a list of known terrain types. each tile in the board will
 	// 		point to one of the items in this vector

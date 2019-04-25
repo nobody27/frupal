@@ -1,27 +1,10 @@
 #include "seeker.h"
 #include "GameManager.h"
 #include "boardNtile.h"
-
+#include "resources.h"
 #include <iostream>
 
 using namespace std;
-
-//"default" constructor, only name and relevant obstacle provided
-Tool::Tool(string theName, string obstacleName) : energySaved(1) ,
-singleUse(true) , price(1) , quantity(1)
-{
-  name = theName;
-  relevantObstacle = obstacleName; 
-}
-
-//constructor for when options menu passes in all user selected values for tools
-Tool::Tool(string theName, string obstacleName, int theEnergySaved, bool
-isSingleUse, int thePrice, int theQuantity) : energySaved(theEnergySaved) ,
-singleUse(isSingleUse) , price(thePrice) , quantity(theQuantity)
-{
-  name = theName;
-  relevantObstacle = obstacleName;
-}
 
 SeekerOptions::SeekerOptions(GameManager* gameManager) : 
 										x(0),
@@ -43,26 +26,30 @@ Seeker::Seeker(GameManager* gameManager, const SeekerOptions& options) :
 												theIsland(gameManager->theIsland)
 {
 	location = theIsland->getLocation(options.x, options.y);
+  inventory.push_back(&gameManager->theResources->resources.front());
 }
 
-//void Seeker::useTool(string relevantObstacle)
-//{
- //check if seeker tile obstacle == relevant obstacle 
-
-    //remove obstacle from tile
-
-    //if its single use remove tool from inventory
-
-  //print doesnt work message
-  
-//  return;
-//}
 
 
 
 void Seeker::display() {
 	//theIsland->displayLocation(location);
 	cout << endl << endl << "You currently have " << energy << " energy and " << money << " gold pieces." << endl;
+}
+
+void Seeker::displayTools() {
+  cout << endl << endl << "**TOOLS**" << endl;
+  if (inventory.empty())
+  {
+    cout << "You don't have any tools!" << endl;
+  }
+  else 
+  { 
+    for (auto it = begin(inventory); it != end(inventory); ++it) 
+    {
+      cout << (*it)->name << endl;
+    }
+  }
 }
 
 //TODO check terrain ahead for each call
@@ -89,7 +76,7 @@ void Seeker::move(direction_t direction) {
 	}
 
 }
-void Seeker::addTool(Tool newTool) {
+void Seeker::addTool(Tool* newTool) {
   
   //push tool into inventory
   inventory.push_back(newTool);  
