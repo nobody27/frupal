@@ -38,7 +38,7 @@ bool GameMenu::call() {
 
 void GameMenu::display() const {
 	//print the options
-	system("clear");
+	//system("clear");
 	gameMgr->theIsland->displayIsland();
 	gameMgr->theSeeker->display();
 	//TODO display the board and your locations
@@ -80,11 +80,15 @@ bool GameMenu::getAndExecuteCommand() {
 				break;
 			//TODO buy tool, use tool, view board
 			case 'R':
+				cout << "returning to main menu" << endl;
 				done = true;
 				break;
 			case 'Q':
 				//exit - quick quit 
+				cout << "quitting the game" << endl;
+				done = true;
 				quit = true;
+				break;
 			default:
 				cout << "'" << choice << "' is not a valid command in the game menu..." << endl;
 				again = true;

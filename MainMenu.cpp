@@ -21,9 +21,13 @@ using namespace std;
 //TODO add error handling
 MainMenu::MainMenu(GameManager* gameManager) : gameMgr(gameManager), 
 												gameMenu(gameManager),
-												optionsMenu(gameManager),
-												splashText("splash.txt") 
+												optionsMenu(gameManager)
 {
+	ifstream splashBuf("splash.txt");
+	string tmp;
+	while(getline(splashBuf,tmp)) {
+		splashText += tmp + "\n";
+	}
 }
 
 bool MainMenu::call() {
@@ -38,15 +42,15 @@ bool MainMenu::call() {
 
 void MainMenu::displayExitScreen() {
 	system("clear");
-	cout << splashText.rdbuf() << "\n\n\n\n\n";
+	cout << splashText << "\n\n\n\n\n";
 	cout << "Thank you for playing Frupal Island!" << endl;
 	cout << "Please leave a rating in your app store." << endl;
 }
 
 void MainMenu::display() const {
 	//prepare the screen
-	system("clear");
-	cout << splashText.rdbuf() << "\n\n\n\n\n";
+	//system("clear");
+	cout << splashText << "\n\n\n\n\n";
 	cout << "Welcome to Frupal Island!" << endl;
 	//print the options
 	cout << "Make Your Choice: " << endl;

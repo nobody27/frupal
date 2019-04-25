@@ -37,7 +37,7 @@ bool OptionsMenu::call() {
 
 void OptionsMenu::display() const {
 	//print the options
-	system("clear");
+	//system("clear");
 	cout << "Make Your Choice: " << endl;
 	cout << setw(15) << left << "(S) set board size" << endl;
 	cout << setw(15) << left << "(E) set seeker's initial energy level" << endl;
@@ -72,11 +72,15 @@ bool OptionsMenu::getAndExecuteCommand() {
 				break;
 			//TODO other options
 			case 'R':
+				cout << "returning to main menu" << endl;
 				done = true;
 				break;
 			case 'Q':
 				//exit - quick quit 
+				cout << "quitting the game" << endl;
+				done = true;
 				quit = true;
+				break;
 			default:
 				cout << "'" << choice << "' is not a valid command in the game menu..." << endl;
 				again = true;
@@ -90,7 +94,8 @@ bool OptionsMenu::setBoardSize() {
 	size_t size = 0;
 	cout << "Please enter desired board size" << endl;
 	//TODO error handling and check for good range
-	if (!cin >> size) {
+	cin >> size; cin.ignore(100, '\n');
+	if (!size) {
 		cout << "invalid size -- aborting command" << endl; 
 		return false; //failure
 	}
@@ -102,7 +107,8 @@ bool OptionsMenu::setSeekerEnergy() {
 	size_t energy = 0;
 	cout << "Please enter how much energy the seeker will start with" << endl;
 	//TODO error handling and check for good range
-	if (!cin >> energy) {
+	cin >> energy; cin.ignore(100, '\n');
+	if (!energy) {
 		cout << "invalid energy -- aborting command" << endl; 
 		return false; //failure
 	}
@@ -114,8 +120,9 @@ bool OptionsMenu::setSeekerMoney() {
 	size_t money = 0;
 	cout << "Please enter how much money the seeker will start with" << endl;
 	//TODO error handling and check for good range
-	if (!cin >> money) {
-		cout << "invalid energy -- aborting command" << endl; 
+	cin >> money; cin.ignore(100, '\n');
+	if (!money) {
+		cout << "invalid money -- aborting command" << endl; 
 		return false; //failure
 	}
 	gameMgr->seekerOptions->theMoney=money;

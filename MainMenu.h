@@ -53,7 +53,7 @@ private:
 	OptionsMenu optionsMenu;
 
 	//string for storing the splash screen text
-	ifstream splashText;
+	string splashText;
 };
 
 #endif // MAIN_MENU_H
