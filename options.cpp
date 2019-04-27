@@ -1,51 +1,5 @@
-#include <stdio.h>
-#include <string.h>
-#include <iostream>
-#include <iomanip>
-#include <fstream>
-#include "seeker.h"
-
-using namespace std;
-
-struct options{
-	char** lines;
-	int boardSize = 0;
-	int startEnergy = 0;
-	int startMoney = 0;
-	int binocularCost = 0;
-
-	int lineCount;
-
-/*
-	int size;
-	int energy;
-	int money;
-	int binocularCost;
-	int meadow;
-	int forest;
-	int bog;
-	int rocks;
-	int trees;
-*/
-
-	void readOptions();
-	void displayOptions();
-	void changeOptions();
-	void writeOptions();
-
-	void generalMenu();
-	void obstacleMenu();
-	void toolMenu();
-	void displayCategories();
-	void optionsMainMenu();
-};
-void clear_all();
-void display_splash();
-
-const int MAX_LINE_COUNT = 20;
-const int MAX_LINE_LENGTH = 100;
-
-int main(){
+#include "options.h"
+void options::testOptions(){
 	options test;
 	char reply = ' ';
 
@@ -61,82 +15,106 @@ int main(){
 	test.readOptions();
 	test.displayOptions();
 	test.optionsMainMenu();
-	test.writeOptions();
+//	test.writeOptions();
 /*	test.selectMenu();
 
 	test.changeOptions();
 */
 }
-	return 0;
 }
 
 void options::readOptions(){
 	ifstream myfile;
-	char next[MAX_LINE_COUNT][MAX_LINE_LENGTH];
+	string type;
+	string name;
+	string value;
+	string line;
+	string toolName;
+	string obstacleName;
+	int energySaved;
+	int singleUse;
+	int price;
+	int quantity;		
+	//char next[MAX_LINE_COUNT][MAX_LINE_LENGTH];
 	 lineCount = 0;
 	myfile.open("options.txt");
-	while(!myfile.eof()){
-		myfile.getline(next[lineCount], MAX_LINE_LENGTH);
+	
+	while(getline(myfile, line)){
 		lineCount++;
+		if(line[0] == '3'){
+			toolCount++;
+		}else if(line[0] == '2'){
+			obstacleCount++;
+		}
 	}
-	cout << lineCount << " options were loaded." << endl;
+	cout << "\nLine count = " << lineCount;
+	cout << "\nTool count = " << toolCount;
+	cout << "\nObstacle count = " << obstacleCount;
 
-cout << endl << endl << endl;
-lines = new char*[lineCount];
-for(int n = 0; n < lineCount; n++){
-	lines[n] = new char[strlen(next[n])+1];
-	strcpy(lines[n], next[n]);
-//	cout << lines[n] << endl;
-}
+	loadedTools = new Tool*[toolCount];	
+	obstacles = new string[obstacleCount];
 
-/*
+	myfile.close();
+	myfile.open("options.txt");
+	int i = 0;
+	while(getline(myfile, type, ',')){
+	cout << "\nType: " << type;
+	
+	if(type[0] == '1'){
+		getline(myfile, name, ',');
+		cout << "\nName: " << name;
+		getline(myfile, value, '\n');
+		cout << "\nValue: " << value;
+			if(!name.compare("boardSize")){
+					boardSize = stoi(value);
+			}else if(!name.compare("startEnergy")){
+					startEnergy = stoi(value);
+			}else if(!name.compare("startMoney")){
+					startMoney = stoi(value);
+			}else if(!name.compare("binocularCost")){
+					binocularCost = stoi(value);
+			}
 
-myfile.clear();
-
-	while(!myfile.eof()){
-		myfile.getline(next, 100);
-
-for(int x = 0; x < 100; x++){
-	cout << next[x];
-}
+	}else if(type[0] == '2'){
+		getline(myfile, name, '\n');
+		obstacles[i] = name;
+	}else if(type[0] == '3'){
+		getline(myfile, toolName, ',');
+		getline(myfile, obstacleName, ',');
+		getline(myfile, value, ',');
+		energySaved = stoi(value);
+		getline(myfile, value, ',');
+		singleUse = stoi(value);
+		getline(myfile, value, ',');
+		price = stoi(value);
+		getline(myfile, value);
+		quantity = stoi(value);
 		
-//		options[i] = next - '0';
-//		myfile.ignore(100,'\n');
-		myfile.peek();			
+		cout << "\nTool name: " << toolName <<
+			"\nObstacle name: " << obstacleName <<
+			"\nEnergy saved: " << energySaved <<
+			"\nsingleUse: " << singleUse <<
+			"\nprice: " << price <<
+			"\nquantity: " << quantity;
+		loadedTools[i] = new Tool(toolName, obstacleName, energySaved, singleUse, price, quantity);			
 	}
-	myfile.close();
+	i++;
 
-	size = options[0];
-	energy = options[1];
-	money = options[2];
-	binocularCost = options[3];
-	meadow = options[4];
-	forest = options[5];
-	bog = options[6];
-	rocks = options[7];
-	trees = options[8];
-	myfile.close();
-*/
+myfile.peek();	
+	}
 }
 
 void options::displayOptions(){
 	clear_all();
 
-for(int i = 0; i < lineCount; i++){
-	cout << lines[i] << endl;
-}
-	cout 	<< endl ;
-/*
-		<< "Size: " << size << endl
-		<< "Energy: " << energy << endl
-		<< "Money: " << money << endl
-		<< "Cost of Binoculars: " << binocularCost << endl
-		<< "Meadows: " << meadow << endl
-		<< "Forests: " << forest << endl
-		<< "Bog: " << bog << endl
-		<< "Rocks: " << rocks << endl
-		<< "Trees: " << trees << endl;
-*/
+	cout << "\nBoard size: " << boardSize <<
+		"\nStarting Energy: " << startEnergy <<
+		"\nStarting Money: " << startMoney <<
+		"\nBinoculars Cost: " << binocularCost;
+
+	for(int t = 0; t < toolCount; t++){
+		cout << "\nTool " << (t+1) << ": ";
+	}
 }
 
 void options::changeOptions(){
@@ -281,7 +259,7 @@ void options::writeOptions(){
 }
 
 void clear_all(){
-	cout << "\033[2J\033[1;1H";
+//	cout << "\033[2J\033[1;1H";
 }
 
 void display_splash(){
@@ -312,7 +290,7 @@ void options::optionsMainMenu(){
 	char reply = ' ';
 
 	while(reply != 'q'){
-		clear_all();
+	//	clear_all();
 		cout << "Which category would you like to configure?" <<
 			"\nPress '1' to configure general settings." <<
 			"\nPress '2' to configure obstacles." <<
@@ -341,33 +319,37 @@ void options::optionsMainMenu(){
 void options::generalMenu(){
 
 	char reply = ' ';	
+/*
 	char* prev;
 	char* parts;
-
+	char* maybethiswillwork;
 	cout << "\nPrinting options starting with '1'" << endl;
 	for(int i = 0; i < lineCount; i++){
 		if(lines[i][0] == '1'){
 			//cout << lines[i] << endl;
-			
-			parts = strtok(lines[i],",");	
-			while(parts != NULL){
+//			maybethiswillwork = new char[strlen(lines[i])+1];
+			strcpy(maybethiswillwork, lines[i]);
+//			parts = strtok(maybethiswillwork,",");	
+//			while(parts != NULL){
+			while((parts = strtok_r(maybethiswillwork, ",", &maybethiswillwork))){
 				//cout << parts << endl;
 				strcpy(prev, parts);
-				parts = strtok(NULL, ",");	
-				if(!strcmp(prev, "boardSize")){
+//				parts = strtok(NULL, ",");	
+				if(!strcmp(prev, "boardSize") && parts){
 					boardSize = atoi(parts);
-				}else if(!strcmp(prev, "startEnergy")){
+				}else if(!strcmp(prev, "startEnergy") && parts){
 					startEnergy = atoi(parts);
-				}else if(!strcmp(prev, "startMoney")){
+				}else if(!strcmp(prev, "startMoney") && parts){
 					startMoney = atoi(parts);
-				}else if(!strcmp(prev, "binocularCost")){
+				}else if(!strcmp(prev, "binocularCost") && parts){
 					binocularCost = atoi(parts);
 				}
 			}
 		}
+//			delete maybethiswillwork;
 	}
-
-	
+//		free(maybethiswillwork);
+*/	
 	while(reply != 'Q'){
 	clear_all();
 	cout << "General options:" <<
@@ -380,7 +362,7 @@ void options::generalMenu(){
 		"\nPress '2' to change starting energy." <<
 		"\nPress '3' to change starting money." <<
 		"\nPress '4' to change binocular cost." <<
-		"\nPress 'Q' to quit to the previous menu." <<
+	"\nPress 'Q' to quit to the previous menu." <<
 		"\n\nYour choice: ";
 
 		cin >> reply;
@@ -425,6 +407,6 @@ void options::toolMenu(){
 			cout << lines[i] << endl;
 		}
 	}
-	int x;
+	char x;
 cin >> x;
 }

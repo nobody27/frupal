@@ -10,12 +10,13 @@
 #ifndef GAME_INTERFACE_H
 #define GAME_INTERFACE_H
 
+
 #include "boardNtile.h" 		//owned by Jessica
 								//TODO in the future we may want to separate 
 								//board and tile to separate files
 #include "seeker.h"				//owned by John
 #include "MainMenu.h"			//owned by Elyse
-//#include "configurations.h"		//owned by Max
+#include "options.h"		//owned by Max
 //#include "tools.h"				//owned by John (maybe help from Leior)
 //#include "obstacles.h"			//TBD (maybe John or Leior)
 using namespace std;
