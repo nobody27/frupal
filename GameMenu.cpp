@@ -48,7 +48,7 @@ void GameMenu::display() const {
 	cout << setw(15) << left << "(J) move West" << endl;
 	cout << setw(15) << left << "(K) move South" << endl;
 	cout << setw(15) << left << "(L) move East" << endl;
-  cout << setw(15) << left << "(B)uy an item" << endl;
+    cout << setw(15) << left << "(B)uy an item" << endl;
 	cout << setw(15) << left << "(R)eturn to the Main Menu" << endl;
 	cout << setw(15) << left << "(Q)uit the program" << endl;
 	cout << "\n>";
@@ -66,7 +66,14 @@ bool GameMenu::getAndExecuteCommand() {
         display();
         //request the command
         cin >> choice;
-        //capitalize and check for legal input
+        //check for legal input before attempting to capitalize
+        while (choice != 'I' && choice != 'i' && choice != 'J' && choice != 'j' && choice != 'K' && choice != 'k' && choice != 'L' && choice != 'l' && choice != 'R' && choice != 'r' && choice != 'Q' && choice != 'q' && choice != 'B' && choice != 'b')
+        {
+            cout << "\n"; 
+            cout << "Invalid input. Please try again." << endl;
+            cout << "\n>";
+            cin >> choice;
+        }
         switch (toupper(choice)) {
             case 'I':
                 gameMgr->theSeeker->move(Seeker::NORTH);
