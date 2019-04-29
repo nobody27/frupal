@@ -42,6 +42,7 @@ void GameMenu::display() const {
 	gameMgr->theIsland->displayIsland();
 	gameMgr->theSeeker->display();
 	//TODO display the board and your locations
+    cout << "\n";
 	cout << "Make Your Choice: " << endl;
 	cout << setw(15) << left << "(I) move North" << endl;
 	cout << setw(15) << left << "(J) move West" << endl;
@@ -50,7 +51,7 @@ void GameMenu::display() const {
   cout << setw(15) << left << "(B)uy an item" << endl;
 	cout << setw(15) << left << "(R)eturn to the Main Menu" << endl;
 	cout << setw(15) << left << "(Q)uit the program" << endl;
-	cout << "\n\n\n";
+	cout << "\n>";
 	//TODO buy tool, use tool
 }
 

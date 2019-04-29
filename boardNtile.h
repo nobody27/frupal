@@ -46,7 +46,7 @@ class Tile
 		Tile(int xValue, int yValue, Terrain* theTerrain); //constructor
 		//~Tile();
 		void tileDisplay();
-        void printIslandTile();
+        void printIslandTile(Tile* location);
         void displayTerrain() {terrain->display();} 
         void displayLocation() const;
 		void visitTile();

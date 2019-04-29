@@ -26,6 +26,7 @@ Seeker::Seeker(GameManager* gameManager, const SeekerOptions& options) :
 												theIsland(gameManager->theIsland)
 {
 	location = theIsland->getLocation(options.x, options.y);
+    location->visitTile();
   inventory.push_back(&gameManager->theResources->resources.front());
 }
 

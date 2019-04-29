@@ -13,6 +13,9 @@
 #include <vector>
 #include <assert.h>
 #include <string>
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define YELLOW "\033[33m"
 
 using namespace std;
 
@@ -63,7 +66,7 @@ void Tile::displayLocation() const
     terrain->display();
 }
 
-void Tile::printIslandTile()
+void Tile::printIslandTile(Tile* location)
 {
 				if(!visited)
 				{
@@ -71,9 +74,14 @@ void Tile::printIslandTile()
 				}
 				else
 				{
-								cout<< terrain->getShortName();
+								cout << YELLOW << terrain->getShortName() << RESET;
 				}
-				cout << "_";
+                if (this == location)
+                {
+                    cout << RED << "@" << RESET;
+                }
+                else
+                    cout << "_";
 				cout << "E";
 }
 
@@ -162,7 +170,7 @@ void Board::displayRow(int rowNumber) const
 				int j=rowNumber;
 				for(int i=0; i<boardSize; ++i)
 				{ 
-								boardArray[i][j]->printIslandTile();
+								boardArray[i][j]->printIslandTile(gameMgr->theSeeker->location);
 								cout << "  "; //space between tiles
 				}
 				cout << endl;
