@@ -66,6 +66,7 @@ bool GameMenu::getAndExecuteCommand() {
         display();
         //request the command
         cin >> choice;
+/* not needed
         //check for legal input before attempting to capitalize
         while (choice != 'I' && choice != 'i' && choice != 'J' && choice != 'j' && choice != 'K' && choice != 'k' && choice != 'L' && choice != 'l' && choice != 'R' && choice != 'r' && choice != 'Q' && choice != 'q' && choice != 'B' && choice != 'b')
         {
@@ -74,6 +75,7 @@ bool GameMenu::getAndExecuteCommand() {
             cout << "\n>";
             cin >> choice;
         }
+*/
         switch (toupper(choice)) {
             case 'I':
                 gameMgr->theSeeker->move(Seeker::NORTH);
