@@ -41,7 +41,7 @@ private:
 	// R - return to main menu
 	// Q - exit (quit quit)
 	bool getAndExecuteCommand();
-
+  bool shopMenu();
 	GameManager* gameMgr;
 
 	//option to quickly quit the game instead of just returning to MainMenu

@@ -48,7 +48,6 @@ void GameMenu::display() const {
 	cout << setw(15) << left << "(K) move South" << endl;
 	cout << setw(15) << left << "(L) move East" << endl;
   cout << setw(15) << left << "(B)uy an item" << endl;
-  cout << setw(15) << left << "(T)ools list" << endl;
 	cout << setw(15) << left << "(R)eturn to the Main Menu" << endl;
 	cout << setw(15) << left << "(Q)uit the program" << endl;
 	cout << "\n\n\n";
@@ -92,12 +91,7 @@ bool GameMenu::getAndExecuteCommand() {
 				quit = true;
 				break;
       case 'B':
-        cout << "entering shop" << endl;
-        //TODO display tools and available money
-        //TODO command to buy an item
-        break;
-      case 'T':
-        gameMgr->theSeeker->displayTools();
+        shopMenu();        
         break;
 			default:
 				cout << "'" << choice << "' is not a valid command in the game menu..." << endl;
@@ -113,14 +107,21 @@ bool GameMenu::getAndExecuteCommand() {
 	return done;
 }
 
-/*bool ShopMenu() {
- 
-  gameMgr->theSeeker->display();
-	cout << "Make Your Choice: " << endl;
-	gameMgr->
+bool GameMenu::shopMenu()
+{
+  string choice;
+  cout << "entering shop" << endl;
+  gameMgr->theSeeker->displayTools();
+  cout << endl << "**Tools for sale**" << endl << endl;
+  cout << left << 0 << " " << "Cancel Leave Shop" << endl;
+  gameMgr->theResources->displayResources();
+  //TODO display tools and available money
+  //TODO command to buy an item
+  cout << endl << "Money: $" << gameMgr->theSeeker->money << endl << endl;
+  cout << "Choice: ";
+  cin >> choice;
 
-}*/
-
-
-
+  //switch statement for purchase
+  return true;
+}
 

@@ -21,9 +21,6 @@ class Tool {
     Tool(string theName, string obstacleName);
 		Tool(string theName, string obstacleName, int energySaved, bool
     singleUse, int price, int quantity);
-
-    //TODO add copy constructor for tools for adding and reomving from vectors
-
 		//use the tool
 		//check that it can be used on the relevant obstacle type
 		//if the tool is singleUse make sure to remove it from the seeker
@@ -53,7 +50,7 @@ class Resources {
   public:
     //constructor
     Resources(GameManager* gameManager, const ResourcesOptions& resourcesOptions);
-    
+    void displayResources(); 
     vector<Tool> resources;
 
   private:
