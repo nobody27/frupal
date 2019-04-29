@@ -20,9 +20,14 @@ Terrain::Terrain(string theName, string theShortName) : name(theName), shortName
 {
 }
 
-void Terrain::display()
+/*void Terrain::display() //TODO is this function used by anything?
 {
 	cout << "	Terrain: " << name << endl;
+}*/
+
+void Terrain::display()
+{
+    cout << name;
 }
 
 
@@ -50,6 +55,12 @@ void Tile::tileDisplay()
 	terrain->display();
 	cout << "	Treasure: " << treasure<<endl;
 	cout << "	" << (visited ? "visited by seeker" : "undiscovered") << endl;
+}
+
+void Tile::displayLocation() const
+{
+    cout << "You are standing in a ";
+    terrain->display();
 }
 
 void Tile::printIslandTile()
@@ -201,5 +212,36 @@ Tile* Board::getLocation(int x, int y) const {
 	return boardArray[x][y];
 }
 
+
+void Board::displayLocation(Tile* location) const
+{
+    int x = location->xValue;
+    int y = location->yValue;
+    location->displayLocation();
+    if (y+1 >= boardSize)
+        cout << endl << "To the north lies ocean";
+    else {
+        cout << endl << "To the north is a ";
+        boardArray[x][y+1]->displayTerrain();
+    }
+    if (y-1 < 0)
+        cout << endl << "To the south lies ocean";
+    else {
+        cout << endl << "To the south is a ";
+        boardArray[x][y-1]->displayTerrain();
+    }
+    if (x+1 >= boardSize)
+        cout << endl << "To the east lies ocean";
+    else {
+        cout << endl << "To the east is a ";
+        boardArray[x+1][y]->displayTerrain();
+    }
+    if (x-1 < 0)
+        cout << endl << "To the west lies ocean";
+    else {
+        cout << endl << "To the west is a ";
+        boardArray[x-1][y]->displayTerrain();
+    }
+}
 
 

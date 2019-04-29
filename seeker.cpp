@@ -33,7 +33,7 @@ Seeker::Seeker(GameManager* gameManager, const SeekerOptions& options) :
 
 
 void Seeker::display() {
-	//theIsland->displayLocation(location);
+    theIsland->displayLocation(location);
 	cout << endl << endl << "You currently have " << energy << " energy and " << money << " gold pieces." << endl;
 }
 

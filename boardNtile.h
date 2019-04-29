@@ -46,7 +46,9 @@ class Tile
 		Tile(int xValue, int yValue, Terrain* theTerrain); //constructor
 		//~Tile();
 		void tileDisplay();
-    void printIslandTile();
+        void printIslandTile();
+        void displayTerrain() {terrain->display();} 
+        void displayLocation() const;
 		void visitTile();
 		int xValue;
 		int yValue;
@@ -79,9 +81,11 @@ public:
 	void display() const;
     void displayIsland() const;
 	void displayRow(int rowNumber) const;
+    void displayLocation(Tile* location) const;
 	void visitAllTiles(); //reveal all for working display for coders
 	void addResource(); 
 	Tile*  getLocation(int x, int y) const;
+    
 	int size() const {return boardSize;}
 private:
 	GameManager* gameMgr;

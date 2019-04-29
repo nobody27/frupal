@@ -58,45 +58,45 @@ bool GameMenu::getAndExecuteCommand() {
 	bool done = false;
 	bool again = true;
 	
-	while(again) {
-		again = false;
-		char choice = 0;
-		//display the menu options
-		display();
-		//request the command
-		cin >> choice;
-		//capitalize and check for legal input
-		switch (toupper(choice)) {
-			case 'I':
-				gameMgr->theSeeker->move(Seeker::NORTH);
-				break;
-			case 'J':
-				gameMgr->theSeeker->move(Seeker::WEST);
-				break;
-			case 'K':
-				gameMgr->theSeeker->move(Seeker::SOUTH);
-				break;
-			case 'L':
-				gameMgr->theSeeker->move(Seeker::EAST);
-				break;
-			//TODO buy tool, use tool, view board
-			case 'R':
-				cout << "returning to main menu" << endl;
-				done = true;
-				break;
-			case 'Q':
-				//exit - quick quit 
-				cout << "quitting the game" << endl;
-				done = true;
-				quit = true;
-				break;
-      case 'B':
-        shopMenu();        
-        break;
-			default:
-				cout << "'" << choice << "' is not a valid command in the game menu..." << endl;
-				again = true;
-		}
+    while(again) {
+        again = false;
+        char choice = 0;
+        //display the menu options
+        display();
+        //request the command
+        cin >> choice;
+        //capitalize and check for legal input
+        switch (toupper(choice)) {
+            case 'I':
+                gameMgr->theSeeker->move(Seeker::NORTH);
+                break;
+            case 'J':
+                gameMgr->theSeeker->move(Seeker::WEST);
+                break;
+            case 'K':
+                gameMgr->theSeeker->move(Seeker::SOUTH);
+                break;
+            case 'L':
+                gameMgr->theSeeker->move(Seeker::EAST);
+                break;
+                //TODO buy tool, use tool, view board
+            case 'R':
+                cout << "returning to main menu" << endl;
+                done = true;
+                break;
+            case 'Q':
+                //exit - quick quit 
+                cout << "quitting the game" << endl;
+                done = true;
+                quit = true;
+                break;
+            case 'B':
+                shopMenu();        
+                break;
+            default:
+                cout << "'" << choice << "' is not a valid command in the game menu..." << endl;
+                again = true;
+        }
 		if(gameMgr->theSeeker->energy <= 0) {
 			gameMgr->theSeeker->display();
             cout << endl << "You are out of energy!";
