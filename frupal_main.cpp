@@ -14,6 +14,8 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
+	//clear the screen	
+	system("clear");
 
 	////initialize the game interface////
 	/* 

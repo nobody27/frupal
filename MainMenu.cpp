@@ -45,11 +45,12 @@ void MainMenu::displayExitScreen() {
 	cout << splashText << "\n\n\n\n\n";
 	cout << "Thank you for playing Frupal Island!" << endl;
 	cout << "Please leave a rating in your app store." << endl;
+	cout << "\n\n\n";
 }
 
 void MainMenu::display() const {
 	//prepare the screen
-	//system("clear");
+	system("clear");
 	cout << splashText << "\n\n\n\n\n";
 	cout << "Welcome to Frupal Island!" << endl;
 	//print the options
