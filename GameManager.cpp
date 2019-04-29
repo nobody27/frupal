@@ -12,7 +12,6 @@
 								//TODO in the future we may want to separate 
 								//board and tile to separate files
 #include "seeker.h"				//owned by John
-#include "PlayerInterface.h"	//owned by Elyse
 //#include "configurations.h"		//owned by Max
 //#include "tools.h"				//owned by John (maybe help from Leior)
 //#include "obstacles.h"			//TBD (maybe John or Leior)
