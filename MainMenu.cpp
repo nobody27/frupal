@@ -76,16 +76,6 @@ bool MainMenu::getAndExecuteCommand() {
 		display();
 		//request the command
 		cin >> choice;
-/* not needed
-        //check for legal input before attempting to capitalize
-        while (choice != 'P' && choice != 'p' && choice != 'O' && choice != 'o' && choice != 'Q' && choice != 'q')
-        {
-            cout << "\n"; 
-            cout << "Invalid input. Please try again." << endl;
-            cout << "\n>";
-            cin >> choice;
-        }
-*/
 		switch (toupper(choice)) {
 			case 'P':
 				//before playing we must make sure everything is initialized
