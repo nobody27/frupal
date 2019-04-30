@@ -153,8 +153,7 @@ void Board::displayIsland() const
 				}
 				
 				cout << "Key:"<<endl;
-				cout << "	Top left space is terrain type: "<<endl;
-				cout << "		G=Grassy Meadow, B=Bog, F=Forrest, W=Water, X=Unrevealed"<<endl;
+				cout << "	Top left space is terrain type:	G=Grassy Meadow, B=Bog, F=Forrest, W=Water, X=Unrevealed"<<endl;
 				cout << "	Top center is _ unless seeker is there. SEEKER is '@'." <<endl; 
 				cout << "	Top right is for treasure. E=Excavation site until searched" <<endl;
 				cout << "	Bottom left is for obstacles." <<endl<<endl;
