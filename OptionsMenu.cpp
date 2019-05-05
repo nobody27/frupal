@@ -15,6 +15,8 @@
 #include <iostream>
 #include <iomanip>
 
+#define GRAY "\033[90m"
+#define RESET "\033[0m"
 using namespace std;
 
 OptionsMenu::OptionsMenu(GameManager* gameManager) : gameMgr(gameManager), quit(false){
@@ -39,9 +41,17 @@ void OptionsMenu::display() const {
 	//print the options
 	//system("clear");
 	cout << "Make Your Choice: " << endl;
+	if(gameMgr->initialized) {
+		cout << GRAY;
+	}
+	//// Place text for options that are not available after initialization here ////
 	cout << setw(15) << left << "(S) set board size" << endl;
 	cout << setw(15) << left << "(E) set seeker's initial energy level" << endl;
 	cout << setw(15) << left << "(M) set seeker's initial money" << endl;
+	/////////////////////////////////////////////////////////////////////////////////
+	if(gameMgr->initialized) {
+		cout << RESET;
+	}
 	cout << setw(15) << left << "(R)eturn to the Main Menu" << endl;
 	cout << setw(15) << left << "(Q)uit the program" << endl;
 	cout << "\n\n\n";
@@ -51,24 +61,41 @@ void OptionsMenu::display() const {
 bool OptionsMenu::getAndExecuteCommand() {
 	bool done = false;
 	bool again = true;
+	bool unsupportedAfterInitialization = false;
 	
 	while(again) {
 		again = false;
+		unsupportedAfterInitialization = false;
 		char choice = 0;
 		//display the menu options
 		display();
 		//request the command
 		cin >> choice;
 		//capitalize and check for legal input
+
+		//TODO all the code regarding initialized should be moved to methods
+		// in order to avoid code duplication
 		switch (toupper(choice)) {
 			case 'S':
-				again = !setBoardSize(); //try again if command fails
+				if(gameMgr->initialized) {
+					unsupportedAfterInitialization = true;
+				} else {
+					again = !setBoardSize(); //try again if command fails
+				}
 				break;
 			case 'E':
-				again = !setSeekerEnergy(); //try again if command fails
+				if(gameMgr->initialized) {
+					unsupportedAfterInitialization = true;
+				} else {
+					again = !setSeekerEnergy(); //try again if command fails
+				}
 				break;
 			case 'M':
-				again = !setSeekerMoney(); //try again if command fails
+				if(gameMgr->initialized) {
+					unsupportedAfterInitialization = true;
+				} else {
+					again = !setSeekerMoney(); //try again if command fails
+				}
 				break;
 			//TODO other options
 			case 'R':
@@ -82,8 +109,12 @@ bool OptionsMenu::getAndExecuteCommand() {
 				quit = true;
 				break;
 			default:
-				cout << "'" << choice << "' is not a valid command in the game menu..." << endl;
+				cout << "'" << choice <<  "' is not a valid command in the game menu..." << endl;
 				again = true;
+		}
+		if(unsupportedAfterInitialization) {
+			cout << "'" << choice << "' is not valid after the game has begun..." << endl;
+			again = true;
 		}
 	}
 	return done;

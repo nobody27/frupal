@@ -199,7 +199,8 @@ void options::writeOptions(){
 }
 
 void clear_all(){
-	cout << "\033[2J\033[1;1H";
+	system("clear");
+	//cout << "\033[2J\033[1;1H";
 }
 
 void display_splash(){
