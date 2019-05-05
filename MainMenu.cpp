@@ -18,7 +18,7 @@
 
 
 #define RESET "\033[0m"
-#define BOLDMAGENTA "\033[1m\033[35m"
+#define BOLDMAGENTA "\033[1;35m"
 
 using namespace std;
 

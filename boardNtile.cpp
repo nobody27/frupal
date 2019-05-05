@@ -16,6 +16,7 @@
 #define RESET "\033[0m"
 #define RED "\033[31m"
 #define YELLOW "\033[33m"
+#define BOLDRED "\033[31;1m"
 
 using namespace std;
 
@@ -78,7 +79,7 @@ void Tile::printIslandTile(Tile* location)
 				}
                 if (this == location)
                 {
-                    cout << RED << "@" << RESET;
+                    cout << BOLDRED << "@" << RESET;
                 }
                 else
                     cout << "_";
