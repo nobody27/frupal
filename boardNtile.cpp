@@ -20,7 +20,7 @@
 
 using namespace std;
 
-Terrain::Terrain(string theName, string theShortName) : name(theName), shortName(theShortName)
+Terrain::Terrain(string theName, string theShortName) : exertion(1), name(theName), shortName(theShortName)
 {
 }
 
