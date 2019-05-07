@@ -31,7 +31,7 @@ class Terrain {
 		const string& getName() const {return name;}
 		const string& getShortName() const {return shortName;}
 		void setTerrainType(string theName, string theShortName);
-
+    
 	private:
 		string name;
 		string shortName;
