@@ -118,24 +118,24 @@ bool GameMenu::shopMenu()
   //TODO display tools and available money
   //TODO command to buy an item
   cout << endl << "Money: $" << gameMgr->theSeeker->money << endl << endl;
-  cout << "Choice: ";
-  cin >> choice;
-
-  if(choice == 0)
-  {
-    return false;
-  }
   
   int numRes = static_cast<int>(gameMgr->theResources->resources.size());
   
   //make sure its a valid choice and they have enough money
-  while(choice < 0 || choice > numRes+1 || gameMgr->theSeeker->money <
-  gameMgr->theResources->resources[choice-1].price)
+  while(choice < 0 || choice > numRes+1 || 
+		(choice != 0 && gameMgr->theSeeker->money <
+  gameMgr->theResources->resources[choice-1].price) )
   {
     cout << "Enter valid choice you can afford: ";
     cin.clear();
-    cin.ignore(100, '\n');
     cin >> choice;
+    cin.ignore(100, '\n');
+	cout << "your choice was " << choice << ", " << (choice == 0 ? "good" : "bad")  << endl;
+  }
+
+  if(choice == 0)
+  {
+    return false;
   }
 
   choice--;
