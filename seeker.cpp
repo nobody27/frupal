@@ -74,7 +74,10 @@ void Seeker::move(direction_t direction) {
     
     theIsland->getLocation(x,y)->visitTile();
 		
-    energy = energy - 1; //TODO re-implement this based on terrain
+    if()
+    {
+      energy = energy - 1; //TODO re-implement this based on terrain
+    }
 	}
 
 }
@@ -92,6 +95,13 @@ void Seeker::addTool(Tool* newTool) {
 
   //else push tool into inventory
   inventory.push_back(newTool);  
+}
+
+bool Seeker::useTool()
+{
+  
+
+
 }
 
 
