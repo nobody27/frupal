@@ -74,7 +74,7 @@ void Seeker::move(direction_t direction) {
     
     theIsland->getLocation(x,y)->visitTile();
 		
-    energy -= theIsland->getLocation(x,y)->terrain->cost;
+    energy -= theIsland->getLocation(x,y)->terrain->exertion;
 	}
 
 }
