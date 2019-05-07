@@ -3,6 +3,7 @@
 #include "boardNtile.h"
 #include "resources.h"
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -48,7 +49,7 @@ void Seeker::displayTools() {
   { 
     for (auto it = begin(inventory); it != end(inventory); ++it) 
     {
-      cout << (*it)->name << endl;
+      cout << (*it)->name << setw(5) << right << (*it)->quantity << endl;
     }
   }
 }
@@ -79,7 +80,17 @@ void Seeker::move(direction_t direction) {
 }
 void Seeker::addTool(Tool* newTool) {
   
-  //push tool into inventory
+  //check if tool is already owned, if so +1 that tool
+  for(auto it = begin(inventory); it != end(inventory); ++it)
+  {
+    if(newTool == (*it))
+    {
+      (*it)->quantity++;
+      return;
+    }
+  }
+
+  //else push tool into inventory
   inventory.push_back(newTool);  
 }
 
