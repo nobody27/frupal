@@ -52,6 +52,12 @@ Tile::Tile(int x, int y, Terrain* theTerrain): xValue(x),
 				treasureName=("Nothing here! Better luck next time."); //no treasure - later string withe description
 }
 
+
+Terrain* Tile::getTerrain()
+{
+				return terrain;
+}
+
 void Tile::tileDisplay()
 {
 				cout << "	Position: (" << xValue << "," <<
@@ -66,6 +72,8 @@ void Tile::displayLocation() const
 				cout << "You are standing in a ";
 				terrain->display();
 }
+
+
 
 void Tile::printIslandTile(Tile* location)
 {

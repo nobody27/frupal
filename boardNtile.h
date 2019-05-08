@@ -53,6 +53,7 @@ class Tile
 								void visitTile();
 								int xValue;
 								int yValue;
+								Terrain* getTerrain();
 
 				private:
 								Terrain* terrain;
