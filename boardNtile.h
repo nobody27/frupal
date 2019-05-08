@@ -58,8 +58,7 @@ class Tile
 								Terrain* terrain;
 								string treasureName;
 								char treasureLetter;
-								string obstacleName;
-								char obstacleLetter;
+								//Obstacle* obstacle pointer for when we have obstacle class
 								bool visited; //has the seeker visited this tile
 
 };
