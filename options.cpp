@@ -39,6 +39,9 @@ void options::readOptions(){
 	 lineCount = 0;
 	myfile.open("options.txt");
 	
+	//You shouldn't have to read the file in twice
+	//use std::vector or std::set instead of an array and you won't
+	// need to know the number of tools in advance
 	while(getline(myfile, line)){
 		lineCount++;
 		if(line[0] == '3'){
@@ -60,6 +63,10 @@ void options::readOptions(){
 	while(getline(myfile, type, ',')){
 	cout << "\nType: " << type;
 	
+	//Since you are entering a string anyway I'd suggest using "general" instead of "1",
+	// "tool" instead of "2", etc.
+	//TODO add option for ignoring any line that begins with "#" and for empty lines
+	//TODO add wraning/error printout for any line that reaches the end of the if statement
 	if(type[0] == '1'){
 		getline(myfile, name, ',');
 		cout << "\nName: " << name;
@@ -274,6 +281,10 @@ void display_splash(){
 	}
 }
 
+// this code makes use of recursiveness and a while loop
+//it will result in an infinite loop and you never set reply. don't use it.
+//I'm not sure what you are going for but you might want to use something
+//similar to the different menu classes
 void options::displayCategories(){
 
 
@@ -298,6 +309,9 @@ void options::optionsMainMenu(){
 			"\nPress 'Q' to quit.";
 
 		cin >> reply;
+		//note: if you use tolower(reply) in the switch instead of overriding the 
+		//		original value it will do the same thing and then you can print
+		//		the original value in the error message :)
 		reply = tolower(reply);
 		
 		switch(reply){
@@ -311,6 +325,7 @@ void options::optionsMainMenu(){
 				toolMenu();
 				break;
 			default:
+				//TODO print a message that the input is not acceptible
 				break;
 		}
 	}
