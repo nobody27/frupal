@@ -130,7 +130,6 @@ bool GameMenu::shopMenu()
     cin.clear();
     cin >> choice;
     cin.ignore(100, '\n');
-	cout << "your choice was " << choice << ", " << (choice == 0 ? "good" : "bad")  << endl;
   }
 
   if(choice == 0)
