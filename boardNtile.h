@@ -45,7 +45,7 @@ class Tile
 				public:
 								Tile(int xValue, int yValue, Terrain* theTerrain); //constructor
 								//~Tile();
-								void tileDisplay();
+								void tileDisplay() const;
 								void printIslandTile(Tile* location);
 								void printIslandTileR2(Tile* location);
 								void displayTerrain() {terrain->display();} 

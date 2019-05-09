@@ -49,7 +49,7 @@ Tile::Tile(int x, int y, Terrain* theTerrain): xValue(x),
 {
 				//make sure that terrain is not a null pointer
 				assert(terrain);
-				treasureName=("Nothing here! Better luck next time."); //no treasure - later string withe description
+				treasureName=("none"); //no treasure - later string withe description
 }
 
 
@@ -58,13 +58,22 @@ Terrain* Tile::getTerrain()
 				return terrain;
 }
 
-void Tile::tileDisplay()
+
+//for use in the "to the North lies ..." etc  should display Terrain, any obstacle, any treasure
+void Tile::tileDisplay() const
 {
-				cout << "	Position: (" << xValue << "," <<
-								yValue << ")" << endl;
 				terrain->display();
-				cout << "	Treasure: " << treasureName<<endl;
-				cout << "	" << (visited ? "visited by seeker" : "undiscovered") << endl;
+				cout << ". ";
+				if (treasureName == "none")
+				{
+				cout << "Bummer, there is no treasure here. ";
+				}
+				else
+				{
+					cout << "There is treasure here!!!!!! The treasure is " << treasureName<< ". ";
+				}
+				cout << "There is an obstacle here, it is a __________." <<endl;
+				//cout << "	" << (visited ? "visited by seeker" : "undiscovered") << endl;
 }
 
 void Tile::displayLocation() const
@@ -265,8 +274,10 @@ void Board::displayLocation(Tile* location) const
 				if (y+1 >= boardSize)
 								cout << endl << "To the north lies ocean";
 				else {
+								cerr <<endl << "Now checking new displayTile() function" <<endl;
 								cout << endl << "To the north is a ";
-								boardArray[x][y+1]->displayTerrain();
+								//boardArray[x][y+1]->displayTerrain();
+								boardArray[x][y+1]->tileDisplay();
 				}
 				if (y-1 < 0)
 								cout << endl << "To the south lies ocean";
