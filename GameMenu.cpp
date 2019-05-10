@@ -38,7 +38,8 @@ bool GameMenu::call() {
 
 void GameMenu::display() const {
 	//print the options
-	//system("clear");
+	gameMgr->theSeeker->display(); //this is just to visit the neighboring locations
+	system("clear");
 	gameMgr->theIsland->displayIsland();
 	gameMgr->theSeeker->display();
 	//TODO display the board and your locations

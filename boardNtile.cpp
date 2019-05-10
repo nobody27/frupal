@@ -44,12 +44,17 @@ void Terrain::setTerrainType(string theName, string theShortName)
 //by default set terrain to grassy meadow for now
 Tile::Tile(int x, int y, Terrain* theTerrain): xValue(x), 
 				yValue(y),
+				money(1), //TODO randomize this
 				terrain(theTerrain),
+				//for now we find one unit of money on each new tile
 				visited(false)
 {
 				//make sure that terrain is not a null pointer
 				assert(terrain);
 				treasureName=("none"); //no treasure - later string withe description
+				//make sure that the amount of money is not negative and also make sure
+				//it is not more than one char long
+				assert(money >= 0 && money <=9);
 }
 
 
@@ -64,6 +69,15 @@ void Tile::tileDisplay() const
 {
 				terrain->display();
 				cout << ". ";
+				if(money) 
+				{	
+					cout << "There is gold here with a value of $" << 
+						money << "!!" << endl;
+				} 
+				else 
+				{
+					cout << "There is no gold left to find here." << endl;
+				} 
 				if (treasureName == "none")
 				{
 				cout << "Bummer, there is no treasure here. ";
@@ -117,23 +131,42 @@ void Tile::printIslandTile(Tile* location)
 
 void Tile::printIslandTileR2(Tile* location)
 {
+				assert(money >= 0 && money <=9);
 				//obstacle O or Letter for obstacle type
 				if(!visited) 
 				{
-								cout<< "O";
+					cout<< "O";
+					cout << "X"; //unknown amount of money
 				}
 				else
 				{
-								cout<< "o"; // later obstacleLetter;
+					cout<< "o"; // later obstacleLetter;
+					cout << money;
 				}
 				//space to expand functionality
-				cout << "XX";
+				cout << "X";
 }
 
 
 void Tile::visitTile()
 {
 				visited=true;
+}
+
+int Tile::takeMoney()
+{
+	int retVal = 0;
+	if(money) 
+	{
+		cout << "You just found $" << money << endl;
+		retVal = money;
+		money = 0;
+	}
+	else 
+	{
+		cout << "No money here, keep looking" << endl;
+	}
+	return retVal;
 }
 
 //init by default to size of 10 but allow users to override the default
@@ -266,36 +299,39 @@ Tile* Board::getLocation(int x, int y) const {
 }
 
 
-void Board::displayLocation(Tile* location) const
+void Board::displayLocation(Tile* location) 
 {
 				int x = location->xValue;
 				int y = location->yValue;
 				location->displayLocation();
 				if (y+1 >= boardSize)
-								cout << endl << "To the north lies ocean";
+								cout << endl << "To the north lies ocean" << endl;
 				else {
-								cerr <<endl << "Now checking new displayTile() function" <<endl;
+								//cerr <<endl << "Now checking new displayTile() function" <<endl;
+								boardArray[x][y+1]->visitTile();
 								cout << endl << "To the north is a ";
-								//boardArray[x][y+1]->displayTerrain();
 								boardArray[x][y+1]->tileDisplay();
 				}
 				if (y-1 < 0)
-								cout << endl << "To the south lies ocean";
+								cout << endl << "To the south lies ocean" << endl;
 				else {
+								boardArray[x][y-1]->visitTile();
 								cout << endl << "To the south is a ";
-								boardArray[x][y-1]->displayTerrain();
+								boardArray[x][y-1]->tileDisplay();
 				}
 				if (x+1 >= boardSize)
-								cout << endl << "To the east lies ocean";
+								cout << endl << "To the east lies ocean" << endl;
 				else {
+								boardArray[x+1][y]->visitTile();
 								cout << endl << "To the east is a ";
-								boardArray[x+1][y]->displayTerrain();
+								boardArray[x+1][y]->tileDisplay();
 				}
 				if (x-1 < 0)
-								cout << endl << "To the west lies ocean";
+								cout << endl << "To the west lies ocean" << endl;
 				else {
+								boardArray[x-1][y]->visitTile();
 								cout << endl << "To the west is a ";
-								boardArray[x-1][y]->displayTerrain();
+								boardArray[x-1][y]->tileDisplay();
 				}
 }
 

@@ -70,11 +70,11 @@ void Seeker::move(direction_t direction) {
 		cout << endl << "You cannot move west!";
 	else
 	{
+		//TODO check you have energy to move here
 		location = theIsland->getLocation(x,y);
-    
-    theIsland->getLocation(x,y)->visitTile();
-		
-    energy -= theIsland->getLocation(x,y)->getTerrain()->exertion;
+	    theIsland->getLocation(x,y)->visitTile();
+	    energy -= theIsland->getLocation(x,y)->getTerrain()->exertion;
+		money += theIsland->getLocation(x,y)->takeMoney();
 	}
 
 }

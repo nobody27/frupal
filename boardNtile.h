@@ -51,9 +51,15 @@ class Tile
 								void displayTerrain() {terrain->display();} 
 								void displayLocation() const;
 								void visitTile();
+								int takeMoney(); //excavate the gold from the tile's location. returns the value of the money taken
 								int xValue;
 								int yValue;
 								Terrain* getTerrain();
+								//After you exhert energy to reach a tile you look around
+								//and find money/gold laying around at this value
+								//once you reach the tile you immediately pick it up and
+								//this field goes to 0
+								int money;
 
 				private:
 								Terrain* terrain;
@@ -85,7 +91,7 @@ class Board
 								void display() const;
 								void displayIsland() const;
 								void displayRow(int rowNumber) const;
-								void displayLocation(Tile* location) const;
+								void displayLocation(Tile* location);
 								void visitAllTiles(); //reveal all for working display for coders
 								void addResource(); 
 								Tile*  getLocation(int x, int y) const;
