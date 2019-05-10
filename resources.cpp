@@ -33,6 +33,8 @@ ResourcesOptions::ResourcesOptions(GameManager* gameManager) :
   theResources.push_back(boat);
   Tool binoculars("binoculars", "none", 2, false, 1, 1);
   theResources.push_back(binoculars);
+  Tool powerBar("powerBar", "none", 3, true, 5, 10);
+  theResources.push_back(powerBar);
 }
 
 Resources::Resources(GameManager* gameManager, const ResourcesOptions& options) :

@@ -12,6 +12,8 @@ SeekerOptions::SeekerOptions(GameManager* gameManager) :
 										y(0),
 										theEnergy(20),
 										theMoney(20),
+										hasBoat(false),
+										hasBinoculars(false),
 										gameMgr(gameManager)
 {
 }
@@ -19,12 +21,14 @@ SeekerOptions::SeekerOptions(GameManager* gameManager) :
 
 //constructor with user input
 Seeker::Seeker(GameManager* gameManager, const SeekerOptions& options) :
-												location(nullptr),
-												energy(options.theEnergy),
-												money(options.theMoney),
-												inventory(options.theInventory),
-												gameMgr(gameManager),
-												theIsland(gameManager->theIsland)
+										location(nullptr),
+										energy(options.theEnergy),
+										money(options.theMoney),
+										inventory(options.theInventory),
+										hasBoat(options.hasBoat),
+										hasBinoculars(options.hasBinoculars),
+										gameMgr(gameManager),
+										theIsland(gameManager->theIsland)
 {
 	location = theIsland->getLocation(options.x, options.y);
     location->visitTile();
@@ -79,6 +83,18 @@ void Seeker::move(direction_t direction) {
 
 }
 void Seeker::addTool(Tool* newTool) {
+  //deal with special tools
+  if(newTool->name == "powerBar") {
+	//eat the power bar, get the energy, don't add it to resources
+    cout << "Yum! I feel so much stronger now!" << endl;
+	energy += newTool->energySaved;
+    return;
+  } else if(newTool->name == "boat") {
+    hasBoat = true;
+  } else if (newTool->name == "binoculars") {
+    hasBinoculars = true;
+  }
+
   
   //check if tool is already owned, if so +1 that tool
   for(auto it = begin(inventory); it != end(inventory); ++it)

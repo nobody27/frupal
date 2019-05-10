@@ -28,6 +28,8 @@ public:
 	int theEnergy;
 	int theMoney;
 	vector<Tool*> theInventory;
+	bool hasBoat;
+	bool hasBinoculars;
 private:
 	GameManager* gameMgr;
 };
@@ -61,6 +63,9 @@ class Seeker
     int energy;
     int money;
     vector<Tool*> inventory;
+	//quick access to see if we have special tools
+	bool hasBoat;
+	bool hasBinoculars;
   private:
 	GameManager* gameMgr;
 	Board* theIsland;
