@@ -110,12 +110,12 @@ bool GameMenu::getAndExecuteCommand() {
 
 bool GameMenu::shopMenu()
 {
-  int choice;
+  int choice = -1;
   auto resources = gameMgr->theResources->resources; //shortcut for convenience
   cout << "entering shop" << endl;
   gameMgr->theSeeker->displayTools();
   cout << endl << "**Tools for sale**" << endl << endl;
-  cout << left << 0 << " " << "Cancel Leave Shop" << endl;
+  cout << left << 0 << ": " << "Cancel -- Leave Shop" << endl;
   gameMgr->theResources->displayResources();
   //TODO display tools and available money
   //TODO command to buy an item
@@ -129,9 +129,11 @@ bool GameMenu::shopMenu()
   resources[choice-1].price) )
   {
     cout << "Enter valid choice you can afford: ";
-    cin.clear();
     cin >> choice;
-    cin.ignore(100, '\n');
+	if(cin.fail()) {
+      cin.clear();
+      cin.ignore(100, '\n');
+    }
   }
 
   if(choice == 0)

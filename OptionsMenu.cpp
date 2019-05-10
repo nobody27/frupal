@@ -122,14 +122,20 @@ bool OptionsMenu::getAndExecuteCommand() {
 
 //TODO create utility method that does the repetative work
 bool OptionsMenu::setBoardSize() {
+	bool fail = false;
 	size_t size = 0;
 	size_t min = 2;
 	size_t max = 20;
 	cout << "Please enter desired board size in the range [ " << 
 			min << ".." << max << "]" << endl;
 	//TODO error handling and check for good range
-	cin >> size; cin.ignore(100, '\n');
-	if (!size || size < min || size > max) {
+	cin >> size; 
+	if(cin.fail()) {
+		fail = true;
+		cin.clear();
+		cin.ignore(100, '\n');
+	}
+	if (fail || size < min || size > max) {
 		cout << "invalid size -- aborting command" << endl; 
 		return false; //failure
 	}
@@ -138,14 +144,20 @@ bool OptionsMenu::setBoardSize() {
 }
 
 bool OptionsMenu::setSeekerEnergy() {
+	bool fail = false;
 	size_t energy = 0;
 	size_t min = 1;
 	size_t max = 99;
 	cout << "Please enter how much energy the seeker will start with in the range [" << 
 			min << ".." << max << "]" << endl;
 	//TODO error handling and check for good range
-	cin >> energy; cin.ignore(100, '\n');
-	if (!energy || energy < min || energy > max) {
+	cin >> energy; 
+	if(cin.fail()) {
+		fail = true;
+		cin.clear();
+		cin.ignore(100, '\n');
+	}
+	if (fail || energy < min || energy > max) {
 		cout << "invalid energy -- aborting command" << endl; 
 		return false; //failure
 	}
@@ -154,14 +166,20 @@ bool OptionsMenu::setSeekerEnergy() {
 }
 
 bool OptionsMenu::setSeekerMoney() {
+	bool fail = false;
 	size_t money = 0;
 	size_t min = 0;
 	size_t max = 99;
 	cout << "Please enter how much money the seeker will start with in the range [" <<
 			min << ".." << max << "]" << endl;
 	//TODO error handling and check for good range
-	cin >> money; cin.ignore(100, '\n');
-	if (!money || money < min || money > max) {
+	cin >> money; 
+	if(cin.fail()) {
+		fail = true;
+		cin.clear();
+		cin.ignore(100, '\n');
+	}
+	if (fail || money < min || money > max) {
 		cout << "invalid money -- aborting command" << endl; 
 		return false; //failure
 	}

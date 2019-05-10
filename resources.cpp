@@ -45,9 +45,23 @@ Resources::Resources(GameManager* gameManager, const ResourcesOptions& options) 
 void Resources::displayResources()
 {
   int i = 1;
+	//note that the price header is moved one char to the left
+	//to compensate for the "$" 
+	cout << i << " " << setw(14) << left << "name" 
+			<< " " << setw(8) << left << "price" 
+			<< " " << setw(15) << left << "energy_saved" 
+			<< " " << setw(15) << left << "number_left" 
+			<< " " << setw(15) << left << "obstacle" 
+			<< endl;
+
   for (auto it = begin(resources); it != end(resources); ++it, ++i) 
   {
-    cout << i << " " << setw(13) << left << (*it).name << right << "$" << (*it).price << endl;
+    cout << i << " " << setw(15) << left << it->name << 
+			"$" << setw(7) << left << it->price << 
+			" " << setw(15) << left << it->energySaved << 
+			" " << setw(15) << left << it->quantity << 
+			" " << setw(15) << left << it->relevantObstacle << 
+			endl;
   }
   return;
 }
