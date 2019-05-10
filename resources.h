@@ -12,7 +12,18 @@
 using namespace std;
 
 class GameManager;
-class Obstacle;
+class Obstacle{
+	public:
+
+	string name;
+	int energyCost;
+	char symbol;
+	bool removable;
+
+	Obstacle(string obstacleName, int cost, char mapSymbol, bool isRemovable);
+
+	void display();
+};
 class Tile;
 
 class Tool {
@@ -32,6 +43,8 @@ class Tool {
 		bool singleUse;
     int price;
     int quantity;
+
+	void display();
 };
 
 

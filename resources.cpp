@@ -2,6 +2,26 @@
 #include <iomanip>
 using namespace std;
 
+//Obstacle constructor
+Obstacle::Obstacle(string obstacleName, int cost, char mapSymbol, bool isRemovable){
+	name = obstacleName;
+	energyCost = cost;
+	symbol = mapSymbol;
+	removable = isRemovable;
+}
+
+void Obstacle::display(){
+cout << "\nObstacle: " << name << ", costs " << energyCost  <<
+	"\nSymbol: " << symbol <<
+	"\nRemovable: ";
+if(removable){
+	cout << "Y";
+}else{
+	cout << "N";
+}
+
+}
+
 //"default" constructor, only name and relevant obstacle provided
 Tool::Tool(string theName, string obstacleName) : energySaved(1) ,
 singleUse(true) , price(1) , quantity(1)
@@ -18,6 +38,15 @@ singleUse(isSingleUse) , price(thePrice) , quantity(theQuantity)
   name = theName;
   relevantObstacle = obstacleName;
 }
+
+void Tool::display(){
+cout << "\nTool: " << name <<
+	"\nEffective against: " << relevantObstacle <<
+	"\nSaves: " << energySaved << " energy" <<
+	"\nPrice: " << price <<
+	"\nQuantity: " << quantity;
+}
+
 
 ResourcesOptions::ResourcesOptions(GameManager* gameManager) : 
 										gameMgr(gameManager)
