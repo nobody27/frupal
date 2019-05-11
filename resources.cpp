@@ -51,24 +51,58 @@ cout << "\nTool: " << name <<
 ResourcesOptions::ResourcesOptions(GameManager* gameManager) : 
 										gameMgr(gameManager)
 {
-  //hard coded tools to start and test
-  Tool weedWacker("weedWacker", "bush", 2, false, 2, 1); 
+  /*hard coded tools to start and test
+  Tool weedWacker("WEEDWACKER", "BUSH", 2, false, 2, 1); 
   theResources.push_back(weedWacker);
-  Tool jackHammer("jackHammer", "rock", 2, false, 10, 1);
+  Tool jackHammer("JACKHAMMER", "ROCK", 2, false, 10, 1);
   theResources.push_back(jackHammer);
-  Tool chainSaw("chainSaw", "forest", 2, false, 5, 1);
+  Tool chainSaw("CHAINSAW", "TREE", 2, false, 5, 1);
   theResources.push_back(chainSaw);
-  Tool boat("boat", "water", 2, false, 20, 1);
+*/
+  Tool boat("BOAT", "WATER", 2, false, 20, 1);
   theResources.push_back(boat);
-  Tool binoculars("binoculars", "none", 2, false, 1, 1);
+  Tool binoculars("BINOCULARS", "N/A", 2, false, 1, 1);
   theResources.push_back(binoculars);
-  Tool powerBar("powerBar", "none", 3, true, 5, 10);
+  Tool powerBar("POWER BAR", "N/A", 3, true, 5, 10);
   theResources.push_back(powerBar);
+//some hard coded obstacles
+  Obstacle ROCK("ROCK", 5, '@', 1);
+  theObstacles.push_back(ROCK);  
+  Obstacle TREE("TREE", 5, '#', 1);
+  theObstacles.push_back(TREE);  
+  Obstacle BUSH("BUSH", 5, '*', 1);
+  theObstacles.push_back(BUSH);  
+  Obstacle WATER("WATER", 1, '~', 0);
+  theObstacles.push_back(WATER);  
+}
+
+void ResourcesOptions::displayResources()
+{
+  int i = 1;
+	//note that the price header is moved one char to the left
+	//to compensate for the "$" 
+	cout << "  " << setw(14) << left << "Tool" 
+			<< " " << setw(8) << left << "Price" 
+			<< " " << setw(15) << left << "Energy saved"
+			<< " " << setw(15) << left << "Quantity" 
+			<< " " << setw(15) << left << "Obstacle" 
+			<< endl;
+
+  for (auto it = begin(theResources); it != end(theResources); ++it, ++i) 
+  {
+    cout << i << " " << setw(15) << left << it->name << 
+			"$" << setw(7) << left << it->price << 
+			" " << setw(15) << left << it->energySaved << 
+			" " << setw(15) << left << it->quantity << 
+			" " << setw(15) << left << it->relevantObstacle << 
+			endl;
+  }
+  return;
 }
 
 Resources::Resources(GameManager* gameManager, const ResourcesOptions& options) :
 												resources(options.theResources),
-												gameMgr(gameManager)
+			 obstacles(options.theObstacles),				gameMgr(gameManager)
 {}
 
 void Resources::displayResources()
@@ -76,11 +110,11 @@ void Resources::displayResources()
   int i = 1;
 	//note that the price header is moved one char to the left
 	//to compensate for the "$" 
-	cout << i << " " << setw(14) << left << "name" 
-			<< " " << setw(8) << left << "price" 
-			<< " " << setw(15) << left << "energy_saved" 
-			<< " " << setw(15) << left << "number_left" 
-			<< " " << setw(15) << left << "obstacle" 
+	cout << i << " " << setw(14) << left << "Tool" 
+			<< " " << setw(8) << left << "Price" 
+			<< " " << setw(15) << left << "Energy saved"
+			<< " " << setw(15) << left << "Quantity" 
+			<< " " << setw(15) << left << "Obstacle" 
 			<< endl;
 
   for (auto it = begin(resources); it != end(resources); ++it, ++i) 
@@ -96,3 +130,12 @@ void Resources::displayResources()
 }
 
 
+void Resources::displayObstacles(){
+int i = 1;
+for(auto it = begin(obstacles); it != end(obstacles); ++it, ++i){
+//	it.display();
+
+}
+
+
+}

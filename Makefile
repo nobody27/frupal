@@ -4,7 +4,7 @@
 CFLAGS= -pedantic -O0 -Wall -std=c++14
 DFLAGS= -g
 HEADER_FILES= boardNtile.h GameManager.h MainMenu.h GameMenu.h OptionsMenu.h seeker.h resources.h
-SOURCE_FILES= frupal_main.cpp boardNtile.cpp GameManager.cpp MainMenu.cpp GameMenu.cpp OptionsMenu.cpp seeker.cpp resources.cpp
+SOURCE_FILES= frupal_main.cpp boardNtile.cpp GameManager.cpp MainMenu.cpp GameMenu.cpp OptionsMenu.cpp seeker.cpp resources.cpp options.cpp
 
 
 all: frupal  

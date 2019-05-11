@@ -54,6 +54,14 @@ private:
 	//TODO range enforsement and error handling
 	bool setSeekerMoney();
 
+
+	bool configureTools();
+	void addTool();
+	void removeTool();
+	void modifyTool(int toolNumber);
+
+	bool configureObstacles();
+
 	GameManager* gameMgr;
 
 	//option to quickly quit the game instead of just returning to MainMenu

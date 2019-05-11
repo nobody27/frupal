@@ -22,6 +22,9 @@
 
 using namespace std;
 
+//default config file name
+const string DEFAULT_CONFIG_FILE = "options.txt";
+
 //forward declarations of classes used by GameManager
 class Board;
 class BoardOptions;
@@ -42,6 +45,10 @@ public:
 	//called by main menu before starting the game
 	//initialize based on configurations (default if necessary)
 	//TODO verify the game is only initialized once unless we implement 
+
+	//function to read options from the config file
+	void readConfigFile();
+
 	//a reset command
 	void initializeGame();	
 

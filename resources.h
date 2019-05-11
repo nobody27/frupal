@@ -53,7 +53,8 @@ class ResourcesOptions {
 public:
 	ResourcesOptions(GameManager* gameManager);
 	vector<Tool> theResources;
-
+	vector<Obstacle> theObstacles;
+    void displayResources(); 
 private:
 	GameManager* gameMgr;
 };
@@ -64,7 +65,9 @@ class Resources {
     //constructor
     Resources(GameManager* gameManager, const ResourcesOptions& resourcesOptions);
     void displayResources(); 
+    void displayObstacles();
     vector<Tool> resources;
+    vector<Obstacle> obstacles;
 
   private:
 	  GameManager* gameMgr;

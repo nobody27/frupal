@@ -10,6 +10,7 @@
 
 //include our files
 #include "GameManager.h"
+#include "options.h"
 
 using namespace std;
 

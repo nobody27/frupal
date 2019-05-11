@@ -48,6 +48,8 @@ void OptionsMenu::display() const {
 	cout << setw(15) << left << "(S) set board size" << endl;
 	cout << setw(15) << left << "(E) set seeker's initial energy level" << endl;
 	cout << setw(15) << left << "(M) set seeker's initial money" << endl;
+	cout << setw(15) << left << "(T) configure tools" << endl;
+	cout << setw(15) << left << "(O) configure obstacles" << endl;
 	/////////////////////////////////////////////////////////////////////////////////
 	if(gameMgr->initialized) {
 		cout << RESET;
@@ -95,6 +97,20 @@ bool OptionsMenu::getAndExecuteCommand() {
 					unsupportedAfterInitialization = true;
 				} else {
 					again = !setSeekerMoney(); //try again if command fails
+				}
+				break;
+			case 'T':
+				if(gameMgr->initialized){
+					unsupportedAfterInitialization = true;
+				}else{
+					again = !configureTools();
+				}
+				break;
+			case 'O':
+				if(gameMgr->initialized){
+					unsupportedAfterInitialization = true;
+				}else{
+					again = !configureObstacles();
 				}
 				break;
 			//TODO other options
@@ -187,5 +203,130 @@ bool OptionsMenu::setSeekerMoney() {
 	return true; //success
 }
 
+bool OptionsMenu::configureTools(){
+char reply = ' ';
+int toolNum = 0;
+
+while(reply != 'R'){
+	cout << "\nCurrent list of tools:" << endl;
+	gameMgr->resourcesOptions->displayResources();
+
+	cout << "\n(1) Add a new tool" <<
+		"\n(2) Remove a tool" <<
+		"\n(3) Modify a tool" <<
+		"\n(R)eturn to options menu"
+		"\nYour choice: ";
+
+	cin >> reply;
+	reply = toupper(reply);
+
+	switch(reply){
+		case '1':
+			addTool();
+			break;
+		case '2':
+			removeTool();
+			break;
+		case '3':
+	cout << "\nWhich tool would you like to modify?" <<
+		"\nTool #: ";
+	cin >> toolNum;
+	modifyTool(toolNum);	
+	
+			break;
+		default:
+			break;
+	}
+}
+return true;
+}
+void OptionsMenu::addTool(){
+	char reply = ' ';
+	cout << "\nNot yet implemented. Press any key to return: ";
+	cin >> reply;
+}
+void OptionsMenu::removeTool(){
+	char reply = ' ';
+	cout << "\nNot yet implemented. Press any key to return: ";
+	cin >> reply;
+}
+
+void OptionsMenu::modifyTool(int toolNumber){
+	char reply = ' ';
+	string input;
+	Tool copy = gameMgr->resourcesOptions->theResources[toolNumber-1];
+
+while(reply != 'R'){
+copy.display();
+	cout << "\n\nWhat would you like to change?" <<
+		"\n(1) Tool name" <<
+		"\n(2) Effective obstacle" <<
+		"\n(3) Energy saved" <<
+		"\n(4) Price" <<
+		"\n(5) Quantity" << 
+		"\n(R)eturn to list of tools" << 
+		"\nYout Choice: ";
+	
+	cin >> reply;
+	reply = toupper(reply);
+	switch(reply){
+
+	case '1':
+		cout << "\nEnter a new name: ";
+		cin >> input;
+		cout << "\nChanging the name of \"" << copy.name;
+		copy.name = input;
+		cout << "\" to \"" << copy.name << "\"";
+		break;
+	case '2':
+		cout << "\nEnter a new obstacle (MUST MATCH THE NAME OF THE OBSTACLE): ";
+		cin >> input;
+		cout << "\nChanging the effective obstacle of \"" <<
+		 copy.name << "\" from \"" << copy.relevantObstacle;
+		copy.relevantObstacle = input;
+		cout << "\" to \"" << copy.relevantObstacle << "\"";
+		break;
+	case '3':
+		cout << "\nEnter a new amount: ";
+		cin >> input;
+		cout << "\nChanging the energy savings of \"" << 
+		copy.name << "\" from " << copy.energySaved;
+		copy.energySaved = stoi(input);
+		cout << " to " << copy.energySaved;	
+		break;
+	case '4':
+		cout << "\nEnter a new amount: ";
+		cin >> input;
+		cout << "\nChanging the price of \"" << 
+		copy.name << "\" from " << copy.price;
+		copy.price = stoi(input);
+		cout << " to " << copy.price;	
+		break;
+	case '5':
+		cout << "\nEnter a new amount: ";
+		cin >> input;
+		cout << "\nChanging the quantity of \"" << 
+		copy.name << "\" from " << copy.quantity;
+		copy.quantity = stoi(input);
+		cout << " to " << copy.quantity;	
+		break;
+	default:
+		break;
+	}
+}
+	gameMgr->resourcesOptions->theResources[toolNumber-1].name = copy.name;
+	gameMgr->resourcesOptions->theResources[toolNumber-1].relevantObstacle = copy.relevantObstacle;
+	gameMgr->resourcesOptions->theResources[toolNumber-1].energySaved = copy.energySaved;
+	gameMgr->resourcesOptions->theResources[toolNumber-1].price = copy.price;
+	gameMgr->resourcesOptions->theResources[toolNumber-1].quantity = copy.quantity;
+
+}
 
 
+bool OptionsMenu::configureObstacles(){
+	
+	char reply = ' ';
+	cout << "\nNot yet implemented. Press any key to return: ";
+	cin >> reply;
+return true;
+}
