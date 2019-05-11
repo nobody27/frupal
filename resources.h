@@ -55,6 +55,7 @@ public:
 	vector<Tool> theResources;
 	vector<Obstacle> theObstacles;
     void displayResources(); 
+    void displayObstacles();
 private:
 	GameManager* gameMgr;
 };

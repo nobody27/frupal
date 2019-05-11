@@ -17,3 +17,5 @@ frupal: $(HEADER_FILES) $(SOURCE_FILES)
 clean:
 	rm -f *.o frupal_main
 
+itso: frupal
+	./frupal_main

@@ -22,6 +22,9 @@ class OptionsMenu {
 public:
 	//constructor
 	OptionsMenu(GameManager* gameManager);
+
+	//Function to clearn screen
+	void clear_screen();
 	
 	//call and enter the menu
 	//return true for a quick quit
@@ -54,13 +57,15 @@ private:
 	//TODO range enforsement and error handling
 	bool setSeekerMoney();
 
-
 	bool configureTools();
 	void addTool();
 	void removeTool();
 	void modifyTool(int toolNumber);
 
 	bool configureObstacles();
+	void addObstacle();
+	void removeObstacle();
+	void modifyObstacle(int obstacleNumber);
 
 	GameManager* gameMgr;
 

@@ -15,9 +15,9 @@ cout << "\nObstacle: " << name << ", costs " << energyCost  <<
 	"\nSymbol: " << symbol <<
 	"\nRemovable: ";
 if(removable){
-	cout << "Y";
+	cout << "Yes";
 }else{
-	cout << "N";
+	cout << "No";
 }
 
 }
@@ -65,7 +65,7 @@ ResourcesOptions::ResourcesOptions(GameManager* gameManager) :
   theResources.push_back(binoculars);
   Tool powerBar("POWER BAR", "N/A", 3, true, 5, 10);
   theResources.push_back(powerBar);
-//some hard coded obstacles
+/*some hard coded obstacles
   Obstacle ROCK("ROCK", 5, '@', 1);
   theObstacles.push_back(ROCK);  
   Obstacle TREE("TREE", 5, '#', 1);
@@ -74,6 +74,7 @@ ResourcesOptions::ResourcesOptions(GameManager* gameManager) :
   theObstacles.push_back(BUSH);  
   Obstacle WATER("WATER", 1, '~', 0);
   theObstacles.push_back(WATER);  
+*/
 }
 
 void ResourcesOptions::displayResources()
@@ -84,7 +85,7 @@ void ResourcesOptions::displayResources()
 	cout << "  " << setw(14) << left << "Tool" 
 			<< " " << setw(8) << left << "Price" 
 			<< " " << setw(15) << left << "Energy saved"
-			<< " " << setw(15) << left << "Quantity" 
+			<< " " << setw(12) << left << "Quantity" 
 			<< " " << setw(15) << left << "Obstacle" 
 			<< endl;
 
@@ -93,11 +94,31 @@ void ResourcesOptions::displayResources()
     cout << i << " " << setw(15) << left << it->name << 
 			"$" << setw(7) << left << it->price << 
 			" " << setw(15) << left << it->energySaved << 
-			" " << setw(15) << left << it->quantity << 
+			" " << setw(12) << left << it->quantity << 
 			" " << setw(15) << left << it->relevantObstacle << 
 			endl;
   }
   return;
+}
+void ResourcesOptions::displayObstacles(){
+int i = 1;
+cout << "  " << setw(14) << left << "Obstacle"
+	<< " " << setw(15) << left << "Energy cost"
+	<< " " << setw(10) << left << "Symbol"
+	<< " " << setw(10) << left << "Removable" << endl;
+for(auto it = begin(theObstacles); it != end(theObstacles); ++it, ++i){
+	cout << i << " " << setw(15) << left << it->name <<
+		" " << setw(14) << left << it->energyCost <<
+		" " << setw(10) << left << it->symbol <<
+		" " << setw(10) << left;
+	if(it->removable){
+	cout << "Yes";
+	}else{
+	cout << "No";
+	}
+	cout << endl;
+}
+
 }
 
 Resources::Resources(GameManager* gameManager, const ResourcesOptions& options) :
