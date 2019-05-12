@@ -23,10 +23,6 @@ OptionsMenu::OptionsMenu(GameManager* gameManager) : gameMgr(gameManager), quit(
 	//sub-menu default constructors should be enough
 }
 
-void OptionsMenu::clear_screen(){
-	cout << "\n033[2J\033[1;1H";
-}
-
 //we might be shooting ourselves in the foot implementing a non-essential feature
 //but what the heck, why not :)
 //done - indicates that we are done with this menu and we should return to the main menu
@@ -44,35 +40,40 @@ bool OptionsMenu::call() {
 void OptionsMenu::display() const {
 	//print the options
 	//system("clear");
-	cout << "Make Your Choice: " << endl;
+	gameMgr->clear_screen();
+	cout << "\nOptions menu: " << endl;
 	if(gameMgr->initialized) {
 		cout << GRAY;
 	}
 	//// Place text for options that are not available after initialization here ////
+/*
 	cout << setw(15) << left << "(S) set board size" << endl;
 	cout << setw(15) << left << "(E) set seeker's initial energy level" << endl;
 	cout << setw(15) << left << "(M) set seeker's initial money" << endl;
-	cout << setw(15) << left << "(T) configure tools" << endl;
-	cout << setw(15) << left << "(O) configure obstacles" << endl;
+*/
+	cout << setw(15) << left << "(1) Configure general settings\n";
+	cout << setw(15) << left << "(2) Configure obstacles\n";
+	cout << setw(15) << left << "(3) Configure tools\n";
 	/////////////////////////////////////////////////////////////////////////////////
 	if(gameMgr->initialized) {
 		cout << RESET;
 	}
+	cout << setw(15) << left << "(4) Save configuration\n";
 	cout << setw(15) << left << "(R)eturn to the Main Menu" << endl;
 	cout << setw(15) << left << "(Q)uit the program" << endl;
-	cout << "\n\n\n";
+	cout << "\n>";
 	//TODO load, save
 }
-
 bool OptionsMenu::getAndExecuteCommand() {
 	bool done = false;
 	bool again = true;
 	bool unsupportedAfterInitialization = false;
+	char choice = 0;
 
 	while(again) {
 		again = false;
 		unsupportedAfterInitialization = false;
-		char choice = 0;
+		choice = 0;
 		//display the menu options
 		display();
 		//request the command
@@ -82,6 +83,14 @@ bool OptionsMenu::getAndExecuteCommand() {
 		//TODO all the code regarding initialized should be moved to methods
 		// in order to avoid code duplication
 		switch (toupper(choice)) {
+			case '1':
+				if(gameMgr->initialized){
+					unsupportedAfterInitialization = true;
+				}else{
+					configureGeneralSettings();
+				}
+				break;
+	/*		
 			case 'S':
 				if(gameMgr->initialized) {
 					unsupportedAfterInitialization = true;
@@ -103,19 +112,23 @@ bool OptionsMenu::getAndExecuteCommand() {
 					again = !setSeekerMoney(); //try again if command fails
 				}
 				break;
-			case 'T':
+*/
+			case '2':
 				if(gameMgr->initialized){
 					unsupportedAfterInitialization = true;
 				}else{
-					again = !configureTools();
+					configureObstacles();
 				}
 				break;
-			case 'O':
+			case '3':
 				if(gameMgr->initialized){
 					unsupportedAfterInitialization = true;
 				}else{
-					again = !configureObstacles();
+					configureTools();
 				}
+				break;
+			case '4':
+				gameMgr->writeConfigFile();
 				break;
 				//TODO other options
 			case 'R':
@@ -139,6 +152,46 @@ bool OptionsMenu::getAndExecuteCommand() {
 	}
 	return done;
 }
+void OptionsMenu::configureGeneralSettings(){
+	char reply = ' ';
+	while(reply != 'R'){
+		reply = ' ';
+		gameMgr->clear_screen();
+		cout << "\nWhich setting would you like to configure?" <<
+			"\n(1) Board size" <<
+			"\n(2) Amount of energy at start" <<
+			"\n(3) Amount of money at start" <<
+			"\n(4) Start position" <<
+			"\n(5) Items at start" << 
+			"\n(R)eturn to options menu" <<
+			"\n\n>";
+
+		cin >> reply;
+		reply = toupper(reply);
+		switch(reply){
+			case '1':
+				setBoardSize();
+				break;
+			case '2':
+				setSeekerEnergy();
+				break;
+			case '3':
+				setSeekerMoney();
+				break;
+			case '4':
+				cout << "\nNot yet implemented!";
+				//setSeekerPosition();
+				break;
+			case '5':
+				cout << "\nNot yet implemented!";
+				//setStartingItems();
+				break;
+			default:
+				break;	
+		}
+	}
+}
+
 
 //TODO create utility method that does the repetative work
 bool OptionsMenu::setBoardSize() {
@@ -146,8 +199,10 @@ bool OptionsMenu::setBoardSize() {
 	size_t size = 0;
 	size_t min = 2;
 	size_t max = 20;
-	cout << "Please enter desired board size in the range [ " << 
-		min << ".." << max << "]" << endl;
+	gameMgr->clear_screen();
+	cout << "\nPlease enter desired board size between " << 
+		min << " and " << max << endl
+		<< "\n>";
 	//TODO error handling and check for good range
 	cin >> size; 
 	if(cin.fail()) {
@@ -168,8 +223,10 @@ bool OptionsMenu::setSeekerEnergy() {
 	size_t energy = 0;
 	size_t min = 1;
 	size_t max = 99;
-	cout << "Please enter how much energy the seeker will start with in the range [" << 
-		min << ".." << max << "]" << endl;
+	gameMgr->clear_screen();
+	cout << "\nPlease enter how much energy the seeker will start with, between " << 
+		min << " and " << max << endl
+		<< "\n>";
 	//TODO error handling and check for good range
 	cin >> energy; 
 	if(cin.fail()) {
@@ -190,8 +247,9 @@ bool OptionsMenu::setSeekerMoney() {
 	size_t money = 0;
 	size_t min = 0;
 	size_t max = 99;
-	cout << "Please enter how much money the seeker will start with in the range [" <<
-		min << ".." << max << "]" << endl;
+	gameMgr->clear_screen();
+	cout << "\nPlease enter how much money the seeker will start with, between " <<
+		min << " and " << max << endl << "\n>";
 	//TODO error handling and check for good range
 	cin >> money; 
 	if(cin.fail()) {
@@ -207,128 +265,138 @@ bool OptionsMenu::setSeekerMoney() {
 	return true; //success
 }
 
-bool OptionsMenu::configureTools(){
+//Main tool menu
+void OptionsMenu::configureTools(){
 	char reply = ' ';
 	int toolNum = 0;
 	int min = 1;
 	int toolCount;	
 
 	while(reply != 'R'){
+	gameMgr->clear_screen();
+		//Each time the menu displays, update the tool count
 		toolCount = gameMgr->resourcesOptions->theResources.size();
-		if(toolCount < 1){
+		if(toolCount < 1){	//if there are no tools...
 			cout << "\nThere are currently no tools.";
 			cout << "\n(1) Add a new tool";
 		}
-		if(toolCount > 0){
+		if(toolCount > 0){	//If there is at least one tool...
 			cout << "\nCurrent list of tools:" << endl;
-			gameMgr->resourcesOptions->displayResources();
+			gameMgr->resourcesOptions->displayResources();	//print the tools
 			cout << "\n(1) Add a new tool";
-			cout << "\n(2) Remove a tool" <<
-				"\n(3) Modify a tool";
+			cout << "\n(2) Remove a tool" <<		//and give options
+				"\n(3) Modify a tool";			//to remove/modify
 		}
 
 		cout << "\n(R)eturn to options menu"
-			"\nYour choice: ";
+			"\n\n> ";
 
 		cin >> reply;
 		reply = toupper(reply);
 
-		switch(reply){
+		switch(reply){						
 			case '1':
-				addTool();
+				addTool();			
 				break;
 			case '2':
 				removeTool();
 				break;
 			case '3':
+				//double check tool count, maybe unnecessary?
 				toolCount = gameMgr->resourcesOptions->theResources.size();
-				if(toolCount == 1){
-					modifyTool(1);
-				}else{
+				if(toolCount == 1){	//If there is only one tool,
+					modifyTool(1);	//that tool is the one to modify
+				}else{			//otherwise, ask which one
 					cout << "\nWhich tool would you like to modify?" <<
-						"\nTool #: ";
+						"\n\n>";
 
-					cin >> toolNum;
+					cin >> toolNum;	//and verify input
 					while(cin.fail() || toolNum < min || toolNum > toolCount) {
 						cin.clear();
 						cin.ignore(100, '\n');
-						cout << "\nInvalid response. Please enter a number between " << min << " and " << toolCount;
+						cout << "\nInvalid response. " <<
+							"Please enter a number between " << 
+							min << " and " << toolCount;
 						cout << "\nWhich tool would you like to modify?" <<
-							"\nTool #: ";
+							"\n\n>";
 
 						cin >> toolNum;
 					}
 					modifyTool(toolNum);	
-					toolNum = 0;
+					toolNum = 0;	//reset choice
 				}
 				break;
 			default:
 				break;
 		}
 	}
-	return true;
 }
+//Function to add a tool
 void OptionsMenu::addTool(){
+	//initialize starting values. this should probably use a default constructor instead
 	string name = "NEW TOOL";
 	string obstacle = "OBSTACLE";
 	int energySaved = 0;
 	bool singleUse = 0;
 	int price = 0;
 	int quantity = 0;
-	int index = gameMgr->resourcesOptions->theResources.size();
 	Tool newTool(name, obstacle, energySaved, singleUse, price, quantity);
+	//get the current index of the last vector entry
+	int index = gameMgr->resourcesOptions->theResources.size();
+	//add the new tool to the vector and immediately modify it
 	gameMgr->resourcesOptions->theResources.push_back(newTool);	
 	modifyTool(index+1);
 }
+//Function to remove a tool
 void OptionsMenu::removeTool(){
-
 	int reply;
-	int min = 1;
-	int max = gameMgr->resourcesOptions->theResources.size();
-	if(max == 1){
+	int min = 1;	//lower and upper bounds for input verification set to appropriate values
+	int max = gameMgr->resourcesOptions->theResources.size();//upper bound is tool count
+	if(max == 1){	//if there is only one tool, remove that one
 		gameMgr->resourcesOptions->theResources.erase(gameMgr->resourcesOptions->theResources.begin());
-	}else{
+	}else{		//otherwise, ask which one and verify input.
 		cout << "\nEnter the number of the tool you want to remove: ";
 		cin >> reply;
 		while(cin.fail() || reply < min || reply > max) {
 			cin.clear();
 			cin.ignore(100, '\n');
 			cout << "\nInvalid response. Please enter a number between " << min << " and " << max;
-			cout << "\nEnter the number of the tool you want to remove: ";
+			cout << "\nEnter the number of the tool you want to remove\n\n>";
 			cin >> reply;
-		}
+		}	//remove the vector entry at the appropriate index
 		gameMgr->resourcesOptions->theResources.erase(gameMgr->resourcesOptions->theResources.begin()+reply-1);
 	}
 }
-
+//Function to modify a tool
 void OptionsMenu::modifyTool(int toolNumber){
 	char reply = ' ';
 	string input;
 	int value;
+	//make a local copy of the tool to be modified
 	Tool copy = gameMgr->resourcesOptions->theResources[toolNumber-1];
 
 	while(reply != 'R'){
-		copy.display();
-		cout << "\n\nWhat would you like to change?" <<
+	gameMgr->clear_screen();
+		copy.display();	//tool.display for displaying one tool
+		cout << "\n\nWhat would you like to change?" <<	
 			"\n(1) Tool name" <<
 			"\n(2) Effective obstacle" <<
 			"\n(3) Energy saved" <<
 			"\n(4) Price" <<
 			"\n(5) Quantity" << 
 			"\n(R)eturn to list of tools" << 
-			"\nYour Choice: ";
+			"\n\n>";
 
 		cin >> reply;
 		reply = toupper(reply);
-		switch(reply){
-
+		switch(reply){	//modify the relevant field, with input verification
 			case '1':
 				cout << "\nEnter a new name: ";
 				cin >> input;
-				while(cin.fail()){
+				while(cin.fail()){	//not sure if this is right for strings
 					cin.clear();
 					cin.ignore(100, '\n');
-					cout << "\nInvalid Entry. Enter a new name: ";
+					cout << "\nInvalid Entry. Enter a new name\n\n>";
 					cin >> input;
 				}
 				cout << "\nChanging the name of \"" << copy.name;
@@ -395,24 +463,28 @@ void OptionsMenu::modifyTool(int toolNumber){
 				break;
 		}
 	}
+	//set the values of the desired tool to the values of the copy, modified by the user
 	gameMgr->resourcesOptions->theResources[toolNumber-1].name = copy.name;
 	gameMgr->resourcesOptions->theResources[toolNumber-1].relevantObstacle = copy.relevantObstacle;
 	gameMgr->resourcesOptions->theResources[toolNumber-1].energySaved = copy.energySaved;
 	gameMgr->resourcesOptions->theResources[toolNumber-1].price = copy.price;
 	gameMgr->resourcesOptions->theResources[toolNumber-1].quantity = copy.quantity;
-
 }
 
-
-bool OptionsMenu::configureObstacles(){
+//obstacle configuration is esentially identical to tool configuration
+//except the fields and vector used are different
+//
+//
+//
+void OptionsMenu::configureObstacles(){
 	char reply = ' ';
 	int obstacleNum = 0;
 	int min = 1;
 	int obstacleCount;
 
 	while(reply != 'R'){
+	gameMgr->clear_screen();
 		obstacleCount = gameMgr->resourcesOptions->theObstacles.size();
-
 		if(obstacleCount < 1){
 			cout << "\nThere are currently no obstacles.";
 			cout << "\n(1) Add a new obstacle";
@@ -425,7 +497,7 @@ bool OptionsMenu::configureObstacles(){
 		}
 
 		cout << "\n(R)eturn to options menu"
-			"\nYour choice: ";
+			"\n\n>";
 
 		cin >> reply;
 		reply = toupper(reply);
@@ -443,15 +515,16 @@ bool OptionsMenu::configureObstacles(){
 					modifyObstacle(1);
 				}else{
 					cout << "\nWhich obstacle would you like to modify?" <<
-						"\nObstacle #: ";
+						"\n\n>";
 
 					cin >> obstacleNum;
 					while(cin.fail() || obstacleNum < min || obstacleNum > obstacleCount) {
 						cin.clear();
 						cin.ignore(100, '\n');
-						cout << "\nInvalid response. Please enter a number between " << min << " and " << obstacleCount;
+						cout << "\nInvalid response. Please enter a number between " << 
+							min << " and " << obstacleCount;
 						cout << "\nWhich obstacle would you like to modify?" <<
-							"\nObstacle #: ";
+							"\n\n>";
 
 						cin >> obstacleNum;
 					}
@@ -463,7 +536,6 @@ bool OptionsMenu::configureObstacles(){
 				break;
 		}
 	}
-	return true;
 }
 void OptionsMenu::addObstacle(){
 	string name = "NEW OBSTACLE";
@@ -501,6 +573,8 @@ void OptionsMenu::modifyObstacle(int obstacleNum){
 	Obstacle copy = gameMgr->resourcesOptions->theObstacles[obstacleNum-1];
 
 	while(reply != 'R'){
+	gameMgr->clear_screen();
+		cout << "\nObstacle Editor:\n";
 		copy.display();
 		cout << "\n\nWhat would you like to change?" <<
 			"\n(1) Obstacle name" <<
@@ -508,7 +582,7 @@ void OptionsMenu::modifyObstacle(int obstacleNum){
 			"\n(3) Symbol" <<
 			"\n(4) Removability" <<
 			"\n(R)eturn to list of obstacles" << 
-			"\nYour Choice: ";
+			"\n\n>";
 
 		cin >> reply;
 		reply = toupper(reply);
@@ -543,8 +617,8 @@ void OptionsMenu::modifyObstacle(int obstacleNum){
 				break;
 			case '3':
 				cout << "\nEnter a new symbol: ";
-				cin >> input;
-				while(cin.fail()){
+				cin >> input;			//not sure about this. 
+				while(cin.fail()){		
 					cin.clear();
 					cin.ignore(100, '\n');
 					cout << "\nInvalid Entry. Enter a new symbol: ";

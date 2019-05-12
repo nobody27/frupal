@@ -22,8 +22,15 @@
 
 using namespace std;
 
-//default config file name
-const string DEFAULT_CONFIG_FILE = "options.txt";
+//Change this value to enable/disable the screen clearing function
+const bool SCREEN_CLEARING_ENABLED = true;
+
+//default config file io parameters
+const string DEFAULT_CONFIG_FILE = "defaultConfig.txt";
+const string DEFAULT_CONFIG_OUTPUT = "savedConfig.txt";
+const char GENERAL_CONFIGURATION = '1';
+const char OBSTACLE_CONFIGURATION = '2';
+const char TOOL_CONFIGURATION = '3';
 
 //forward declarations of classes used by GameManager
 class Board;
@@ -46,8 +53,14 @@ public:
 	//initialize based on configurations (default if necessary)
 	//TODO verify the game is only initialized once unless we implement 
 
+	//function to clear the screen and reset cursor
+	void clear_screen();
+
 	//function to read options from the config file
 	void readConfigFile();
+
+	//function to write options to config file
+	void writeConfigFile();
 
 	//a reset command
 	void initializeGame();	

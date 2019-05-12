@@ -23,9 +23,6 @@ public:
 	//constructor
 	OptionsMenu(GameManager* gameManager);
 
-	//Function to clearn screen
-	void clear_screen();
-	
 	//call and enter the menu
 	//return true for a quick quit
 	bool call();	
@@ -49,20 +46,22 @@ private:
 	//TODO range enforsement and error handling
 	bool setBoardSize();
 
-	//read size_t arg and set the power
+	//read size_t arg and set the energy
 	//TODO range enforsement and error handling
 	bool setSeekerEnergy();
 
-	//read size_t arg and set the power
+	//read size_t arg and set the money
 	//TODO range enforsement and error handling
 	bool setSeekerMoney();
 
-	bool configureTools();
+	void configureGeneralSettings();
+
+	void configureTools();
 	void addTool();
 	void removeTool();
 	void modifyTool(int toolNumber);
 
-	bool configureObstacles();
+	void configureObstacles();
 	void addObstacle();
 	void removeObstacle();
 	void modifyObstacle(int obstacleNumber);

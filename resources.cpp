@@ -11,7 +11,8 @@ Obstacle::Obstacle(string obstacleName, int cost, char mapSymbol, bool isRemovab
 }
 
 void Obstacle::display(){
-cout << "\nObstacle: " << name << ", costs " << energyCost  <<
+cout << "\nObstacle name: " << name << 
+	"\nEnergy cose: " << energyCost  <<
 	"\nSymbol: " << symbol <<
 	"\nRemovable: ";
 if(removable){

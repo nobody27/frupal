@@ -12,16 +12,16 @@
 using namespace std;
 
 class GameManager;
+//obstacle class contains
 class Obstacle{
 	public:
-
-	string name;
-	int energyCost;
-	char symbol;
-	bool removable;
-
+	string name;	//a name, which must match the relevantObstacle field in the tool,
+	int energyCost;	//the additional energy cost imposed by the obstacle,
+	char symbol;	//the symbol that the obstacle will display on the map,
+	bool removable;	//whether or not the obstacle is removable, e.g. water is not
+	//default constructor
 	Obstacle(string obstacleName, int cost, char mapSymbol, bool isRemovable);
-
+	//display this obstacle. Used in configuration
 	void display();
 };
 class Tile;
