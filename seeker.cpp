@@ -63,7 +63,7 @@ void Seeker::move(direction_t direction) {
 	//TODO we need a better interface
 	int x = getLocation()->xValue + (direction == EAST) - (direction == WEST);
 	int y = getLocation()->yValue + (direction == NORTH) - (direction == SOUTH);
-	
+  Obstacle* theObstacle = theIsland->getLocation(x,y)->obstacle;	
 	if (y >= theIsland->size() )
 		cout << endl << "You cannot move north!";
 	else if (y < 0 )
@@ -72,7 +72,25 @@ void Seeker::move(direction_t direction) {
 		cout << endl << "You cannot move east!";
 	else if (x < 0 )
 		cout << endl << "You cannot move west!";
-	else
+  //theres an obstacle at that tile
+	else if (theObstacle != NULL)
+  {
+    cout << "There's a " << theObstacle->name << ". ";
+    
+    for (auto it = begin(inventory); it != end(inventory); ++it, ++i)
+    {
+      if (it->relevantObstacle == theObstacle->name)
+      {
+        cout << "Would you like to use your " << it->relevantObstacle << "?" << endl;
+      }
+      else
+      {
+        cout << "You don't have a relevant Tool, would you like to try to get "
+        << "through the obstacle by hand?" << endl;
+      }
+    }
+  }
+  else
 	{
 		//TODO check you have energy to move here
 		location = theIsland->getLocation(x,y);

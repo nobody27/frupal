@@ -47,7 +47,8 @@ Tile::Tile(int x, int y, Terrain* theTerrain): xValue(x),
 				money(1), //TODO randomize this
 				terrain(theTerrain),
 				//for now we find one unit of money on each new tile
-				visited(false)
+				visited(false),
+        obstacle(NULL)
 {
 				//make sure that terrain is not a null pointer
 				assert(terrain);

@@ -15,6 +15,7 @@
 //forward declarations
 class GameManager;
 class seeker; //TODO is this needed?
+class Obstacle;
 
 using namespace std;
 
@@ -60,12 +61,12 @@ class Tile
 								//once you reach the tile you immediately pick it up and
 								//this field goes to 0
 								int money;
-
-				private:
+								Obstacle* obstacle; //pointer for when we have obstacle class
+				
+        private:
 								Terrain* terrain;
 								string treasureName;
 								char treasureLetter;
-								//Obstacle* obstacle pointer for when we have obstacle class
 								bool visited; //has the seeker visited this tile
 
 };
