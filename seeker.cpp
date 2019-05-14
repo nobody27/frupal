@@ -110,21 +110,13 @@ void Seeker::addTool(Tool* newTool) {
     hasBinoculars = true;
   }
 
-  
   //check if tool is already owned, if so +1 that tool
   for(auto it = begin(inventory); it != end(inventory); ++it)
   {
-    if(newTool->name == (*it)->name)
+    if(newTool == (*it))
     {
-      for(auto it2 = begin(gameMgr->theResources->resources); it2 !=
-      end(gameMgr->theResources->resources); ++it2)
-      {
-        if (newTool->name == it2->name)
-        {
-          it2->quantity++;
-          return;
-        }
-      }
+      newTool->quantity++; 
+      return;
     }
   }
 
@@ -139,12 +131,11 @@ char Seeker::moveObstacle(Tile* nextTile)
     Obstacle* theObstacle = nextTile->obstacle;
 
     //find tool
-    for (auto it = begin(gameMgr->theResources->resources); it !=
-    end(gameMgr->theResources->resources); ++it)
+    for (auto it = begin(inventory); it != end(inventory); ++it)
     {
-      if (it->relevantObstacle == theObstacle->name)
+      if ((*it)->relevantObstacle == theObstacle->name)
       {
-        relevantTool = &(*it); 
+        relevantTool = (*it); 
         break;
       }
     }
@@ -163,11 +154,11 @@ char Seeker::moveObstacle(Tile* nextTile)
       //reduce tool count by 1 and/or remove from inventory 
       if (relevantTool->quantity == 1)
       {
+
         for (auto it = begin(inventory); it != end(inventory); ++it)
         {
           if ((*it) == relevantTool)
           {
-            relevantTool->quantity = 0;
             inventory.erase(it);
             break;
           }
