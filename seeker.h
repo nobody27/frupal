@@ -54,7 +54,7 @@ class Seeker
 	void addTool(Tool* newTool);
     //items
     //TODO need access to tools in the event of a single use tool
-    //TODO bool useTool();
+    char moveObstacle(Tile* nextTile);
     //changed this to addTool for scenarios where tools are found and not
     //purchased
     //TODO bool addTool();

@@ -200,6 +200,7 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 				}
         //OBSTACLE TESTING *********
         boardArray[1][1]->obstacle = new Obstacle("BUSH", 5, 'B', true);
+        boardArray[2][2]->obstacle = new Obstacle("ROCK", 10, 'R', false);
 }
 
 Board::~Board()

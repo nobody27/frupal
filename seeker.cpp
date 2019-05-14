@@ -63,7 +63,8 @@ void Seeker::move(direction_t direction) {
 	//TODO we need a better interface
 	int x = getLocation()->xValue + (direction == EAST) - (direction == WEST);
 	int y = getLocation()->yValue + (direction == NORTH) - (direction == SOUTH);
-  Obstacle* theObstacle = theIsland->getLocation(x,y)->obstacle;	
+  Tile* nextTile = theIsland->getLocation(x,y);
+  Obstacle* theObstacle = nextTile->obstacle;
   char choice;	
   if (y >= theIsland->size() ) {
 		cout << endl << "You cannot move north!";
@@ -84,46 +85,7 @@ void Seeker::move(direction_t direction) {
   //theres an obstacle at that tile
 	else if (theObstacle != NULL)
   {
-    cout << "There's a " << theObstacle->name << ". ";
-    for (auto it = begin(inventory); it != end(inventory); ++it)
-    {
-      //if you've got the tool
-      if ((*it)->relevantObstacle == theObstacle->name)
-      {
-        cout << "Use " << (*it)->name << "? " << endl;
-        cin >> choice;
-        choice = toupper(choice);
-        if (choice == 'Y')
-        {
-          //set obstacle to null
-          //reduce energy by smaller amount
-          //reduce tool count
-          //move player
-          cout << "you used your " << (*it)->name << " and got through the " << theObstacle->name << endl;
-        }
-        else
-        {
-          //do nothing
-        }
-      }
-      //if you don't have the tool
-      else
-      {
-        cout << "You don't have a relevant Tool, would you like to try to get "
-        << "through by hand? " << endl;
-        cin >> choice;
-        choice = toupper(choice);
-        if (choice == 'Y')
-        {
-          
-        }
-        else
-        {
-
-        }
-
-      }
-    }
+    choice = moveObstacle(nextTile); 
   }
   //TODO check you have energy to move here
   if (choice == 'Y' || theObstacle == NULL)
@@ -152,10 +114,17 @@ void Seeker::addTool(Tool* newTool) {
   //check if tool is already owned, if so +1 that tool
   for(auto it = begin(inventory); it != end(inventory); ++it)
   {
-    if(newTool == (*it))
+    if(newTool->name == (*it)->name)
     {
-      (*it)->quantity++;
-      return;
+      for(auto it2 = begin(gameMgr->theResources->resources); it2 !=
+      end(gameMgr->theResources->resources); ++it2)
+      {
+        if (newTool->name == it2->name)
+        {
+          it2->quantity++;
+          return;
+        }
+      }
     }
   }
 
@@ -163,10 +132,76 @@ void Seeker::addTool(Tool* newTool) {
   inventory.push_back(newTool);  
 }
 
-/*
-bool Seeker::useTool()
+char Seeker::moveObstacle(Tile* nextTile)
 {
-return false;  //TODO  
+    char choice; 
+    Tool *relevantTool = NULL;
+    Obstacle* theObstacle = nextTile->obstacle;
+
+    //find tool
+    for (auto it = begin(gameMgr->theResources->resources); it !=
+    end(gameMgr->theResources->resources); ++it)
+    {
+      if (it->relevantObstacle == theObstacle->name)
+      {
+        relevantTool = &(*it); 
+        break;
+      }
+    }
+    
+    //if you've got the tool let them move and tell them they cleared obstacle
+    if (relevantTool != NULL)
+    {
+      //remove the obstacle 
+      if (theObstacle->removable)
+      {
+        nextTile->obstacle = NULL;
+      }
+      //currently does not still add additional cost on top of moving because we
+      //don't check with the user
+
+      //reduce tool count by 1 and/or remove from inventory 
+      if (relevantTool->quantity == 1)
+      {
+        for (auto it = begin(inventory); it != end(inventory); ++it)
+        {
+          if ((*it) == relevantTool)
+          {
+            relevantTool->quantity = 0;
+            inventory.erase(it);
+            break;
+          }
+        }
+      }
+      relevantTool->quantity -= 1;
+      
+      cout << "You used your " << relevantTool->name << " to get past the " 
+      << theObstacle->name << "." << endl;
+      return 'Y'; 
+    }
+
+    //if they don't have the tool ask them
+    else
+    {
+      cout << "You don't have a relevant Tool, would you like waste the extra "
+      << theObstacle->energyCost << " energy to get through by hand? ";
+      cin >> choice;
+      choice = toupper(choice);
+      if (choice == 'Y')
+      {
+        if (theObstacle->removable)
+        {
+          nextTile->obstacle = NULL;
+        }
+        energy -= theObstacle->energyCost;
+        cout << "You managed to get through the " << theObstacle->name 
+        << " with your bare hands!" << endl;
+        return choice;
+      }
+      else
+      {
+        return 'N';
+      }
+    }
 }
-*/
 
