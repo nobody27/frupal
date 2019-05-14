@@ -52,10 +52,10 @@ cout << "\nTool: " << name <<
 ResourcesOptions::ResourcesOptions(GameManager* gameManager) : 
 										gameMgr(gameManager)
 {
-  /*hard coded tools to start and test
+  //hard coded tools to start and test
   Tool weedWacker("WEEDWACKER", "BUSH", 2, false, 2, 1); 
   theResources.push_back(weedWacker);
-  Tool jackHammer("JACKHAMMER", "ROCK", 2, false, 10, 1);
+  /*Tool jackHammer("JACKHAMMER", "ROCK", 2, false, 10, 1);
   theResources.push_back(jackHammer);
   Tool chainSaw("CHAINSAW", "TREE", 2, false, 5, 1);
   theResources.push_back(chainSaw);

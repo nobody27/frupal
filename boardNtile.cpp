@@ -198,6 +198,8 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 												boardArray[i][j]=new Tile(i,j, terrainMap["grassy_meadow"]);
 								}
 				}
+        //OBSTACLE TESTING *********
+        boardArray[1][1]->obstacle = new Obstacle("BUSH", 5, 'B', true);
 }
 
 Board::~Board()

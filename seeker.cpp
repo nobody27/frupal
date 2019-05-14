@@ -64,41 +64,76 @@ void Seeker::move(direction_t direction) {
 	int x = getLocation()->xValue + (direction == EAST) - (direction == WEST);
 	int y = getLocation()->yValue + (direction == NORTH) - (direction == SOUTH);
   Obstacle* theObstacle = theIsland->getLocation(x,y)->obstacle;	
-	if (y >= theIsland->size() )
+  char choice;	
+  if (y >= theIsland->size() ) {
 		cout << endl << "You cannot move north!";
-	else if (y < 0 )
+    return;
+    }
+	else if (y < 0 ) {
 		cout << endl << "You cannot move south!";
-	else if (x >= theIsland->size() )
+    return;
+    }
+	else if (x >= theIsland->size() ) {
 		cout << endl << "You cannot move east!";
-	else if (x < 0 )
+    return;
+    }
+	else if (x < 0 ) {
 		cout << endl << "You cannot move west!";
+    return;
+    }
   //theres an obstacle at that tile
 	else if (theObstacle != NULL)
   {
     cout << "There's a " << theObstacle->name << ". ";
-    
-    for (auto it = begin(inventory); it != end(inventory); ++it, ++i)
+    for (auto it = begin(inventory); it != end(inventory); ++it)
     {
-      if (it->relevantObstacle == theObstacle->name)
+      //if you've got the tool
+      if ((*it)->relevantObstacle == theObstacle->name)
       {
-        cout << "Would you like to use your " << it->relevantObstacle << "?" << endl;
+        cout << "Use " << (*it)->name << "? " << endl;
+        cin >> choice;
+        choice = toupper(choice);
+        if (choice == 'Y')
+        {
+          //set obstacle to null
+          //reduce energy by smaller amount
+          //reduce tool count
+          //move player
+          cout << "you used your " << (*it)->name << " and got through the " << theObstacle->name << endl;
+        }
+        else
+        {
+          //do nothing
+        }
       }
+      //if you don't have the tool
       else
       {
         cout << "You don't have a relevant Tool, would you like to try to get "
-        << "through the obstacle by hand?" << endl;
+        << "through by hand? " << endl;
+        cin >> choice;
+        choice = toupper(choice);
+        if (choice == 'Y')
+        {
+          
+        }
+        else
+        {
+
+        }
+
       }
     }
   }
-  else
-	{
-		//TODO check you have energy to move here
-		location = theIsland->getLocation(x,y);
-	    theIsland->getLocation(x,y)->visitTile();
-	    energy -= theIsland->getLocation(x,y)->getTerrain()->exertion;
-		money += theIsland->getLocation(x,y)->takeMoney();
-	}
-
+  //TODO check you have energy to move here
+  if (choice == 'Y' || theObstacle == NULL)
+  {
+    location = theIsland->getLocation(x,y);
+    theIsland->getLocation(x,y)->visitTile();
+    energy -= theIsland->getLocation(x,y)->getTerrain()->exertion;
+    money += theIsland->getLocation(x,y)->takeMoney();
+  }
+  return;
 }
 void Seeker::addTool(Tool* newTool) {
   //deal with special tools
