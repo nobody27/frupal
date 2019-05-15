@@ -44,10 +44,9 @@ void Terrain::setTerrainType(string theName, string theShortName)
 //by default set terrain to grassy meadow for now
 Tile::Tile(int x, int y, Terrain* theTerrain): xValue(x), 
 				yValue(y),
-				money(1), //TODO randomize this
+				money( (rand()%9)), //TODO randomize this - > now random between 0-9 jb
         obstacle(NULL),
 				terrain(theTerrain),
-				//for now we find one unit of money on each new tile
 				visited(false)
 {
 				//make sure that terrain is not a null pointer
@@ -75,11 +74,11 @@ void Tile::tileDisplay() const
 				if(money) 
 				{	
 					cout << "There is gold here with a value of $" << 
-						money << "!!" << endl;
+						money << "!!";
 				} 
 				else 
 				{
-					cout << "There is no gold left to find here." << endl;
+					cout << "There is no gold left to find here.";
 				} 
 				if (treasureChar == 'n')
 				{
@@ -99,6 +98,9 @@ void Tile::displayLocation() const
 				terrain->display();
 				if(treasureChar == 'J')
 				{
+								cout << "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
+								cout << "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
+								cout << "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
 								cout << "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
 								cout << "WELL DONE! You are the greatest treasure seeker ever and you have found the jewel!" <<endl;
 				}
@@ -246,11 +248,11 @@ void Board::displayIsland() const
 								displayRow(j);
 				}
 
-				cout << "Key:"<<endl;
-				cout << "	Top left space is terrain type:	G=Grassy Meadow, B=Bog, F=Forrest, W=Water, X=Unrevealed"<<endl;
-				cout << "	Top center is _ unless seeker is there. SEEKER is '@'." <<endl; 
-				cout << "	Top right is for treasure. E=Excavation site until searched" <<endl;
-				cout << "	Bottom left is for obstacles." <<endl<<endl;
+				cout <<endl;
+				cout << "KEY:  Top left shows terrain type:	G=Grassy Meadow, B=Bog, F=Forrest, W=Water, X=Unrevealed"<<endl;
+				cout << "      Top center shows the SEEKER's location "<<BOLDRED << "@" << RESET;
+				cout << "      Top right is the Excavation site(E). Reveals to 'n' none or 'J' Jewel." <<endl;
+				// cout << "  Bottom left is for obstacles." <<endl<<endl;
 				//TODO note to team - spaces could hold info about tile, (obstacles, tools, food etc) 
 				// display seeker
 
@@ -346,24 +348,24 @@ void Board::displayLocation(Tile* location)
 								boardArray[x][y+1]->tileDisplay();
 				}
 				if (y-1 < 0)
-								cout << endl << "To the south lies ocean" << endl;
+								cout <<  "To the south lies ocean" << endl;
 				else {
 								boardArray[x][y-1]->visitTile();
-								cout << endl << "To the south is a ";
+								cout << "To the south is a ";
 								boardArray[x][y-1]->tileDisplay();
 				}
 				if (x+1 >= boardSize)
-								cout << endl << "To the east lies ocean" << endl;
+								cout << "To the east lies ocean" << endl;
 				else {
 								boardArray[x+1][y]->visitTile();
-								cout << endl << "To the east is a ";
+								cout << "To the east is a ";
 								boardArray[x+1][y]->tileDisplay();
 				}
 				if (x-1 < 0)
-								cout << endl << "To the west lies ocean" << endl;
+								cout << "To the west lies ocean" ;
 				else {
 								boardArray[x-1][y]->visitTile();
-								cout << endl << "To the west is a ";
+								cout << "To the west is a ";
 								boardArray[x-1][y]->tileDisplay();
 				}
 }
