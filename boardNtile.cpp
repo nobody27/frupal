@@ -52,7 +52,9 @@ Tile::Tile(int x, int y, Terrain* theTerrain): xValue(x),
 {
 				//make sure that terrain is not a null pointer
 				assert(terrain);
-				treasureName=("none"); //no treasure - later string withe description
+				//treasureName=("none"); //no treasure - later string withe description
+				if(treasureChar != 'J') treasureChar = 'n';
+				
 				//make sure that the amount of money is not negative and also make sure
 				//it is not more than one char long
 				assert(money >= 0 && money <=9);
@@ -79,15 +81,15 @@ void Tile::tileDisplay() const
 				{
 					cout << "There is no gold left to find here." << endl;
 				} 
-				if (treasureName == "none")
+				if (treasureChar == 'n')
 				{
-				cout << "Bummer, there is no treasure here. ";
+				cout << "Bummer, the Jewel is not here. "<<endl;
 				}
 				else
 				{
-					cout << "There is treasure here!!!!!! The treasure is " << treasureName<< ". ";
+					cout << "The Jewel is here!!!" <<endl;
 				}
-				cout << "There is an obstacle here, it is a __________." <<endl;
+				//cout << "There is an obstacle here, it is a __________." <<endl;
 				//cout << "	" << (visited ? "visited by seeker" : "undiscovered") << endl;
 }
 
@@ -95,6 +97,11 @@ void Tile::displayLocation() const
 {
 				cout << "You are standing in a ";
 				terrain->display();
+				if(treasureChar == 'J')
+				{
+								cout << "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
+								cout << "WELL DONE! You are the greatest treasure seeker ever and you have found the jewel!" <<endl;
+				}
 }
 
 
@@ -126,7 +133,7 @@ void Tile::printIslandTile(Tile* location)
 				}
 				else
 				{
-								cout << "n"; //treasureLetter;
+								cout << treasureChar;
 				}
 }
 
@@ -201,6 +208,9 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
         //OBSTACLE TESTING *********
         boardArray[1][1]->obstacle = new Obstacle("BUSH", 5, 'B', true);
         boardArray[2][2]->obstacle = new Obstacle("ROCK", 10, 'R', false);
+				//functions here to add Jewel
+				Tile* jewelTile = randJewelTile();
+				jewelTile->treasureChar = 'J';
 }
 
 Board::~Board()
@@ -303,7 +313,22 @@ Tile* Board::getLocation(int x, int y) const {
 				return boardArray[x][y];
 }
 
-//Tile* Board::randTreasureLoc()
+//randJewelTile return a Tile pointer that is in a random location in the top right quadarnt of the board
+//it takes no input
+//later could add cases to also make it possible for Jewel to be in top left or bottom right
+Tile* Board::randJewelTile()
+{
+				int jewelX = 0;
+				int jewelY = 0;
+				int halfBoard = .5*boardSize; //this should round down and give an int
+				int rand1 = (rand())%halfBoard; // rand1 will be a random int between 0 and boardsize so that when subtracted
+				//from boardsize will be in top right quadrant - jewel will be in the quarter of the board furthest from the start
+				jewelX = boardSize - 1 - rand1;
+				int rand2 = (rand())%halfBoard;
+				jewelY = boardSize - 1 - rand2;
+				cerr << jewelX << ", " <<jewelY <<endl;
+				return boardArray[jewelX][jewelY];
+}
 				
 
 

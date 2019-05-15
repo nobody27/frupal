@@ -1,4 +1,3 @@
-
 //ATeam Jessica, Elyse, Max, Leior, John
 //cs300
 //April 10, 2019
@@ -59,14 +58,13 @@ class Tile
 								//After you exhert energy to reach a tile you look around
 								//and find money/gold laying around at this value
 								//once you reach the tile you immediately pick it up and
-								//this field goes to 0
+								//this field goes to 0  TODO I think this works everywhere except the start tile - it stays 1.
 								int money;
-								Obstacle* obstacle; //pointer for when we have obstacle class
-				
+								Obstacle* obstacle; //pointer to Obstacle instance on each tile
+								char treasureChar;	//char to hold "J" where jewel is!
         private:
 								Terrain* terrain;
-								string treasureName;
-								char treasureLetter;
+								//string treasureName;
 								bool visited; //has the seeker visited this tile
 
 };
@@ -96,7 +94,7 @@ class Board
 								void visitAllTiles(); //reveal all for working display for coders
 								void addResource(); 
 								Tile*  getLocation(int x, int y) const;
-
+								Tile* randJewelTile();
 								int size() const {return boardSize;}
 				private:
 								GameManager* gameMgr;
