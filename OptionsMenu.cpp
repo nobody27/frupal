@@ -39,7 +39,6 @@ bool OptionsMenu::call() {
 
 void OptionsMenu::display() const {
 	//print the options
-	//system("clear");
 	gameMgr->clear_screen();
 	cout << "\nOptions menu: " << endl;
 	if(gameMgr->initialized) {
@@ -78,6 +77,7 @@ bool OptionsMenu::getAndExecuteCommand() {
 		display();
 		//request the command
 		cin >> choice;
+		cin.ignore(100, '\n');
 		//capitalize and check for legal input
 
 		//TODO all the code regarding initialized should be moved to methods

@@ -150,7 +150,12 @@ void Tile::printIslandTileR2(Tile* location)
 				}
 				else
 				{
-					cout<< "o"; // later obstacleLetter;
+					if(obstacle) {
+						cout << obstacle->symbol; 
+					} else {
+						cout << "o"; // no obstacle;
+						
+					}
 					cout << money;
 				}
 				//space to expand functionality
@@ -332,40 +337,55 @@ Tile* Board::randJewelTile()
 				return boardArray[jewelX][jewelY];
 }
 				
+void Board::visitLocationAndNeighbors(Tile* location)
+{
+		int x = location->xValue;
+		int y = location->yValue;
+		
+		boardArray[x][y]->visitTile();
+		if (y+1 < boardSize) {
+				boardArray[x][y+1]->visitTile();
+		}
+		if (y > 0) {
+				boardArray[x][y-1]->visitTile();
+		}
+		if (x+1 < boardSize) {
+				boardArray[x+1][y]->visitTile();
+		}
+		if (x > 0) {
+				boardArray[x-1][y]->visitTile();
+		}
 
+}
 
 void Board::displayLocation(Tile* location) 
 {
 				int x = location->xValue;
 				int y = location->yValue;
+				visitLocationAndNeighbors(location);
 				location->displayLocation();
-				if (y+1 >= boardSize)
+				if (y+1 >= boardSize) {
 								cout << endl << "To the north lies ocean" << endl;
-				else {
-								//cerr <<endl << "Now checking new displayTile() function" <<endl;
-								boardArray[x][y+1]->visitTile();
+				} else {
 								cout << endl << "To the north is a ";
 								boardArray[x][y+1]->tileDisplay();
 				}
-				if (y-1 < 0)
-								cout <<  "To the south lies ocean" << endl;
-				else {
-								boardArray[x][y-1]->visitTile();
-								cout << "To the south is a ";
+				if (y-1 < 0) {
+								cout << endl << "To the south lies ocean" << endl;
+				} else {
+								cout << endl << "To the south is a ";
 								boardArray[x][y-1]->tileDisplay();
 				}
-				if (x+1 >= boardSize)
-								cout << "To the east lies ocean" << endl;
-				else {
-								boardArray[x+1][y]->visitTile();
-								cout << "To the east is a ";
+				if (x+1 >= boardSize) {
+								cout << endl << "To the east lies ocean" << endl;
+				} else {
+								cout << endl << "To the east is a ";
 								boardArray[x+1][y]->tileDisplay();
 				}
-				if (x-1 < 0)
-								cout << "To the west lies ocean" ;
-				else {
-								boardArray[x-1][y]->visitTile();
-								cout << "To the west is a ";
+				if (x-1 < 0) {
+								cout << endl << "To the west lies ocean" << endl;
+				} else {
+								cout << endl << "To the west is a ";
 								boardArray[x-1][y]->tileDisplay();
 				}
 }

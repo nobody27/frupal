@@ -38,11 +38,6 @@ bool GameMenu::call() {
 
 void GameMenu::display() const {
 	//print the options
-	gameMgr->theSeeker->display(); //this is just to visit the neighboring locations
-	system("clear");
-	gameMgr->theIsland->displayIsland();
-	gameMgr->theSeeker->display();
-	//TODO display the board and your locations
     cout << "\n";
 	cout << "Make Your Choice: " << endl;
 	cout << setw(15) << left << "(I) move North" << endl;
@@ -50,6 +45,8 @@ void GameMenu::display() const {
 	cout << setw(15) << left << "(K) move South" << endl;
 	cout << setw(15) << left << "(L) move East" << endl;
     cout << setw(15) << left << "(B)uy an item" << endl;
+	cout << setw(15) << left << "(D)isplay the seeker's location" << endl;
+    //cout << setw(15) << left << "(M) display the full map" << endl; //TODO
 	cout << setw(15) << left << "(R)eturn to the Main Menu" << endl;
 	cout << setw(15) << left << "(Q)uit the program" << endl;
 	cout << "\n>";
@@ -67,6 +64,7 @@ bool GameMenu::getAndExecuteCommand() {
         display();
         //request the command
         cin >> choice;
+		cin.ignore(100, '\n');
         switch (toupper(choice)) {
             case 'I':
                 gameMgr->theSeeker->move(Seeker::NORTH);
@@ -81,6 +79,12 @@ bool GameMenu::getAndExecuteCommand() {
                 gameMgr->theSeeker->move(Seeker::EAST);
                 break;
                 //TODO buy tool, use tool, view board
+			case 'D':
+				gameMgr->displayIlsandAndSeeker();
+				//gameMgr->clear_screen();
+				//gameMgr->theIsland->displayIsland();
+				//gameMgr->theSeeker->display();
+				break;
             case 'R':
                 cout << "returning to main menu" << endl;
                 done = true;

@@ -90,6 +90,7 @@ class Board
 								void display() const;
 								void displayIsland() const;
 								void displayRow(int rowNumber) const;
+								void visitLocationAndNeighbors(Tile* location);
 								void displayLocation(Tile* location);
 								void visitAllTiles(); //reveal all for working display for coders
 								void addResource(); 

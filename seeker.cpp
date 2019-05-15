@@ -63,10 +63,10 @@ void Seeker::move(direction_t direction) {
 	//TODO we need a better interface
 	int x = getLocation()->xValue + (direction == EAST) - (direction == WEST);
 	int y = getLocation()->yValue + (direction == NORTH) - (direction == SOUTH);
-  Tile* nextTile = theIsland->getLocation(x,y);
-  Obstacle* theObstacle = nextTile->obstacle;
-  char choice;	
-  if (y >= theIsland->size() ) {
+    char choice;	
+    Tile* nextTile = nullptr; 
+    Obstacle* theObstacle = nullptr;
+    if (y >= theIsland->size() ) {
 		cout << endl << "You cannot move north!";
     return;
     }
@@ -82,21 +82,29 @@ void Seeker::move(direction_t direction) {
 		cout << endl << "You cannot move west!";
     return;
     }
-  //theres an obstacle at that tile
-	else if (theObstacle != NULL)
-  {
-    choice = moveObstacle(nextTile); 
-  }
-  //TODO check you have energy to move here
-  if (choice == 'Y' || theObstacle == NULL)
-  {
-    location = theIsland->getLocation(x,y);
-    theIsland->getLocation(x,y)->visitTile();
-    energy -= theIsland->getLocation(x,y)->getTerrain()->exertion;
-    money += theIsland->getLocation(x,y)->takeMoney();
-  }
-  return;
-}
+    //theres an obstacle at that tile
+	else
+    {
+      nextTile = theIsland->getLocation(x,y);
+      theObstacle = nextTile->obstacle;
+      if (theObstacle) {
+		choice = moveObstacle(nextTile); 
+      }
+    }
+    //TODO check you have energy to move here
+    if (choice == 'Y' || !theObstacle)
+    {
+      location = theIsland->getLocation(x,y);
+      theIsland->getLocation(x,y)->visitTile();
+      energy -= theIsland->getLocation(x,y)->getTerrain()->exertion;
+      money += theIsland->getLocation(x,y)->takeMoney();
+    }
+	cout << "\n\n\n";
+	cout << "press ENTER to continue";
+	cin.get();
+	gameMgr->displayIlsandAndSeeker();
+    return;
+} 
 void Seeker::addTool(Tool* newTool) {
   //deal with special tools
   if(newTool->name == "powerBar") {
@@ -124,6 +132,8 @@ void Seeker::addTool(Tool* newTool) {
   inventory.push_back(newTool);  
 }
 
+
+//TODO need to check there is enough energy
 char Seeker::moveObstacle(Tile* nextTile)
 {
     char choice; 
@@ -141,7 +151,7 @@ char Seeker::moveObstacle(Tile* nextTile)
     }
     
     //if you've got the tool let them move and tell them they cleared obstacle
-    if (relevantTool != NULL)
+    if (relevantTool)
     {
       //remove the obstacle 
       if (theObstacle->removable)
@@ -150,22 +160,23 @@ char Seeker::moveObstacle(Tile* nextTile)
       }
       //currently does not still add additional cost on top of moving because we
       //don't check with the user
-
-      //reduce tool count by 1 and/or remove from inventory 
-      if (relevantTool->quantity == 1)
-      {
-
-        for (auto it = begin(inventory); it != end(inventory); ++it)
+		
+      if(relevantTool->singleUse) {
+        //reduce tool count by 1 and/or remove from inventory 
+        if (relevantTool->quantity == 1)
         {
-          if ((*it) == relevantTool)
+
+          for (auto it = begin(inventory); it != end(inventory); ++it)
           {
-            inventory.erase(it);
-            break;
+            if ((*it) == relevantTool)
+            {
+              inventory.erase(it);
+              break;
+            }
           }
         }
+        relevantTool->quantity -= 1;
       }
-      relevantTool->quantity -= 1;
-      
       cout << "You used your " << relevantTool->name << " to get past the " 
       << theObstacle->name << "." << endl;
       return 'Y'; 
@@ -174,9 +185,12 @@ char Seeker::moveObstacle(Tile* nextTile)
     //if they don't have the tool ask them
     else
     {
-      cout << "You don't have a relevant Tool, would you like waste the extra "
-      << theObstacle->energyCost << " energy to get through by hand? ";
+      cout << "You don't have a relevant Tool to deal with the " << theObstacle->name 
+			<< ", would you like waste the extra "
+      		<< theObstacle->energyCost << " energy to get through by hand? [Y/N]" 
+			<< endl;
       cin >> choice;
+      cin.ignore(100,'\n');
       choice = toupper(choice);
       if (choice == 'Y')
       {
