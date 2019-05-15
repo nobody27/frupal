@@ -45,10 +45,10 @@ void Terrain::setTerrainType(string theName, string theShortName)
 Tile::Tile(int x, int y, Terrain* theTerrain): xValue(x), 
 				yValue(y),
 				money(1), //TODO randomize this
+        obstacle(NULL),
 				terrain(theTerrain),
 				//for now we find one unit of money on each new tile
-				visited(false),
-        obstacle(NULL)
+				visited(false)
 {
 				//make sure that terrain is not a null pointer
 				assert(terrain);
