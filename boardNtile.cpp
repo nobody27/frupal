@@ -213,6 +213,7 @@ Board::~Board()
 				}
 }
 
+
 void Board::display() const
 {
 				cout << "Displaying your island: " <<endl;
@@ -301,6 +302,9 @@ Tile* Board::getLocation(int x, int y) const {
 				}
 				return boardArray[x][y];
 }
+
+//Tile* Board::randTreasureLoc()
+				
 
 
 void Board::displayLocation(Tile* location) 

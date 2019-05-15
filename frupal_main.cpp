@@ -7,13 +7,22 @@
 
 //include libraries
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 //include our files
 #include "GameManager.h"
 
 using namespace std;
 
+
 int main(int argc, char* argv[]) {
+	//seed rand function
+	srand(time(0));
+	int random = rand();
+	cerr << "seed = " << time(0) <<endl;
+	cerr << "random = " << random << endl;
+
 	//clear the screen	
 	system("clear");
 
