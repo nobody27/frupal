@@ -24,13 +24,13 @@ using namespace std;
 class Terrain {
 				public:
 								//constructor
-								Terrain(string theName, string theShortName);
+								Terrain(string theName, string theShortName, unsigned int theExertion);
 								//TODO - add constructor that configures all variables
 								void display();
 								const string& getName() const {return name;}
 								const string& getShortName() const {return shortName;}
-								void setTerrainType(string theName, string theShortName);
-								const unsigned int exertion;
+								void setTerrainType(string theName, string theShortName, unsigned int theExertion);
+								unsigned int exertion;
 
 				private:
 								string name;

@@ -17,17 +17,14 @@
 #define RED "\033[31m"
 #define YELLOW "\033[33m"
 #define BOLDRED "\033[31;1m"
-
+#define GREEN "\033[32m"
+#define BLUE "\033[34m"
+#define MAGENTA "\033[35m"
 using namespace std;
 
-siteTerrain::Terrain(string theName, string theShortName) : exertion(1), name(theName), shortName(theShortName)
+Terrain::Terrain(string theName, string theShortName, unsigned int theExertion) : exertion(theExertion), name(theName), shortName(theShortName)
 {
 }
-
-/*void Terrain::display() //TODO is this function used by anything?
-	{
-	cout << "	Terrain: " << name << endl;
-	}*/
 
 void Terrain::display()
 {
@@ -35,10 +32,11 @@ void Terrain::display()
 }
 
 
-void Terrain::setTerrainType(string theName, string theShortName)
+void Terrain::setTerrainType(string theName, string theShortName, unsigned int theExertion)
 {
 				name=theName;
 				shortName=theShortName;
+				exertion=theExertion;
 }
 
 //by default set terrain to grassy meadow for now
@@ -98,11 +96,11 @@ void Tile::displayLocation() const
 				cout << endl;
 				if(treasureChar == 'J')
 				{
-								cout << "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
-								cout << "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
-								cout << "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
-								cout << "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
-								cout << "WELL DONE! You are the greatest treasure seeker ever and you have found the jewel!" <<endl;
+								cout << GREEN <<  "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
+								cout << BLUE << "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
+								cout << BOLDRED << "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
+								cout << YELLOW << "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
+								cout << GREEN << "WELL DONE! You are the greatest treasure seeker ever and you have found the jewel!" <<RESET<<endl;
 								//TODO set configuration to exit the game
 				}
 }
@@ -136,7 +134,7 @@ void Tile::printIslandTile(Tile* location)
 				}
 				else
 				{
-								cout << treasureChar;
+								cout << MAGENTA << treasureChar <<RESET;
 				}
 }
 
@@ -195,11 +193,11 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 				gameMgr(gameManager),
 				boardSize(options.size)
 {
-				//init the terrain TODO - repleace with real configuration
-				//for now add a default grassy meadow terrain
 				string terrainName = "grassy_meadow";
 				string terrainShortName = "G";
-				terrainMap[terrainName] = new Terrain(terrainName, terrainShortName);
+				terrainMap[terrainName] = new Terrain(terrainName, terrainShortName, 1);
+				terrainMap["bog"] = new Terrain("bog", "B", 2);
+				terrainMap["forest"] = new Terrain("forest", "F", 2);
 
 				//init the board
 				boardArray = new Tile**[boardSize];	
@@ -212,7 +210,7 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 												//set according to it, otherwise set default
 												if(j>= -.3*boardSize + .8*boardSize)
 												{
-												boardArray[i][j]=new Tile(i,j, terrainMap["forrest"]);
+												boardArray[i][j]=new Tile(i,j, terrainMap["forest"]);
 												}
 												else
 											{	
@@ -338,7 +336,6 @@ Tile* Board::randJewelTile()
 				jewelX = boardSize - 1 - rand1;
 				int rand2 = (rand())%halfBoard;
 				jewelY = boardSize - 1 - rand2;
-				//cerr << jewelX << ", " <<jewelY <<endl;
 				return boardArray[jewelX][jewelY];
 }
 				
@@ -388,7 +385,7 @@ void Board::displayLocation(Tile* location)
 								boardArray[x+1][y]->tileDisplay();
 				}
 				if (x-1 < 0) {
-								cout << "To the west lies ocean" << endl;
+								cout << "To the west lies ocean";
 				} else {
 								cout << "To the west is a ";
 								boardArray[x-1][y]->tileDisplay();
