@@ -20,7 +20,7 @@
 
 using namespace std;
 
-Terrain::Terrain(string theName, string theShortName) : exertion(1), name(theName), shortName(theShortName)
+siteTerrain::Terrain(string theName, string theShortName) : exertion(1), name(theName), shortName(theShortName)
 {
 }
 
@@ -210,7 +210,14 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 								{
 												//perparation for options: if location exists in options
 												//set according to it, otherwise set default
+												if(j>= -.3*boardSize + .8*boardSize)
+												{
+												boardArray[i][j]=new Tile(i,j, terrainMap["forrest"]);
+												}
+												else
+											{	
 												boardArray[i][j]=new Tile(i,j, terrainMap["grassy_meadow"]);
+											}
 								}
 				}
         //OBSTACLE TESTING *********
@@ -259,9 +266,6 @@ void Board::displayIsland() const
 				cout << "      Top center shows the SEEKER's location "<<BOLDRED << "@" << RESET;
 				cout << "      Top right is the Excavation site(E). Reveals to 'n' none or 'J' Jewel." <<endl;
 				// cout << "  Bottom left is for obstacles." <<endl<<endl;
-				//TODO note to team - spaces could hold info about tile, (obstacles, tools, food etc) 
-				// display seeker
-
 }
 
 void Board::displayRow(int rowNumber) const
@@ -329,12 +333,12 @@ Tile* Board::randJewelTile()
 				int jewelX = 0;
 				int jewelY = 0;
 				int halfBoard = .5*boardSize; //this should round down and give an int
-				int rand1 = (rand())%halfBoard; // rand1 will be a random int between 0 and boardsize so that when subtracted
+				int rand1 = (rand())%halfBoard; // rand1 will be a random int between 0 and halfBoard so that when subtracted
 				//from boardsize will be in top right quadrant - jewel will be in the quarter of the board furthest from the start
 				jewelX = boardSize - 1 - rand1;
 				int rand2 = (rand())%halfBoard;
 				jewelY = boardSize - 1 - rand2;
-				cerr << jewelX << ", " <<jewelY <<endl;
+				//cerr << jewelX << ", " <<jewelY <<endl;
 				return boardArray[jewelX][jewelY];
 }
 				
