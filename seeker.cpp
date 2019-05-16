@@ -107,23 +107,24 @@ void Seeker::move(direction_t direction) {
 } 
 void Seeker::addTool(Tool* newTool) {
   //deal with special tools
-  if(newTool->name == "powerBar") {
+  if(newTool->name == "POWER BAR") {
 	//eat the power bar, get the energy, don't add it to resources
     cout << "Yum! I feel so much stronger now!" << endl;
 	energy += newTool->energySaved;
+	//newTool->quantity--;
     return;
-  } else if(newTool->name == "boat") {
+  } else if(newTool->name == "BOAT") {
     hasBoat = true;
-  } else if (newTool->name == "binoculars") {
+  } else if (newTool->name == "BINOCULARS") {
     hasBinoculars = true;
   }
 
+  newTool->quantity++; 
   //check if tool is already owned, if so +1 that tool
   for(auto it = begin(inventory); it != end(inventory); ++it)
   {
     if(newTool == (*it))
     {
-      newTool->quantity++; 
       return;
     }
   }

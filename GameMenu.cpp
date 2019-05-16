@@ -115,7 +115,7 @@ bool GameMenu::getAndExecuteCommand() {
 bool GameMenu::shopMenu()
 {
   int choice = -1;
-  auto resources = gameMgr->theResources->resources; //shortcut for convenience
+  vector<Tool>& resources = gameMgr->theResources->resources; //shortcut for convenience
   cout << "entering shop" << endl;
   gameMgr->theSeeker->displayTools();
   cout << endl << "**Tools for sale**" << endl << endl;

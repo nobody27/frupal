@@ -86,7 +86,7 @@ void ResourcesOptions::displayResources()
 	cout << "  " << setw(14) << left << "Tool" 
 			<< " " << setw(8) << left << "Price" 
 			<< " " << setw(15) << left << "Energy saved"
-			<< " " << setw(12) << left << "Quantity" 
+			//<< " " << setw(12) << left << "Quantity" 
 			<< " " << setw(15) << left << "Obstacle" 
 			<< endl;
 
@@ -95,7 +95,7 @@ void ResourcesOptions::displayResources()
     cout << i << " " << setw(15) << left << it->name << 
 			"$" << setw(7) << left << it->price << 
 			" " << setw(15) << left << it->energySaved << 
-			" " << setw(12) << left << it->quantity << 
+			//" " << setw(12) << left << it->quantity << 
 			" " << setw(15) << left << it->relevantObstacle << 
 			endl;
   }
@@ -135,7 +135,7 @@ void Resources::displayResources()
 	cout << i << " " << setw(14) << left << "Tool" 
 			<< " " << setw(8) << left << "Price" 
 			<< " " << setw(15) << left << "Energy saved"
-			<< " " << setw(15) << left << "Quantity" 
+			//<< " " << setw(15) << left << "Quantity" 
 			<< " " << setw(15) << left << "Obstacle" 
 			<< endl;
 
@@ -144,7 +144,7 @@ void Resources::displayResources()
     cout << i << " " << setw(15) << left << it->name << 
 			"$" << setw(7) << left << it->price << 
 			" " << setw(15) << left << it->energySaved << 
-			" " << setw(15) << left << it->quantity << 
+			//" " << setw(15) << left << it->quantity << 
 			" " << setw(15) << left << it->relevantObstacle << 
 			endl;
   }
