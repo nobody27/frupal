@@ -26,6 +26,7 @@
 #define BLUE "\033[34m"
 #define MAGENTA "\033[35m"
 #define BOLDMAGENTA "\033[1;35m"
+#define CYAN "\036[34m"
 #define GRAY "\033[90m"
 
 using namespace std;

@@ -24,18 +24,19 @@ using namespace std;
 class Terrain {
 public:
 		//constructor
-		Terrain(string theName, string theShortName, unsigned int theExertion);
+		Terrain(string theName, char theShortName, unsigned int theExertion, string theColor);
 		//TODO - add constructor that configures all variables
-		void display();
+		void display() const;
+		void displayShortName() const;
 		const string& getName() const {return name;}
-		const string& getShortName() const {return shortName;}
-		void setTerrainType(string theName, string theShortName, unsigned int theExertion);
+		const char& getShortName() const {return shortName;}
+//		void setTerrainType(string theName, string theShortName, unsigned int theExertion);
 		unsigned int exertion;
 
 private:
 		string name;
-		//this should only be one char long but it is a string in order to allow coloring.
-		string shortName; 
+		char shortName; 
+		string color;
 };
 
 //a tile takes up a single location on the board and includes all the

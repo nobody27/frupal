@@ -15,22 +15,34 @@
 #include <string>
 using namespace std;
 
-Terrain::Terrain(string theName, string theShortName, unsigned int theExertion) : exertion(theExertion), name(theName), shortName(theShortName)
+Terrain::Terrain(string theName, 
+				char theShortName, 
+				unsigned int theExertion, 
+				string theColor) : exertion(theExertion), 
+										name(theName), 
+										shortName(theShortName), 
+										color(theColor)
 {
 }
 
-void Terrain::display()
+void Terrain::display() const
 {
-				cout << name;
+				cout << color << name << RESET;
 }
 
+void Terrain::displayShortName() const
+{
+				cout << color << shortName << RESET;
+}
 
+/*
 void Terrain::setTerrainType(string theName, string theShortName, unsigned int theExertion)
 {
 				name=theName;
 				shortName=theShortName;
 				exertion=theExertion;
 }
+*/
 
 //by default set terrain to grassy meadow for now
 Tile::Tile(int x, int y, Terrain* theTerrain): xValue(x), 
@@ -64,11 +76,11 @@ void Tile::tileDisplay() const
 				if(money) 
 				{	
 					cout << "There is gold here with a value of $" << 
-						money << "!!";
+						money << "!! ";
 				} 
 				else 
 				{
-					cout << "There is no gold left to find here.";
+					cout << "There is no gold left to find here. ";
 				} 
 				if (treasureChar == 'n')
 				{
@@ -100,7 +112,7 @@ void Tile::printIslandTile(Tile* location)
 				}
 				else
 				{
-								cout << YELLOW << terrain->getShortName() << RESET;
+								terrain->displayShortName();
 				}
 				//seeker location
 				if (this == location)
@@ -394,10 +406,10 @@ void Board::displayLocation(Tile* location)
 
 void Board::initTerrainMap()
 {
-		terrainMap["grassy_meadow"] = new Terrain("grassy_meadow", "G", 1);
-		terrainMap["bog"] = new Terrain("bog", "B", 2);
-		terrainMap["forest"] = new Terrain("forest", "F", 2);
-		terrainMap["water"] = new Terrain("water", "W", 0);
+		terrainMap["grassy_meadow"] = new Terrain("grassy_meadow", 'G', 1, YELLOW);
+		terrainMap["bog"] = new Terrain("bog", 'B', 2, CYAN);
+		terrainMap["forest"] = new Terrain("forest", 'F', 2, GREEN);
+		terrainMap["water"] = new Terrain("water", 'W', 0, BLUE);
 
 	
 }
