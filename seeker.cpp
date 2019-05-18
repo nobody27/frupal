@@ -82,14 +82,23 @@ void Seeker::move(direction_t direction) {
 		cout << endl << "You cannot move west!";
     return;
     }
-    //theres an obstacle at that tile
-	else
+    nextTile = theIsland->getLocation(x,y);
+    theObstacle = nextTile->obstacle;
+    if(!hasBoat && nextTile->getTerrain()->getName() == "water") {
+		//this is water and you don't have a boat.
+		//charge one energy and abort the move
+		energy--;
+		cout << "You wade through the water but it is too deep." << endl <<
+		"You think to yourself... I could really use a boat right now..." << 
+		endl << endl;
+		gameMgr->requestEnter();
+		gameMgr->displayIslandAndSeeker();
+		return;
+    }
+    if (theObstacle) 
     {
-      nextTile = theIsland->getLocation(x,y);
-      theObstacle = nextTile->obstacle;
-      if (theObstacle) {
-		choice = moveObstacle(nextTile); 
-      }
+    //theres an obstacle at that tile
+      choice = moveObstacle(nextTile); 
     }
     //TODO check you have energy to move here
     if (choice == 'Y' || !theObstacle)
@@ -99,10 +108,8 @@ void Seeker::move(direction_t direction) {
       energy -= theIsland->getLocation(x,y)->getTerrain()->exertion;
       money += theIsland->getLocation(x,y)->takeMoney();
     }
-	cout << "\n\n\n";
-	cout << "press ENTER to continue";
-	cin.get();
-	gameMgr->displayIlsandAndSeeker();
+	gameMgr->requestEnter();
+	gameMgr->displayIslandAndSeeker();
     return;
 } 
 void Seeker::addTool(Tool* newTool) {

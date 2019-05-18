@@ -16,10 +16,6 @@
 #include <fstream>
 #include <iomanip>
 
-
-#define RESET "\033[0m"
-#define BOLDMAGENTA "\033[1;35m"
-
 using namespace std;
 
 //TODO add error handling
@@ -83,7 +79,7 @@ bool MainMenu::getAndExecuteCommand() {
 				if(!gameMgr->initialized) {
 					gameMgr->initializeGame();
 				}
-				gameMgr->displayIlsandAndSeeker();
+				gameMgr->displayIslandAndSeeker();
 				quit = gameMenu.call();
 				break;
 			case 'O':

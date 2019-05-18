@@ -74,7 +74,9 @@ public:
 	void initializeGame();	
 
 	//display the island and seeker information
-	void displayIlsandAndSeeker();
+	void displayIslandAndSeeker();
+
+	void requestEnter() const;
 
 	////global data////
 	//TODO is there a reason to hide as private and use set/get methods?

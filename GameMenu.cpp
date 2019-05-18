@@ -80,7 +80,7 @@ bool GameMenu::getAndExecuteCommand() {
                 break;
                 //TODO buy tool, use tool, view board
 			case 'D':
-				gameMgr->displayIlsandAndSeeker();
+				gameMgr->displayIslandAndSeeker();
 				//gameMgr->clear_screen();
 				//gameMgr->theIsland->displayIsland();
 				//gameMgr->theSeeker->display();
@@ -115,9 +115,7 @@ bool GameMenu::getAndExecuteCommand() {
 			cout << YELLOW << "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
 			cout << GREEN << "WELL DONE! You are the greatest treasure seeker ever and you have found the jewel!" <<RESET<<endl;
 			quit = true;
-			cout << "\n\n\n";
-			cout << "press ENTER to continue";
-			cin.get();
+			gameMgr->requestEnter();
 		}
 	}
 	return done;

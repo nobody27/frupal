@@ -277,11 +277,16 @@ void GameManager::initializeGame() {
 	cin.get();
 }
 
-void GameManager::displayIlsandAndSeeker() {
+void GameManager::displayIslandAndSeeker() {
 	clear_screen();
 	theIsland->visitLocationAndNeighbors(theSeeker->getLocation());
 	theIsland->displayIsland();
 	theSeeker->display();
 }
 
+void GameManager::requestEnter() const {
+	cout << "\n\n\n";
+	cout << "press ENTER to continue";
+	cin.get();
+}
 

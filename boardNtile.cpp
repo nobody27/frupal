@@ -177,26 +177,31 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 				gameMgr(gameManager),
 				boardSize(options.size)
 {
-				initTerrainMap();
-				//init the board
-				boardArray = new Tile**[boardSize];	
-				for(int i=0; i<boardSize; ++i)
+		initTerrainMap();
+		//init the board
+		boardArray = new Tile**[boardSize];	
+		for(int i=0; i<boardSize; ++i)
+		{
+				boardArray[i]= new Tile*[boardSize];
+				for(int j=0; j<boardSize; ++j)
 				{
-								boardArray[i]= new Tile*[boardSize];
-								for(int j=0; j<boardSize; ++j)
-								{
-												//perparation for options: if location exists in options
-												//set according to it, otherwise set default
-												if(j>= -.3*boardSize + .8*boardSize)
-												{
-												boardArray[i][j]=new Tile(i,j, terrainMap["forest"]);
-												}
-												else
-											{	
-												boardArray[i][j]=new Tile(i,j, terrainMap["grassy_meadow"]);
-											}
-								}
+						//perparation for options: if location exists in options
+						//set according to it, otherwise set default
+						int border = -.3*boardSize + .8*boardSize;
+						if(j > border)
+						{
+							boardArray[i][j]=new Tile(i,j, terrainMap["forest"]);
+						}
+						else if (j == border)
+						{
+							boardArray[i][j]=new Tile(i,j, terrainMap["water"]);
+						} 
+						else
+						{	
+							boardArray[i][j]=new Tile(i,j, terrainMap["grassy_meadow"]);
+						}
 				}
+		}
         //OBSTACLE TESTING *********
         boardArray[1][1]->obstacle = new Obstacle("BUSH", 5, 'B', true);
         boardArray[2][2]->obstacle = new Obstacle("ROCK", 10, 'R', false);
