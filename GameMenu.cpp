@@ -108,6 +108,17 @@ bool GameMenu::getAndExecuteCommand() {
             cout << endl << endl << "GAME OVER" << endl << endl;
 			quit = true;
 		}
+		else if(gameMgr->theSeeker->location->treasureChar == 'J') {
+			cout << GREEN <<  "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
+			cout << BLUE << "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
+			cout << BOLDRED << "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
+			cout << YELLOW << "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
+			cout << GREEN << "WELL DONE! You are the greatest treasure seeker ever and you have found the jewel!" <<RESET<<endl;
+			quit = true;
+			cout << "\n\n\n";
+			cout << "press ENTER to continue";
+			cin.get();
+		}
 	}
 	return done;
 }

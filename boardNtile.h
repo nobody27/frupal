@@ -22,19 +22,20 @@ using namespace std;
 //types with (for example) obstacle types. 
 //but more fields will be needed and it will be easy to add them 
 class Terrain {
-				public:
-								//constructor
-								Terrain(string theName, string theShortName, unsigned int theExertion);
-								//TODO - add constructor that configures all variables
-								void display();
-								const string& getName() const {return name;}
-								const string& getShortName() const {return shortName;}
-								void setTerrainType(string theName, string theShortName, unsigned int theExertion);
-								unsigned int exertion;
+public:
+		//constructor
+		Terrain(string theName, string theShortName, unsigned int theExertion);
+		//TODO - add constructor that configures all variables
+		void display();
+		const string& getName() const {return name;}
+		const string& getShortName() const {return shortName;}
+		void setTerrainType(string theName, string theShortName, unsigned int theExertion);
+		unsigned int exertion;
 
-				private:
-								string name;
-								string shortName;
+private:
+		string name;
+		//this should only be one char long but it is a string in order to allow coloring.
+		string shortName; 
 };
 
 //a tile takes up a single location on the board and includes all the
@@ -42,40 +43,40 @@ class Terrain {
 //(perhaps with the exception of whether or not the seeker is there)
 class Tile
 {
-				public:
-								Tile(int xValue, int yValue, Terrain* theTerrain); //constructor
-								//~Tile();
-								void tileDisplay() const;
-								void printIslandTile(Tile* location);
-								void printIslandTileR2(Tile* location);
-								void displayTerrain() {terrain->display();} 
-								void displayLocation() const;
-								void visitTile();
-								int takeMoney(); //excavate the gold from the tile's location. returns the value of the money taken
-								int xValue;
-								int yValue;
-								Terrain* getTerrain();
-								//After you exhert energy to reach a tile you look around
-								//and find money/gold laying around at this value
-								//once you reach the tile you immediately pick it up and
-								//this field goes to 0  TODO I think this works everywhere except the start tile - it stays 1.
-								int money;
-								Obstacle* obstacle; //pointer to Obstacle instance on each tile
-								char treasureChar;	//char to hold "J" where jewel is!
-        private:
-								Terrain* terrain;
-								//string treasureName;
-								bool visited; //has the seeker visited this tile
+public:
+		Tile(int xValue, int yValue, Terrain* theTerrain); //constructor
+		//~Tile();
+		void tileDisplay() const;
+		void printIslandTile(Tile* location);
+		void printIslandTileR2(Tile* location);
+		void displayTerrain() {terrain->display();} 
+		void displayLocation() const;
+		void visitTile();
+		int takeMoney(); //excavate the gold from the tile's location. returns the value of the money taken
+		int xValue;
+		int yValue;
+		Terrain* getTerrain();
+		//After you exhert energy to reach a tile you look around
+		//and find money/gold laying around at this value
+		//once you reach the tile you immediately pick it up and
+		//this field goes to 0  TODO I think this works everywhere except the start tile - it stays 1.
+		int money;
+		Obstacle* obstacle; //pointer to Obstacle instance on each tile
+		char treasureChar;	//char to hold "J" where jewel is!
+private:
+		Terrain* terrain;
+		//string treasureName;
+		bool visited; //has the seeker visited this tile
 
 };
 
 ////options for configuring the board////
 class BoardOptions {
-				public:
-								BoardOptions(GameManager* gameManager);
-								int size;
-				private:
-								GameManager* gameMgr;
+public:
+		BoardOptions(GameManager* gameManager);
+		int size;
+private:
+		GameManager* gameMgr;
 };
 
 
@@ -83,24 +84,26 @@ class BoardOptions {
 //this board is a grid of locations or "tiles"
 class Board 
 {
-				public:
-								//Board(); //constructor - this default creates a 10x10 board. Calls Board(10)
-								Board(GameManager* gameManager, const BoardOptions& options); //constructor - argument from user sizeBoardxsizeBoard
-								~Board();
-								void display() const;
-								void displayIsland() const;
-								void displayRow(int rowNumber) const;
-								void visitLocationAndNeighbors(Tile* location);
-								void displayLocation(Tile* location);
-								void visitAllTiles(); //reveal all for working display for coders
-								void addResource(); 
-								Tile*  getLocation(int x, int y) const;
-								Tile* randJewelTile();
-								int size() const {return boardSize;}
-				private:
-								GameManager* gameMgr;
-								int boardSize;
-								Tile*** boardArray;
-								unordered_map<string, Terrain*> terrainMap;
+public:
+		//Board(); //constructor - this default creates a 10x10 board. Calls Board(10)
+		Board(GameManager* gameManager, const BoardOptions& options); //constructor - argument from user sizeBoardxsizeBoard
+		~Board();
+		void display() const;
+		void displayIsland() const;
+		void displayRow(int rowNumber) const;
+		bool onIsland(int x, int y);
+		void visitLocationAndNeighbors(Tile* location);
+		void displayLocation(Tile* location);
+		void visitAllTiles(); //reveal all for working display for coders
+		void addResource(); 
+		void initTerrainMap();
+		Tile*  getLocation(int x, int y) const;
+		Tile* randJewelTile();
+		int size() const {return boardSize;}
+private:
+		GameManager* gameMgr;
+		int boardSize;
+		Tile*** boardArray;
+		unordered_map<string, Terrain*> terrainMap;
 };
 #endif //BOARD_N_TILE_H

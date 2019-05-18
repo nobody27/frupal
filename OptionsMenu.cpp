@@ -15,8 +15,6 @@
 #include <iostream>
 #include <iomanip>
 
-#define GRAY "\033[90m"
-#define RESET "\033[0m"
 using namespace std;
 
 OptionsMenu::OptionsMenu(GameManager* gameManager) : gameMgr(gameManager), quit(false){
