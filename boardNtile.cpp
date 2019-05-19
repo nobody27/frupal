@@ -5,7 +5,8 @@
 // boardNtile.cpp
 ////////////////////////////////////////////////
 
-//constructors destructors and functions of Board Terrain, and Tile classes
+//constructors destructors and functions of Board class
+
 
 #include "GameManager.h"
 #include "seeker.h"
@@ -13,6 +14,7 @@
 #include <vector>
 #include <assert.h>
 #include <string>
+
 using namespace std;
 
 Terrain::Terrain(string theName, 
@@ -35,14 +37,6 @@ void Terrain::displayShortName() const
 				cout << color << shortName << RESET;
 }
 
-/*
-void Terrain::setTerrainType(string theName, string theShortName, unsigned int theExertion)
-{
-				name=theName;
-				shortName=theShortName;
-				exertion=theExertion;
-}
-*/
 
 //by default set terrain to grassy meadow for now
 Tile::Tile(int x, int y, Terrain* theTerrain): xValue(x), 
@@ -84,14 +78,12 @@ void Tile::tileDisplay() const
 				} 
 				if (treasureChar == 'n')
 				{
-				cout << "Bummer, the Jewel is not here. "<<endl;
+				cout << "The Jewel is "<< MAGENTA << "not here. "<< RESET << endl;
 				}
 				else
 				{
-					cout << "The Jewel is here!!!" <<endl;
+					cout << MAGENTA << "The Jewel is here!!!" << RESET << endl;
 				}
-				//cout << "There is an obstacle here, it is a __________." <<endl;
-				//cout << "	" << (visited ? "visited by seeker" : "undiscovered") << endl;
 }
 
 void Tile::displayLocation() const
@@ -179,6 +171,7 @@ int Tile::takeMoney()
 	return retVal;
 }
 
+
 //init by default to size of 10 but allow users to override the default
 BoardOptions::BoardOptions(GameManager* gameManager) : size(10), gameMgr(gameManager)
 {
@@ -252,9 +245,8 @@ void Board::displayIsland() const
 
 				cout << "KEY:  Top left shows terrain type:	G=Grassy Meadow, B=Bog, F=Forrest, W=Water, X=Unrevealed"<<endl;
 				cout << "      Top center shows the SEEKER's location "<<BOLDRED << "@" << RESET;
-				cout << "      Top right is the Excavation site(E). Reveals to 'n' none or 'J' Jewel." <<endl;
-				// cout << "  Bottom left is for obstacles." <<endl<<endl;
-				cout <<endl;
+				cout << "      Top right is the Excavation site(E). Reveals to " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTA<< "'J' Jewel." <<RESET<<endl;
+				cout << "  Bottom left shows obstacles. Bottom center shows money." <<endl;
 
 				for(int j=(boardSize-1); j>=0; --j)
 				{
