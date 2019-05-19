@@ -242,7 +242,26 @@ void Board::display() const
 
 void Board::displayIsland() const
 {
+cout << "temporary color display for the A team coders" <<endl;
 
+cout << BOLDRED << "BOLDRED" <<endl;
+cout << RED << "RED" <<endl;
+cout << GREEN << "GREEN" <<endl;
+cout << YELLOW << "YELLOW" <<endl;
+cout << BLUE << "BLUE" <<endl;
+cout << MAGENTA << "MAGENTA" <<endl;
+cout << BOLDMAGENTA << "BOLDMAGENTA" <<endl;
+cout << CYAN << "CYAN" << endl;
+cout << LIGHT_YELLOW << "LIGHT_YELLOW" << endl;
+cout << GRAY << "GRAY" << RESET <<endl;
+
+
+/*
+
+from gamemanager.h
+
+
+*/
 				cout << "KEY:  Top left shows terrain type:	G=Grassy Meadow, B=Bog, F=Forrest, W=Water, X=Unrevealed"<<endl;
 				cout << "      Top center shows the SEEKER's location "<<BOLDRED << "@" << RESET;
 				cout << "      Top right is the Excavation site(E). Reveals to " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTA<< "'J' Jewel." <<RESET<<endl;
