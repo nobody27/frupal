@@ -242,6 +242,7 @@ void Board::display() const
 
 void Board::displayIsland() const
 {
+				/*
 cout << "temporary color display for the A team coders" <<endl;
 
 cout << BOLDRED << "BOLDRED" <<endl;
@@ -256,9 +257,6 @@ cout << LIGHT_YELLOW << "LIGHT_YELLOW" << endl;
 cout << GRAY << "GRAY" << RESET <<endl;
 
 
-/*
-
-from gamemanager.h
 
 
 */
