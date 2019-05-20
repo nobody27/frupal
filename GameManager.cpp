@@ -258,12 +258,7 @@ void GameManager::initializeGame() {
 	theSeeker = new Seeker(this, *seekerOptions);
 	initialized = true;
 
-	//seed rand function
-	srand(time(0));
-	srand(randomSeed);
-	cerr << "seed = " << time(0) <<endl;
-	int random = rand(); //TODO erase
-	cerr << "random = " << random << endl; //TODO erase
+	//seed rand function  - FOR NOW find this at the beginning of main  TODO discuss
 
 	//print introduction
 	clear_screen();

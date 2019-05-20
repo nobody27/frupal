@@ -208,11 +208,13 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 				}
 		}
         //OBSTACLE TESTING *********
-        boardArray[1][1]->obstacle = new Obstacle("BUSH", 5, 'B', true);
+        boardArray[1][2]->obstacle = new Obstacle("BUSH", 5, 'B', true);
         boardArray[2][2]->obstacle = new Obstacle("ROCK", 10, 'R', false);
-				//functions here to add Jewel
+				//these lines below add Jewel
 				Tile* jewelTile = randJewelTile();
 				jewelTile->treasureChar = 'J';
+				//use for testing how map looks
+				//visitAllTiles();
 }
 
 Board::~Board()
@@ -242,33 +244,14 @@ void Board::display() const
 
 void Board::displayIsland() const
 {
-				/*
-cout << "temporary color display for the A team coders" <<endl;
-
-cout << BOLDRED << "BOLDRED" <<endl;
-cout << RED << "RED" <<endl;
-cout << GREEN << "GREEN" <<endl;
-cout << YELLOW << "YELLOW" <<endl;
-cout << BLUE << "BLUE" <<endl;
-cout << MAGENTA << "MAGENTA" <<endl;
-cout << BOLDMAGENTA << "BOLDMAGENTA" <<endl;
-cout << CYAN << "CYAN" << endl;
-cout << LIGHT_YELLOW << "LIGHT_YELLOW" << endl;
-cout << GRAY << "GRAY" << RESET <<endl;
-
-
-
-
-*/
-				cout << "KEY:  Top left shows terrain type:	G=Grassy Meadow, B=Bog, F=Forrest, W=Water, X=Unrevealed"<<endl;
-				cout << "      Top center shows the SEEKER's location "<<BOLDRED << "@" << RESET;
-				cout << "      Top right is the Excavation site(E). Reveals to " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTA<< "'J' Jewel." <<RESET<<endl;
-				cout << "  Bottom left shows obstacles. Bottom center shows money." <<endl;
-
 				for(int j=(boardSize-1); j>=0; --j)
 				{
 								displayRow(j);
 				}
+cout << "KEY:  Top left shows terrain type:"<<YELLOW<<"	G=Grassy Meadow," <<GRAY<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYAN<<" W=Water,"<<RESET<<" X=Unrevealed"<<endl;
+				cout << "    Top center shows the SEEKER's location "<<BOLDRED << "@" << RESET;
+				cout << "    Top right is the Excavation site(E). Reveals to " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTA<< "'J' Jewel." <<RESET<<endl;
+				cout << "    Bottom left shows obstacles. Bottom center shows money." <<endl;
 }
 
 void Board::displayRow(int rowNumber) const
@@ -338,9 +321,14 @@ Tile* Board::randJewelTile()
 				int halfBoard = .5*boardSize; //this should round down and give an int
 				int rand1 = (rand())%halfBoard; // rand1 will be a random int between 0 and halfBoard so that when subtracted
 				//from boardsize will be in top right quadrant - jewel will be in the quarter of the board furthest from the start
-				jewelX = boardSize - 1 - rand1;
+				jewelX = (boardSize - 1 - rand1);
 				int rand2 = (rand())%halfBoard;
-				jewelY = boardSize - 1 - rand2;
+				jewelY = (boardSize - 1 - rand2);
+				cerr << "rand1" << rand1 <<endl;
+				cerr << "rand2" << rand2 <<endl;
+				cerr << "jewelX" << jewelX <<endl;
+				cerr << "jewelY" << jewelY <<endl;
+
 				return boardArray[jewelX][jewelY];
 }
 		
