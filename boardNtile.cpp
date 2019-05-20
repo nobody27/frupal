@@ -27,6 +27,17 @@ Terrain::Terrain(string theName,
 {
 }
 
+void Terrain::changeTerrain(string theName, 
+				char theShortName, 
+				unsigned int theExertion, 
+				string theColor) 
+{
+				exertion=theExertion;
+				name=theName;
+				shortName=theShortName;
+				color=theColor;
+}
+
 void Terrain::display() const
 {
 				cout << color << name << RESET;
@@ -69,12 +80,12 @@ void Tile::tileDisplay() const
 				cout << ". ";
 				if(money) 
 				{	
-					cout << "There is gold here with a value of $" << 
-						money << "!! ";
+					cout << "There is $"<< 
+						money << "gold here!! ";
 				} 
 				else 
 				{
-					cout << "There is no gold left to find here. ";
+					cout << "There is no gold left here. ";
 				} 
 				if (treasureChar == 'n')
 				{
@@ -192,21 +203,20 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 				{
 						//perparation for options: if location exists in options
 						//set according to it, otherwise set default
-						int border = -.3*boardSize + .8*boardSize;
-						if(j > border)
+						int slope = -.3;
+						int yInt = .8*boardSize;
+						if(j > slope*i + yInt)
 						{
 							boardArray[i][j]=new Tile(i,j, terrainMap["forest"]);
 						}
-						else if (j == border)
-						{
-							boardArray[i][j]=new Tile(i,j, terrainMap["water"]);
-						} 
 						else
 						{	
 							boardArray[i][j]=new Tile(i,j, terrainMap["grassy_meadow"]);
 						}
 				}
 		}
+		//add river
+		putInRiver();
         //OBSTACLE TESTING *********
         boardArray[1][2]->obstacle = new Obstacle("BUSH", 5, 'B', true);
         boardArray[2][2]->obstacle = new Obstacle("ROCK", 10, 'R', false);
@@ -214,7 +224,36 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 				Tile* jewelTile = randJewelTile();
 				jewelTile->treasureChar = 'J';
 				//use for testing how map looks
-				//visitAllTiles();
+				visitAllTiles();
+}
+
+void Board::putInRiver()
+{
+				int riverX = 0;
+				int riverY = .9 * (boardSize-1);
+				do
+				{
+								boardArray[riverX][riverY]->terrain->changeTerrain("water", "W", 0, BLUE);
+								if(rand()%2 ==0)
+								{
+												++riverX;
+								}
+								else
+								{
+												--riverY;
+								}
+				}while(riverX<boardSize-1 && riverY>0);
+				if ( riverX==boardSize-2)
+				{
+								++riverX;
+								boardArray[riverX][riverY]->terrain->changeTerrain("water", "W", 0, BLUE);
+				}
+				else
+				{
+								--riverY;
+								boardArray[riverX][riverY]->terrain->changeTerrain("water", "W", 0, BLUE);
+				}
+				
 }
 
 Board::~Board()

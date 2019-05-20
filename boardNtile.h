@@ -30,7 +30,7 @@ public:
 		void displayShortName() const;
 		const string& getName() const {return name;}
 		const char& getShortName() const {return shortName;}
-//		void setTerrainType(string theName, string theShortName, unsigned int theExertion);
+		void changeTerrain(string theName, char theShortName, unsigned int theExertion, string theColor);
 		unsigned int exertion;
 
 private:
@@ -64,9 +64,9 @@ public:
 		int money;
 		Obstacle* obstacle; //pointer to Obstacle instance on each tile
 		char treasureChar;	//char to hold "J" where jewel is!
-private:
+		
 		Terrain* terrain;
-		//string treasureName;
+private:
 		bool visited; //has the seeker visited this tile
 
 };
@@ -98,6 +98,7 @@ public:
 		void visitAllTiles(); //reveal all for working display for coders
 		void addResource(); 
 		void initTerrainMap();
+		void putInRiver();
 		Tile*  getLocation(int x, int y) const;
 		Tile* randJewelTile();
 		int size() const {return boardSize;}
