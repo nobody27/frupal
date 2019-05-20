@@ -93,7 +93,7 @@ public:
 		void displayIsland() const;
 		void displayRow(int rowNumber) const;
 		bool onIsland(int x, int y);
-		void visitLocationAndNeighbors(Tile* location);
+		void visitLocationAndNeighbors(Tile* location, bool endRecursion);
 		void displayLocation(Tile* location);
 		void visitAllTiles(); //reveal all for working display for coders
 		void addResource(); 

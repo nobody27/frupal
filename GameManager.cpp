@@ -274,7 +274,7 @@ void GameManager::initializeGame() {
 
 void GameManager::displayIslandAndSeeker() {
 	clear_screen();
-	theIsland->visitLocationAndNeighbors(theSeeker->getLocation());
+	theIsland->visitLocationAndNeighbors(theSeeker->getLocation(), false);
 	theIsland->displayIsland();
 	theSeeker->display();
 }

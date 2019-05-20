@@ -128,8 +128,6 @@ void Tile::printIslandTile(Tile* location)
 
 void Tile::printIslandTileR2(Tile* location)
 {
-				assert(money >= 0 && money <=9);
-				//obstacle O or Letter for obstacle type
 				if(!visited) 
 				{
 					cout<< "O";
@@ -337,7 +335,7 @@ bool Board::onIsland(int x, int y)
 	return (x >= 0 && x < boardSize && y >= 0 && y < boardSize );
 }
 		
-void Board::visitLocationAndNeighbors(Tile* location)
+void Board::visitLocationAndNeighbors(Tile* location, bool endRecursion)
 {
 		int x = location->xValue;
 		int y = location->yValue;
@@ -353,19 +351,16 @@ void Board::visitLocationAndNeighbors(Tile* location)
 		if(onIsland(x, y-1)) boardArray[x][y-1]->visitTile();
 		if(onIsland(x+1, y)) boardArray[x+1][y]->visitTile();
 		if(onIsland(x-1, y)) boardArray[x-1][y]->visitTile();
+        if(endRecursion == true)
+            return;
 
 		//if seeker has binoculars show tiles two steps away
 		if(gameMgr->theSeeker->hasBinoculars) 
 		{
-				if(onIsland(x, y+2)) boardArray[x][y+2]->visitTile();
-				if(onIsland(x, y-2)) boardArray[x][y-2]->visitTile();
-				if(onIsland(x+2, y)) boardArray[x+2][y]->visitTile();
-				if(onIsland(x-2, y)) boardArray[x-2][y]->visitTile();
-
-				if(onIsland(x+1, y+1)) boardArray[x+1][y+1]->visitTile();
-				if(onIsland(x-1, y-1)) boardArray[x-1][y-1]->visitTile();
-				if(onIsland(x+1, y-1)) boardArray[x+1][y-1]->visitTile();
-				if(onIsland(x-1, y+1)) boardArray[x-1][y+1]->visitTile();
+				if(onIsland(x, y+1)) visitLocationAndNeighbors(boardArray[x][y+1], true);
+				if(onIsland(x, y-1)) visitLocationAndNeighbors(boardArray[x][y-1], true);
+				if(onIsland(x+1, y)) visitLocationAndNeighbors(boardArray[x+1][y], true);
+				if(onIsland(x-1, y)) visitLocationAndNeighbors(boardArray[x-1][y], true);
 		}
 }
 
@@ -373,7 +368,7 @@ void Board::displayLocation(Tile* location)
 {
 				int x = location->xValue;
 				int y = location->yValue;
-				visitLocationAndNeighbors(location);
+				visitLocationAndNeighbors(location, false);
 				location->displayLocation();
 				if (y+1 >= boardSize) {
 								cout << "To the north lies ocean" << endl;
