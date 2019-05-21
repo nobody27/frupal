@@ -54,8 +54,11 @@ public:
 	ResourcesOptions(GameManager* gameManager);
 	vector<Tool> theResources;
 	vector<Obstacle> theObstacles;
-    void displayResources(); 
-    void displayObstacles();
+    	void displayResources(); 
+    	void displayObstacles();
+	void eraseResources();
+	void eraseObstacles();
+	
 private:
 	GameManager* gameMgr;
 };

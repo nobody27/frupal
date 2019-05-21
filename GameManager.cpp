@@ -51,8 +51,50 @@ void GameManager::clear_screen(){
 	}
 }
 
+string GameManager::getFileName(){
+	char reply = ' ';
+	bool confirmed = false;
+	string fileName;
+	string name;
+
+	while(!confirmed){	//loop until user confirms choice
+		cout << "\nEnter the new file name: ";
+		cin >> name;
+		while(cin.fail()){	//verify input, not sure if this is how to do it for strings
+			cin.clear();
+			cin.ignore(100, '\n');
+			cout << "\nInvalid entry. " <<
+				"Enter the new file name: ";
+			cin >> name;
+		}
+		cout << "\nYou entered \"" << name <<	//prompt user to confirm input
+			"\". Is this correct? " <<
+			"\nPress 'Y' to confirm" <<
+			" or any other key to enter a new file name." <<
+			"\n\n>";
+		cin >> reply;
+		reply = toupper(reply);
+		while(cin.fail()){	//verify input of confirmation
+			cin.clear();
+			cin.ignore(100, '\n');
+			cout << "\nInvalid entry. " <<
+				"\nPress 'Y' to confirm, " <<
+				"or any other key to enter a new file name." <<
+				"\n\n>";
+			cin >> reply;
+			reply = toupper(reply);
+		}	
+		if(reply == 'Y'){	//if the user has confirmed, set the filename and break
+			confirmed = true;
+			fileName = name;
+		}
+	}
+	return fileName;
+}
+
+
 //Funtion to read data from config file into the appropriate fields
-void GameManager::readConfigFile(){
+void GameManager::readConfigFile(bool useCustom){
 	string fileName = DEFAULT_CONFIG_FILE;	//set in GameManager.h 
 	//most of these fields temporarily store values to pass to tool/obstacle constructors
 	ifstream configFile;
@@ -69,49 +111,21 @@ void GameManager::readConfigFile(){
 	char symbol;
 	bool removable;
 	char reply = ' ';
-	bool confirmed = false;
 
-	cout << "\nReading from file \"" << fileName << "\"." <<
-		"\nRead from a different file?" <<
-		"\nPress 'Y' to change the file name, " <<
-		"or any other key to skip." <<
-		"\n\n>";
-	cin >> reply;
-	reply = toupper(reply);
-	if(reply == 'Y'){	//prompt user for and verify new config file name
-		while(!confirmed){	//loop until user confirms choice
-			cout << "\nEnter the new file name: ";
-			cin >> name;
-			while(cin.fail()){
-				cin.clear();
-				cin.ignore(100, '\n');
-				cout << "\nInvalid entry. " <<
-					"Enter the new file name: ";
-				cin >> name;
-			}
-			cout << "\nYou entered \"" << name <<
-				"\". Is this correct? " <<
-				"\nPress 'Y' to confirm" <<
-				" or any other key to edit." <<
-				"\n\n>";
-			cin >> reply;
-			reply = toupper(reply);
-			while(cin.fail() || (reply != 'Y' && reply != 'N')){
-				cin.clear();
-				cin.ignore(100, '\n');
-				cout << "\nInvalid entry. " <<
-					"\nPress 'Y' to change the file name, " <<
-					"or any other key to skip." <<
-					"\n\n>";
-				cin >> reply;
-				reply = toupper(reply);
-			}	
-			if(reply == 'Y'){
-				confirmed = true;
-				fileName = name;
-			}
+	if(useCustom){
+		cout << "\nReading from file \"" << fileName << "\"." <<
+			"\nRead from a different file?" <<
+			"\nPress 'Y' to change the file name, " <<
+			"or any other key to skip." <<
+			"\n\n>";
+		cin >> reply;
+		reply = toupper(reply);
+		if(reply == 'Y'){	//prompt user for and verify new config file name
+			fileName = getFileName();
 		}
 	}
+	resourcesOptions->eraseResources();//if there are hard-coded tools/obstacles
+	resourcesOptions->eraseObstacles();//erase the vectors so they can be repopulated from file
 
 	configFile.open(fileName);
 	while(getline(configFile, type, ',')){	//read first digit of each line into type
@@ -162,6 +176,7 @@ void GameManager::readConfigFile(){
 			resourcesOptions->theResources.push_back(newTool);
 		}
 	}
+	configFile.close();
 }
 
 //
@@ -170,7 +185,6 @@ void GameManager::writeConfigFile(){
 	string fileName = DEFAULT_CONFIG_OUTPUT;
 	string name;
 	char reply = ' ';
-	bool confirmed = false;
 	int i = 1;
 	int j = 1;
 
@@ -184,38 +198,7 @@ void GameManager::writeConfigFile(){
 	cin >> reply;
 	reply = toupper(reply);
 	if(reply == 'Y'){		//prompt user for and verify new config file name
-		while(!confirmed){	//loop until user confirms choice
-			cout << "\nEnter the new file name: ";
-			cin >> name;
-			while(cin.fail()){
-				cin.clear();
-				cin.ignore(100, '\n');
-				cout << "\nInvalid entry. " <<
-					"Enter the new file name: ";
-				cin >> name;
-			}
-			cout << "\nYou entered \"" << name <<
-				"\". Is this correct? " <<
-				"\nPress 'Y' to confirm" <<
-				" or any other key to edit." <<
-				"\n\n>";
-			cin >> reply;
-			reply = toupper(reply);
-			while(cin.fail() || (reply != 'Y' && reply != 'N')){
-				cin.clear();
-				cin.ignore(100, '\n');
-				cout << "\nInvalid entry. " <<
-					"\nPress 'Y' to change the file name, " <<
-					"or any other key to skip." <<
-					"\n\n>";
-				cin >> reply;
-				reply = toupper(reply);
-			}	
-			if(reply == 'Y'){
-				confirmed = true;
-				fileName = name;
-			}
-		}
+		fileName = getFileName();
 	}
 
 	configFile.open(fileName);	//print out the integers first

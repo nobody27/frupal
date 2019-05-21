@@ -46,19 +46,15 @@ void OptionsMenu::display() const {
 		cout << GRAY;
 	}
 	//// Place text for options that are not available after initialization here ////
-/*
-	cout << setw(15) << left << "(S) set board size" << endl;
-	cout << setw(15) << left << "(E) set seeker's initial energy level" << endl;
-	cout << setw(15) << left << "(M) set seeker's initial money" << endl;
-*/
 	cout << setw(15) << left << "(1) Configure general settings\n";
 	cout << setw(15) << left << "(2) Configure obstacles\n";
 	cout << setw(15) << left << "(3) Configure tools\n";
+	cout << setw(15) << left << "(4) Load configuration\n";
 	/////////////////////////////////////////////////////////////////////////////////
 	if(gameMgr->initialized) {
 		cout << RESET;
 	}
-	cout << setw(15) << left << "(4) Save configuration\n";
+	cout << setw(15) << left << "(5) Save configuration\n";
 	cout << setw(15) << left << "(R)eturn to the Main Menu" << endl;
 	cout << setw(15) << left << "(Q)uit the program" << endl;
 	cout << "\n>";
@@ -128,6 +124,9 @@ bool OptionsMenu::getAndExecuteCommand() {
 				}
 				break;
 			case '4':
+				gameMgr->readConfigFile(true); //useCustom = true. We want to define the file.
+				break;
+			case '5':
 				gameMgr->writeConfigFile();
 				break;
 				//TODO other options

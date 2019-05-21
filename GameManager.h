@@ -56,8 +56,11 @@ public:
 	//function to clear the screen and reset cursor
 	void clear_screen();
 
+	//Function to obtain and verify a custom file name
+	string getFileName();
+
 	//function to read options from the config file
-	void readConfigFile();
+	void readConfigFile(bool useCustom = false);
 
 	//function to write options to config file
 	void writeConfigFile();
