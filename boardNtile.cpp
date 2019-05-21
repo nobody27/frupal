@@ -252,7 +252,7 @@ Board::~Board()
 				}
 }
 
-
+/*
 void Board::display() const
 {
 				cout << "Displaying your island: " <<endl;
@@ -298,7 +298,7 @@ void Board::displayRow(int rowNumber) const
 				}
 				cout <<endl;
 }
-
+*/
 
 void Board::visitAllTiles()
 {
@@ -462,3 +462,53 @@ void Board::followVars(int&posX, int&posY, int&minX, int&maxX, int&minY, int&max
     return;
 }
 
+//follow**********************
+void Board::display() 
+{
+        int posX, posY, minX, maxX, minY, maxY;
+        followVars(posX, posY, minX, maxX, minY, maxY);
+        
+				
+				cout << "Displaying your island: " <<endl;
+				for(int i=minX; i<=maxX; ++i)
+				{
+								for(int j=minY; j<=maxY; ++j)
+								{
+												cout <<"the Tile at (" << i << ", " << j <<") has  data" <<endl;
+												boardArray[i][j]->tileDisplay();
+								}
+								cout <<endl;
+				}
+}
+
+void Board::displayIsland()
+{
+        int posX, posY, minX, maxX, minY, maxY;
+        followVars(posX, posY, minX, maxX, minY, maxY);
+        
+        for(int j=maxY; j>=minY; --j)
+				{
+								displayRow(j);
+				}
+
+				cout <<endl;
+				cout << "KEY:  Top left shows terrain type:	G=Grassy Meadow, B=Bog, F=Forrest, W=Water, X=Unrevealed"<<endl;
+				cout << "      Top center shows the SEEKER's location "<<BOLDRED << "@" << RESET;
+				cout << "      Top right is the Excavation site(E). Reveals to 'n' none or 'J' Jewel." <<endl;
+				// cout << "  Bottom left is for obstacles." <<endl<<endl;
+}
+
+void Board::displayRow(int rowNumber)
+{
+        int posX, posY, minX, maxX, minY, maxY;
+        followVars(posX, posY, minX, maxX, minY, maxY);
+
+        cout << endl;
+				cout << "		"; //left margin
+				int j=rowNumber;
+				for(int i=minX; i<=maxX; ++i)
+				{ 
+								boardArray[i][j]->printIslandTile(gameMgr->theSeeker->location);
+								cout << "  "; //space between tiles
+				}
+}

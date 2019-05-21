@@ -90,9 +90,9 @@ public:
 		//Board(); //constructor - this default creates a 10x10 board. Calls Board(10)
 		Board(GameManager* gameManager, const BoardOptions& options); //constructor - argument from user sizeBoardxsizeBoard
 		~Board();
-		void display() const;
-		void displayIsland() const;
-		void displayRow(int rowNumber) const;
+		void display();
+		void displayIsland();
+		void displayRow(int rowNumber);
 		bool onIsland(int x, int y);
 		void visitLocationAndNeighbors(Tile* location, bool endRecursion);
 		void displayLocation(Tile* location);
