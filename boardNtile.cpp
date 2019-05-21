@@ -225,7 +225,7 @@ void Board::putInRiver()
 				do
 				{
 								boardArray[riverX][riverY]->terrain = terrainMap["water"];
-								if(rand()%2 ==0)
+								if(rand()%10 >= 6)
 								{
 												if(riverX<boardSize-1)
 												{
@@ -239,7 +239,7 @@ void Board::putInRiver()
 																--riverY;
 												}
 								}
-				}while(riverX != boardSize-1 || riverY != 0);
+				}while(riverX != boardSize-1 && riverY != 0);
 }
 
 Board::~Board()
@@ -273,10 +273,10 @@ void Board::displayIsland() const
 				{
 								displayRow(j);
 				}
-				cout << "KEY:  Top left shows terrain type:"<<YELLOW<<"	G=Grassy Meadow," <<BLUE<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYAN<<" W=Water,"<<GRAY<<" X=Unrevealed"<< RESET<<endl;
-				cout << "      Top center shows the SEEKER's location "<<BOLDRED << "@" << RESET;
-				cout << "      Top right is the Excavation site(E). Reveals to " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTA<< "'J' Jewel." <<RESET<<endl;
-				cout << "      Bottom left shows obstacles. Bottom center shows money." <<endl;
+				cout << "KEY:  Terrain type:"<<YELLOW<<"	G=Grassy Meadow," <<BLUE<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYAN<<" W=Water,"<<GRAY<<" X=Unrevealed"<< RESET<<endl;
+				cout << "      SEEKER's location "<<BOLDRED << "@" << RESET;
+				cout << "      Excavation site" <<GRAY<< " (E)"<<RESET<<" reveals to " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTA<< "'J' Jewel." <<RESET<<endl;
+				//cout << "      Bottom left shows obstacles. Bottom center shows money." <<endl;
 }
 
 void Board::displayRow(int rowNumber) const
@@ -492,10 +492,9 @@ void Board::displayIsland()
 				}
 
 				cout <<endl;
-				cout << "KEY:  Top left shows terrain type:	G=Grassy Meadow, B=Bog, F=Forrest, W=Water, X=Unrevealed"<<endl;
-				cout << "      Top center shows the SEEKER's location "<<BOLDRED << "@" << RESET;
-				cout << "      Top right is the Excavation site(E). Reveals to 'n' none or 'J' Jewel." <<endl;
-				// cout << "  Bottom left is for obstacles." <<endl<<endl;
+				cout << "KEY:  Terrain type:"<<YELLOW<<"	G=Grassy Meadow," <<BLUE<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYAN<<" W=Water,"<<GRAY<<" X=Unrevealed"<< RESET<<endl;
+				cout << "      SEEKER's location "<<BOLDRED << "@" << RESET;
+				cout << "      Excavation site" <<GRAY<< " (E)"<<RESET<<" reveals to " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTA<< "'J' Jewel." <<RESET<<endl;
 }
 
 void Board::displayRow(int rowNumber)
@@ -511,4 +510,12 @@ void Board::displayRow(int rowNumber)
 								boardArray[i][j]->printIslandTile(gameMgr->theSeeker->location);
 								cout << "  "; //space between tiles
 				}
+				cout << endl;
+				cout << "		";//left margin
+				for(int i=minX; i<=maxX; ++i)
+				{
+								boardArray[i][j]->printIslandTileR2(gameMgr->theSeeker->location);
+								cout << "  "; //space between tiles
+				}
+				cout << endl;
 }
