@@ -27,19 +27,6 @@ Terrain::Terrain(string theName,
 {
 }
 
-/*
-void Terrain::changeTerrain(string theName, 
-				char theShortName, 
-				unsigned int theExertion, 
-				string theColor) 
-{
-				exertion=theExertion;
-				name=theName;
-				shortName=theShortName;
-				color=theColor;
-}
-*/
-
 void Terrain::display() const
 {
 				cout << color << name << RESET;
@@ -232,30 +219,38 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 void Board::putInRiver()
 {
 				int riverX = 0;
-				int riverY = .9 * (boardSize-1);
+				int riverY = .8 * (boardSize-1);
+				
 				do
 				{
-								boardArray[riverX][riverY]->terrain->changeTerrain("water", "W", 0, BLUE);
+								boardArray[riverX][riverY]->terrain = terrainMap["water"];
 								if(rand()%2 ==0)
 								{
+												if(riverX<boardSize-1)
+												{
 												++riverX;
+												}
 								}
 								else
 								{
+												if(riverY>0
+												{
 												--riverY;
+												}
 								}
-				}while(riverX<boardSize-1 && riverY>0);
+				}while(riverX != boardSize-1 || riverY != 0);
+				/*
 				if ( riverX==boardSize-2)
 				{
 								++riverX;
-								boardArray[riverX][riverY]->terrain->changeTerrain("water", "W", 0, BLUE);
+								boardArray[riverX][riverY]->terrain = terrainMap["water"];
 				}
-				else
+				else if(riverY==1)
 				{
 								--riverY;
-								boardArray[riverX][riverY]->terrain->changeTerrain("water", "W", 0, BLUE);
+								boardArray[riverX][riverY]->terrain = terrainMap["water"];
 				}
-				
+				*/
 }
 
 Board::~Board()
