@@ -54,6 +54,10 @@ private:
 	//TODO range enforsement and error handling
 	bool setSeekerMoney();
 
+	//read in a specific random seed to recreate a specific game
+	//TODO allow this to be red from the config file
+	bool setRandomSeed();
+
 	void configureGeneralSettings();
 
 	void configureTools();

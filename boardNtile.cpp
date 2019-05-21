@@ -170,18 +170,24 @@ int Tile::takeMoney()
 //init by default to size of 10 but allow users to override the default
 BoardOptions::BoardOptions(GameManager* gameManager) : size(10), gameMgr(gameManager)
 {
+	randomSeed = time(0);
 }
 
 
 Board::Board(GameManager* gameManager, const BoardOptions& options) : 
 				gameMgr(gameManager),
-				boardSize(options.size)
+				boardSize(options.size),
+				randomSeed(options.randomSeed)
 {
-				initTerrainMap();
-				//init the board
-				boardArray = new Tile**[boardSize];	
-				for(int i=0; i<boardSize; ++i)
-				{
+		srand(randomSeed);
+		cerr << "seed = " << randomSeed <<endl;
+		int random = rand(); //TODO erase
+		cerr << "random = " << random << endl; //TODO erase
+		initTerrainMap();
+		//init the board
+		boardArray = new Tile**[boardSize];	
+		for(int i=0; i<boardSize; ++i)
+		{
 								boardArray[i]= new Tile*[boardSize];
 								for(int j=0; j<boardSize; ++j)
 								{
@@ -198,17 +204,17 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 																boardArray[i][j]=new Tile(i,j, terrainMap["grassy_meadow"]);
 												}
 								}
-				}
-				//add river
-				putInRiver();
-				//OBSTACLE TESTING *********
-				boardArray[1][2]->obstacle = new Obstacle("BUSH", 5, 'B', true);
-				boardArray[2][2]->obstacle = new Obstacle("ROCK", 10, 'R', false);
-				//these lines below add Jewel
-				Tile* jewelTile = randJewelTile();
-				jewelTile->treasureChar = 'J';
-				//use for testing how map looks
-				//visitAllTiles();
+		}
+		//add river
+		putInRiver();
+		//OBSTACLE TESTING *********
+		boardArray[1][2]->obstacle = new Obstacle("BUSH", 5, 'B', true);
+		boardArray[2][2]->obstacle = new Obstacle("ROCK", 10, 'R', false);
+		//these lines below add Jewel
+		Tile* jewelTile = randJewelTile();
+		jewelTile->treasureChar = 'J';
+		//use for testing how map looks
+		//visitAllTiles();
 }
 
 void Board::putInRiver()

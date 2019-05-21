@@ -15,15 +15,15 @@ using namespace std;
 
 
 int main(int argc, char* argv[]) {
-
+/*
 	srand(time(0));
 //	srand(randomSeed);
 	cerr << "seed = " << time(0) <<endl;
 	int random = rand(); //TODO erase
 	cerr << "random = " << random << endl; //TODO erase
 	//clear the screen	
+*/
 	system("clear");
-
 	////initialize the game interface////
 	/* 
 	 * this will be a kind of "god view" of the system that includes

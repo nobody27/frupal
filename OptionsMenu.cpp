@@ -161,6 +161,7 @@ void OptionsMenu::configureGeneralSettings(){
 			"\n(3) Amount of money at start" <<
 			"\n(4) Start position" <<
 			"\n(5) Items at start" << 
+			"\n(6) Random seed" << 
 			"\n(R)eturn to options menu" <<
 			"\n\n>";
 
@@ -183,6 +184,9 @@ void OptionsMenu::configureGeneralSettings(){
 			case '5':
 				cout << "\nNot yet implemented!";
 				//setStartingItems();
+				break;
+			case '6':
+				setRandomSeed();
 				break;
 			default:
 				break;	
@@ -260,6 +264,32 @@ bool OptionsMenu::setSeekerMoney() {
 		return false; //failure
 	}
 	gameMgr->seekerOptions->theMoney=money;
+	return true; //success
+}
+
+//Main tool menu
+
+bool OptionsMenu::setRandomSeed() {
+	bool fail = false;
+	size_t seed = 0;
+	size_t min = 0;
+	size_t max = INT32_MAX;
+	gameMgr->clear_screen();
+	cout << "\nPlease enter a seed for the pseudorandom generator " << 
+		endl << "\n>";
+	//TODO error handling and check for good range
+	cin >> seed; 
+	if(cin.fail()) {
+		fail = true;
+		cin.clear();
+		cin.ignore(100, '\n');
+	}
+	if (fail || seed < min || seed > max) {
+		cout << "invalid seed -- aborting command" << endl; 
+		return false; //failure
+	}
+	gameMgr->boardOptions->randomSeed=seed;
+	cout << "your new random seed is: " << seed << endl;
 	return true; //success
 }
 

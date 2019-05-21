@@ -76,6 +76,7 @@ class BoardOptions {
 public:
 		BoardOptions(GameManager* gameManager);
 		int size;
+		int randomSeed;
 private:
 		GameManager* gameMgr;
 };
@@ -107,5 +108,6 @@ private:
 		int boardSize;
 		Tile*** boardArray;
 		unordered_map<string, Terrain*> terrainMap;
+		int randomSeed;
 };
 #endif //BOARD_N_TILE_H

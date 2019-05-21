@@ -92,7 +92,7 @@ void Seeker::move(direction_t direction) {
 		"You think to yourself... I could really use a boat right now..." << 
 		endl << endl;
 		gameMgr->requestEnter();
-		gameMgr->displayIslandAndSeeker();
+		//gameMgr->displayIslandAndSeeker();
 		return;
     }
     if (theObstacle) 
@@ -108,7 +108,7 @@ void Seeker::move(direction_t direction) {
       energy -= theIsland->getLocation(x,y)->getTerrain()->exertion;
       money += theIsland->getLocation(x,y)->takeMoney();
     }
-	gameMgr->requestEnter();
+	//gameMgr->requestEnter();
 	gameMgr->displayIslandAndSeeker();
     return;
 } 
