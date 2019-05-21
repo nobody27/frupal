@@ -27,6 +27,7 @@ Terrain::Terrain(string theName,
 {
 }
 
+/*
 void Terrain::changeTerrain(string theName, 
 				char theShortName, 
 				unsigned int theExertion, 
@@ -37,6 +38,7 @@ void Terrain::changeTerrain(string theName,
 				shortName=theShortName;
 				color=theColor;
 }
+*/
 
 void Terrain::display() const
 {
