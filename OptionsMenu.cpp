@@ -84,29 +84,29 @@ bool OptionsMenu::getAndExecuteCommand() {
 					configureGeneralSettings();
 				}
 				break;
-	/*		
-			case 'S':
-				if(gameMgr->initialized) {
-					unsupportedAfterInitialization = true;
-				} else {
-					again = !setBoardSize(); //try again if command fails
-				}
-				break;
-			case 'E':
-				if(gameMgr->initialized) {
-					unsupportedAfterInitialization = true;
-				} else {
-					again = !setSeekerEnergy(); //try again if command fails
-				}
-				break;
-			case 'M':
-				if(gameMgr->initialized) {
-					unsupportedAfterInitialization = true;
-				} else {
-					again = !setSeekerMoney(); //try again if command fails
-				}
-				break;
-*/
+				/*		
+						case 'S':
+						if(gameMgr->initialized) {
+						unsupportedAfterInitialization = true;
+						} else {
+						again = !setBoardSize(); //try again if command fails
+						}
+						break;
+						case 'E':
+						if(gameMgr->initialized) {
+						unsupportedAfterInitialization = true;
+						} else {
+						again = !setSeekerEnergy(); //try again if command fails
+						}
+						break;
+						case 'M':
+						if(gameMgr->initialized) {
+						unsupportedAfterInitialization = true;
+						} else {
+						again = !setSeekerMoney(); //try again if command fails
+						}
+						break;
+				 */
 			case '2':
 				if(gameMgr->initialized){
 					unsupportedAfterInitialization = true;
@@ -158,9 +158,8 @@ void OptionsMenu::configureGeneralSettings(){
 			"\n(1) Board size" <<
 			"\n(2) Amount of energy at start" <<
 			"\n(3) Amount of money at start" <<
-			"\n(4) Start position" <<
-			"\n(5) Items at start" << 
-			"\n(6) Random seed" << 
+			"\n(4) Random seed" << 
+			//"\n(N) Start position" <<
 			"\n(R)eturn to options menu" <<
 			"\n\n>";
 
@@ -176,15 +175,11 @@ void OptionsMenu::configureGeneralSettings(){
 			case '3':
 				setSeekerMoney();
 				break;
-			case '4':
+			case 'N':
 				cout << "\nNot yet implemented!";
 				//setSeekerPosition();
 				break;
-			case '5':
-				cout << "\nNot yet implemented!";
-				//setStartingItems();
-				break;
-			case '6':
+			case '4':
 				setRandomSeed();
 				break;
 			default:
@@ -300,7 +295,7 @@ void OptionsMenu::configureTools(){
 	int toolCount;	
 
 	while(reply != 'R'){
-	gameMgr->clear_screen();
+		gameMgr->clear_screen();
 		//Each time the menu displays, update the tool count
 		toolCount = gameMgr->resourcesOptions->theResources.size();
 		if(toolCount < 1){	//if there are no tools...
@@ -403,7 +398,7 @@ void OptionsMenu::modifyTool(int toolNumber){
 	Tool copy = gameMgr->resourcesOptions->theResources[toolNumber-1];
 
 	while(reply != 'R'){
-	gameMgr->clear_screen();
+		gameMgr->clear_screen();
 		copy.display();	//tool.display for displaying one tool
 		cout << "\n\nWhat would you like to change?" <<	
 			"\n(1) Tool name" <<
@@ -418,14 +413,7 @@ void OptionsMenu::modifyTool(int toolNumber){
 		reply = toupper(reply);
 		switch(reply){	//modify the relevant field, with input verification
 			case '1':
-				cout << "\nEnter a new name: ";
-				cin >> input;
-				while(cin.fail()){	//not sure if this is right for strings
-					cin.clear();
-					cin.ignore(100, '\n');
-					cout << "\nInvalid Entry. Enter a new name\n\n>";
-					cin >> input;
-				}
+				input = getAName();
 				cout << "\nChanging the name of \"" << copy.name;
 				copy.name = input;
 				cout << "\" to \"" << copy.name << "\"";
@@ -445,42 +433,21 @@ void OptionsMenu::modifyTool(int toolNumber){
 				cout << "\" to \"" << copy.relevantObstacle << "\"";
 				break;
 			case '3':
-				cout << "\nEnter an amount: ";
-				cin >> value;
-				while(cin.fail() || value < 0){
-					cin.clear();
-					cin.ignore(100, '\n');
-					cout << "\nInvalid Entry. Enter a positive number: ";
-					cin >> value;
-				}
+				value = getPositiveInt();
 				cout << "\nChanging the energy savings of \"" << 
 					copy.name << "\" from " << copy.energySaved;
 				copy.energySaved = value;
 				cout << " to " << copy.energySaved;	
 				break;
 			case '4':
-				cout << "\nEnter an amount: ";
-				cin >> value;
-				while(cin.fail() || value < 0){
-					cin.clear();
-					cin.ignore(100, '\n');
-					cout << "\nInvalid Entry. Enter a positive number: ";
-					cin >> value;
-				}
+				value = getPositiveInt();
 				cout << "\nChanging the price of \"" << 
 					copy.name << "\" from " << copy.price;
 				copy.price = value;
 				cout << " to " << copy.price;	
 				break;
 			case '5':
-				cout << "\nEnter an amount: ";
-				cin >> value;
-				while(cin.fail() || value < 0){
-					cin.clear();
-					cin.ignore(100, '\n');
-					cout << "\nInvalid Entry. Enter a positive number: ";
-					cin >> value;
-				}
+				value = getPositiveInt();
 				cout << "\nChanging the quantity of \"" << 
 					copy.name << "\" from " << copy.quantity;
 				copy.quantity = value;
@@ -510,7 +477,7 @@ void OptionsMenu::configureObstacles(){
 	int obstacleCount;
 
 	while(reply != 'R'){
-	gameMgr->clear_screen();
+		gameMgr->clear_screen();
 		obstacleCount = gameMgr->resourcesOptions->theObstacles.size();
 		if(obstacleCount < 1){
 			cout << "\nThere are currently no obstacles.";
@@ -600,7 +567,7 @@ void OptionsMenu::modifyObstacle(int obstacleNum){
 	Obstacle copy = gameMgr->resourcesOptions->theObstacles[obstacleNum-1];
 
 	while(reply != 'R'){
-	gameMgr->clear_screen();
+		gameMgr->clear_screen();
 		cout << "\nObstacle Editor:\n";
 		copy.display();
 		cout << "\n\nWhat would you like to change?" <<
@@ -616,28 +583,14 @@ void OptionsMenu::modifyObstacle(int obstacleNum){
 		switch(reply){
 
 			case '1':
-				cout << "\nEnter a new name: ";
-				cin >> input;
-				while(cin.fail()){
-					cin.clear();
-					cin.ignore(100, '\n');
-					cout << "\nInvalid Entry. Enter a new name: ";
-					cin >> input;
-				}
+				input = getAName();
 				cout << "\nChanging the name of \"" << copy.name;
 				copy.name = input;
 				cout << "\" to \"" << copy.name << "\"";
 				break;
 			case '2':
-				cout << "\nEnter an amount: ";
-				cin >> value;
-				while(cin.fail() || value < 0){
-					cin.clear();
-					cin.ignore(100, '\n');
-					cout << "\nInvalid Entry. Enter a positive number: ";
-					cin >> value;
-				}
-				cout << "\nChanging the energy cose of \"" << 
+				value = getPositiveInt();
+				cout << "\nChanging the energy cost of \"" << 
 					copy.name << "\" from " << copy.energyCost;
 				copy.energyCost = value;
 				cout << " to " << copy.energyCost;	
@@ -649,7 +602,7 @@ void OptionsMenu::modifyObstacle(int obstacleNum){
 					cin.clear();
 					cin.ignore(100, '\n');
 					cout << "\nInvalid Entry. Enter a new symbol: ";
-					cin >> value;
+					cin >> input;
 				}
 				cout << "\nChanging the symbol for \"" << 
 					copy.name << "\" from '" << copy.symbol;
@@ -678,4 +631,30 @@ void OptionsMenu::modifyObstacle(int obstacleNum){
 	gameMgr->resourcesOptions->theObstacles[obstacleNum-1].energyCost = copy.energyCost;
 	gameMgr->resourcesOptions->theObstacles[obstacleNum-1].symbol = copy.symbol;
 	gameMgr->resourcesOptions->theObstacles[obstacleNum-1].removable = copy.removable;
+}
+
+int OptionsMenu::getPositiveInt(){
+	int value;
+	cout << "\nEnter an amount: ";
+	cin >> value;
+	while(cin.fail() || value < 0){
+		cin.clear();
+		cin.ignore(100, '\n');
+		cout << "\nInvalid Entry. Enter a positive number: ";
+		cin >> value;
+	}
+	return value;
+}
+
+string OptionsMenu::getAName(){
+	string input;
+		cout << "\nEnter a new name: ";
+	cin >> input;
+	while(cin.fail()){
+		cin.clear();
+		cin.ignore(100, '\n');
+		cout << "\nInvalid Entry. Enter a new name: ";
+		cin >> input;
+	}
+	return input;
 }

@@ -70,6 +70,11 @@ private:
 	void removeObstacle();
 	void modifyObstacle(int obstacleNumber);
 
+	//utility function to get and verify a positive number (no upper bound)
+	int getPositiveInt();	
+	//utility function to get a string
+	string getAName();
+
 	GameManager* gameMgr;
 
 	//option to quickly quit the game instead of just returning to MainMenu
