@@ -32,11 +32,11 @@ public:
 		const char& getShortName() const {return shortName;}
 		void changeTerrain(string theName, char theShortName, unsigned int theExertion, string theColor);
 		unsigned int exertion;
-
+		string color;
+	
 private:
 		string name;
 		char shortName; 
-		string color;
 };
 
 //a tile takes up a single location on the board and includes all the

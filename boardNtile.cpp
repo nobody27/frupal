@@ -21,9 +21,9 @@ Terrain::Terrain(string theName,
 								char theShortName, 
 								unsigned int theExertion, 
 								string theColor) : exertion(theExertion), 
+				color(theColor),
 				name(theName), 
-				shortName(theShortName), 
-				color(theColor)
+				shortName(theShortName)
 {
 }
 
@@ -426,9 +426,9 @@ void Board::displayLocation(Tile* location)
 void Board::initTerrainMap()
 {
 				terrainMap["grassy_meadow"] = new Terrain("grassy_meadow", 'G', 1, YELLOW);
-				terrainMap["bog"] = new Terrain("bog", 'B', 2, CYAN);
+				terrainMap["bog"] = new Terrain("bog", 'B', 2, BLUE);
 				terrainMap["forest"] = new Terrain("forest", 'F', 2, GREEN);
-				terrainMap["water"] = new Terrain("water", 'W', 0, BLUE);
+				terrainMap["water"] = new Terrain("water", 'W', 0, CYAN);
 
 
 }
