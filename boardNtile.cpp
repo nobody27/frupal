@@ -5,7 +5,8 @@
 // boardNtile.cpp
 ////////////////////////////////////////////////
 
-//constructors destructors and functions of Board Terrain, and Tile classes
+//constructors destructors and functions of Board class
+
 
 #include "GameManager.h"
 #include "seeker.h"
@@ -13,49 +14,44 @@
 #include <vector>
 #include <assert.h>
 #include <string>
-#define RESET "\033[0m"
-#define RED "\033[31m"
-#define YELLOW "\033[33m"
-#define BOLDRED "\033[31;1m"
 
 using namespace std;
 
-Terrain::Terrain(string theName, string theShortName) : exertion(1), name(theName), shortName(theShortName)
+Terrain::Terrain(string theName, 
+								char theShortName, 
+								unsigned int theExertion, 
+								string theColor) : exertion(theExertion), 
+				color(theColor),
+				name(theName), 
+				shortName(theShortName)
 {
 }
 
-/*void Terrain::display() //TODO is this function used by anything?
-	{
-	cout << "	Terrain: " << name << endl;
-	}*/
-
-void Terrain::display()
+void Terrain::display() const
 {
-				cout << name;
+				cout << color << name << RESET;
+}
+
+void Terrain::displayShortName() const
+{
+				cout << color << shortName << RESET;
 }
 
 
-void Terrain::setTerrainType(string theName, string theShortName)
-{
-				name=theName;
-				shortName=theShortName;
-}
-
-//by default set terrain to grassy meadow for now
+//tile constructor
 Tile::Tile(int x, int y, Terrain* theTerrain): xValue(x), 
 				yValue(y),
-				money(1), //TODO randomize this
+				obstacle(NULL),
 				terrain(theTerrain),
-				//for now we find one unit of money on each new tile
-				visited(false),
-        obstacle(NULL)
+				visited(false)
 {
 				//make sure that terrain is not a null pointer
 				assert(terrain);
-				treasureName=("none"); //no treasure - later string withe description
+				if(treasureChar != 'J') treasureChar = 'n';
+
 				//make sure that the amount of money is not negative and also make sure
 				//it is not more than one char long
-				assert(money >= 0 && money <=9);
+				money = rand() % 10;
 }
 
 
@@ -72,29 +68,29 @@ void Tile::tileDisplay() const
 				cout << ". ";
 				if(money) 
 				{	
-					cout << "There is gold here with a value of $" << 
-						money << "!!" << endl;
-				} 
-				else 
-				{
-					cout << "There is no gold left to find here." << endl;
-				} 
-				if (treasureName == "none")
-				{
-				cout << "Bummer, there is no treasure here. ";
+								cout << "There is $" << 
+												money << " gold here!! ";
 				}
 				else
 				{
-					cout << "There is treasure here!!!!!! The treasure is " << treasureName<< ". ";
+								cout << "There is no gold left here. ";
+				} 
+				if (treasureChar == 'n')
+				{
+								cout << "The Jewel is "<< MAGENTA << "not here. "<< RESET << endl;
 				}
-				cout << "There is an obstacle here, it is a __________." <<endl;
-				//cout << "	" << (visited ? "visited by seeker" : "undiscovered") << endl;
+				else
+				{
+								cout << MAGENTA << "The Jewel is here!!!" << RESET << endl;
+				}
 }
 
 void Tile::displayLocation() const
 {
 				cout << "You are standing in a ";
 				terrain->display();
+				cout << endl;
+
 }
 
 
@@ -104,11 +100,11 @@ void Tile::printIslandTile(Tile* location)
 				//terrain type
 				if(!visited)
 				{
-								cout<< "X";
+								cout<<GRAY<< "X"<<RESET;
 				}
 				else
 				{
-								cout << YELLOW << terrain->getShortName() << RESET;
+								terrain->displayShortName();
 				}
 				//seeker location
 				if (this == location)
@@ -117,35 +113,35 @@ void Tile::printIslandTile(Tile* location)
 				}
 				else
 				{
-								cout << "_";
+								cout << GRAY <<"_"<<RESET;
 				}
 				//treasure E for excavation, or Letter for treasure type
 				if(!visited)
 				{
-								cout << "E";
+								cout <<GRAY<< "E"<<RESET;
 				}
 				else
 				{
-								cout << "n"; //treasureLetter;
+								cout << MAGENTA << treasureChar <<RESET;
 				}
 }
 
 void Tile::printIslandTileR2(Tile* location)
 {
-				assert(money >= 0 && money <=9);
-				//obstacle O or Letter for obstacle type
 				if(!visited) 
 				{
-					cout<< "O";
-					cout << "X"; //unknown amount of money
+								cout<<GRAY<< "O";
+								cout << "XX"<<RESET; //unknown amount of money
 				}
 				else
 				{
-					cout<< "o"; // later obstacleLetter;
-					cout << money;
+								if(obstacle) {
+												cout << obstacle->symbol; 
+								} else {
+												cout << "o"; // no obstacle;
+								}
+								cout << "$" << money;
 				}
-				//space to expand functionality
-				cout << "X";
 }
 
 
@@ -156,51 +152,94 @@ void Tile::visitTile()
 
 int Tile::takeMoney()
 {
-	int retVal = 0;
-	if(money) 
-	{
-		cout << "You just found $" << money << endl;
-		retVal = money;
-		money = 0;
-	}
-	else 
-	{
-		cout << "No money here, keep looking" << endl;
-	}
-	return retVal;
+				int retVal = 0;
+				if(money) 
+				{
+								cout << "You just found $" << money << endl;
+								retVal = money;
+								money = 0;
+				}
+				else 
+				{
+								cout << "No money here, keep looking" << endl;
+				}
+				return retVal;
 }
+
 
 //init by default to size of 10 but allow users to override the default
 BoardOptions::BoardOptions(GameManager* gameManager) : size(10), gameMgr(gameManager)
 {
+	randomSeed = time(0);
 }
 
 
 Board::Board(GameManager* gameManager, const BoardOptions& options) : 
 				gameMgr(gameManager),
-				boardSize(options.size)
+				boardSize(options.size),
+				randomSeed(options.randomSeed)
 {
-				//init the terrain TODO - repleace with real configuration
-				//for now add a default grassy meadow terrain
-				string terrainName = "grassy_meadow";
-				string terrainShortName = "G";
-				terrainMap[terrainName] = new Terrain(terrainName, terrainShortName);
-
-				//init the board
-				boardArray = new Tile**[boardSize];	
-				for(int i=0; i<boardSize; ++i)
-				{
+		srand(randomSeed);
+		cerr << "seed = " << randomSeed <<endl;
+		int random = rand(); //TODO erase
+		cerr << "random = " << random << endl; //TODO erase
+		initTerrainMap();
+		//init the board
+		boardArray = new Tile**[boardSize];	
+		for(int i=0; i<boardSize; ++i)
+		{
 								boardArray[i]= new Tile*[boardSize];
 								for(int j=0; j<boardSize; ++j)
 								{
-												//perparation for options: if location exists in options
+												//preparation for options: if location exists in options
 												//set according to it, otherwise set default
-												boardArray[i][j]=new Tile(i,j, terrainMap["grassy_meadow"]);
+												int slope = -.3;
+												int yInt = .8*boardSize;
+												if(j > slope*i + yInt)
+												{
+																boardArray[i][j]=new Tile(i,j, terrainMap["forest"]);
+												}
+												else
+												{	
+																boardArray[i][j]=new Tile(i,j, terrainMap["grassy_meadow"]);
+												}
 								}
-				}
-        //OBSTACLE TESTING *********
-        boardArray[1][1]->obstacle = new Obstacle("BUSH", 5, 'B', true);
-        boardArray[2][2]->obstacle = new Obstacle("ROCK", 10, 'R', false);
+		}
+		//add river
+		putInRiver();
+		//OBSTACLE TESTING *********
+		boardArray[1][2]->obstacle = new Obstacle("BUSH", 5, 'B', true);
+		boardArray[2][2]->obstacle = new Obstacle("ROCK", 10, 'R', false);
+		//these lines below add Jewel
+		Tile* jewelTile = randJewelTile();
+		jewelTile->treasureChar = 'J';
+		//use for testing how map looks
+		//visitAllTiles();
+}
+
+void Board::putInRiver()
+{
+				int riverX = 0;
+				int riverY = .8 * (boardSize-1);
+
+				do
+				{
+								boardArray[riverX][riverY]->terrain = terrainMap["water"];
+								if(rand()%10 >= 6)
+								{
+												if(riverX<boardSize-1)
+												{
+																++riverX;
+												}
+								}
+								else
+								{
+												if(riverY>0 ) 
+												{
+																--riverY;
+												}
+								}
+				}while(riverX != boardSize-1 && riverY != 0);
 }
 
 Board::~Board()
@@ -213,6 +252,7 @@ Board::~Board()
 				}
 }
 
+/*
 void Board::display() const
 {
 				cout << "Displaying your island: " <<endl;
@@ -229,20 +269,14 @@ void Board::display() const
 
 void Board::displayIsland() const
 {
-
 				for(int j=(boardSize-1); j>=0; --j)
 				{
 								displayRow(j);
 				}
-
-				cout << "Key:"<<endl;
-				cout << "	Top left space is terrain type:	G=Grassy Meadow, B=Bog, F=Forrest, W=Water, X=Unrevealed"<<endl;
-				cout << "	Top center is _ unless seeker is there. SEEKER is '@'." <<endl; 
-				cout << "	Top right is for treasure. E=Excavation site until searched" <<endl;
-				cout << "	Bottom left is for obstacles." <<endl<<endl;
-				//TODO note to team - spaces could hold info about tile, (obstacles, tools, food etc) 
-				// display seeker
-
+				cout << "KEY:  Terrain type:"<<YELLOW<<"	G=Grassy Meadow," <<BLUE<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYAN<<" W=Water,"<<GRAY<<" X=Unrevealed"<< RESET<<endl;
+				cout << "      SEEKER's location "<<BOLDRED << "@" << RESET;
+				cout << "      Excavation site" <<GRAY<< " (E)"<<RESET<<" reveals to " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTA<< "'J' Jewel." <<RESET<<endl;
+				//cout << "      Bottom left shows obstacles. Bottom center shows money." <<endl;
 }
 
 void Board::displayRow(int rowNumber) const
@@ -264,7 +298,7 @@ void Board::displayRow(int rowNumber) const
 				}
 				cout <<endl;
 }
-
+*/
 
 void Board::visitAllTiles()
 {
@@ -302,41 +336,186 @@ Tile* Board::getLocation(int x, int y) const {
 				return boardArray[x][y];
 }
 
+//randJewelTile return a Tile pointer that is in a random location in the top right quadarnt of the board
+//it takes no input
+//later could add cases to also make it possible for Jewel to be in top left or bottom right
+Tile* Board::randJewelTile()
+{
+				int jewelX = 0;
+				int jewelY = 0;
+				int halfBoard = .5*boardSize; //this should round down and give an int
+				int rand1 = (rand())%halfBoard; // rand1 will be a random int between 0 and halfBoard so that when subtracted
+				//from boardsize will be in top right quadrant - jewel will be in the quarter of the board furthest from the start
+				jewelX = (boardSize - 1 - rand1);
+				int rand2 = (rand())%halfBoard;
+				jewelY = (boardSize - 1 - rand2);
+				cerr << "rand1" << rand1 <<endl;
+				cerr << "rand2" << rand2 <<endl;
+				cerr << "jewelX" << jewelX <<endl;
+				cerr << "jewelY" << jewelY <<endl;
+
+				return boardArray[jewelX][jewelY];
+}
+
+bool Board::onIsland(int x, int y)
+{
+				return (x >= 0 && x < boardSize && y >= 0 && y < boardSize );
+}
+
+void Board::visitLocationAndNeighbors(Tile* location, bool endRecursion)
+{
+				int x = location->xValue;
+				int y = location->yValue;
+
+				//this is only really needed for the first position in the
+				//game and after jumping to the jewels but it's a good
+				//sanity check
+				assert(onIsland(x,y)); 
+				boardArray[x][y]->visitTile();
+
+				//show show info regarding tiles one step away
+				if(onIsland(x, y+1)) boardArray[x][y+1]->visitTile();
+				if(onIsland(x, y-1)) boardArray[x][y-1]->visitTile();
+				if(onIsland(x+1, y)) boardArray[x+1][y]->visitTile();
+				if(onIsland(x-1, y)) boardArray[x-1][y]->visitTile();
+				if(endRecursion == true)
+								return;
+
+				//if seeker has binoculars show tiles two steps away
+				if(gameMgr->theSeeker->hasBinoculars) 
+				{
+								if(onIsland(x, y+1)) visitLocationAndNeighbors(boardArray[x][y+1], true);
+								if(onIsland(x, y-1)) visitLocationAndNeighbors(boardArray[x][y-1], true);
+								if(onIsland(x+1, y)) visitLocationAndNeighbors(boardArray[x+1][y], true);
+								if(onIsland(x-1, y)) visitLocationAndNeighbors(boardArray[x-1][y], true);
+				}
+}
 
 void Board::displayLocation(Tile* location) 
 {
 				int x = location->xValue;
 				int y = location->yValue;
+				visitLocationAndNeighbors(location, false);
 				location->displayLocation();
-				if (y+1 >= boardSize)
-								cout << endl << "To the north lies ocean" << endl;
-				else {
-								//cerr <<endl << "Now checking new displayTile() function" <<endl;
-								boardArray[x][y+1]->visitTile();
-								cout << endl << "To the north is a ";
+				if (y+1 >= boardSize) {
+								cout << "To the north lies ocean" << endl;
+				} else {
+								cout << "To the north is a ";
 								boardArray[x][y+1]->tileDisplay();
 				}
-				if (y-1 < 0)
-								cout << endl << "To the south lies ocean" << endl;
-				else {
-								boardArray[x][y-1]->visitTile();
-								cout << endl << "To the south is a ";
+				if (y-1 < 0) {
+								cout << "To the south lies ocean" << endl;
+				} else {
+								cout << "To the south is a ";
 								boardArray[x][y-1]->tileDisplay();
 				}
-				if (x+1 >= boardSize)
-								cout << endl << "To the east lies ocean" << endl;
-				else {
-								boardArray[x+1][y]->visitTile();
-								cout << endl << "To the east is a ";
+				if (x+1 >= boardSize) {
+								cout << "To the east lies ocean" << endl;
+				} else {
+								cout << "To the east is a ";
 								boardArray[x+1][y]->tileDisplay();
 				}
-				if (x-1 < 0)
-								cout << endl << "To the west lies ocean" << endl;
-				else {
-								boardArray[x-1][y]->visitTile();
-								cout << endl << "To the west is a ";
+				if (x-1 < 0) {
+								cout << "To the west lies ocean";
+				} else {
+								cout << "To the west is a ";
 								boardArray[x-1][y]->tileDisplay();
 				}
 }
 
+void Board::initTerrainMap()
+{
+				terrainMap["grassy_meadow"] = new Terrain("grassy_meadow", 'G', 1, YELLOW);
+				terrainMap["bog"] = new Terrain("bog", 'B', 2, BLUE);
+				terrainMap["forest"] = new Terrain("forest", 'F', 2, GREEN);
+				terrainMap["water"] = new Terrain("water", 'W', 0, CYAN);
 
+
+}
+
+void Board::followVars(int&posX, int&posY, int&minX, int&maxX, int&minY, int&maxY)
+{
+    posX = gameMgr->theSeeker->getLocation()->xValue;
+    posY = gameMgr->theSeeker->getLocation()->yValue;
+
+    minX = posX - 4;
+    maxX = posX + 5;
+    if (minX < 0) {
+      minX = 0;
+      maxX = minX + 9;
+    }
+    else if (maxX >= boardSize) {
+      maxX = boardSize - 1;
+      minX = maxX - 9;
+    }
+
+    minY = posY - 4;
+    maxY = posY + 5;
+    if (minY < 0) {
+      minY = 0;
+      maxY = minY + 9;
+    }
+    else if (maxY >= boardSize) {
+      maxY = boardSize - 1;
+      minY = maxY - 9;
+    }
+    return;
+}
+
+//follow**********************
+void Board::display() 
+{
+        int posX, posY, minX, maxX, minY, maxY;
+        followVars(posX, posY, minX, maxX, minY, maxY);
+        
+				
+				cout << "Displaying your island: " <<endl;
+				for(int i=minX; i<=maxX; ++i)
+				{
+								for(int j=minY; j<=maxY; ++j)
+								{
+												cout <<"the Tile at (" << i << ", " << j <<") has  data" <<endl;
+												boardArray[i][j]->tileDisplay();
+								}
+								cout <<endl;
+				}
+}
+
+void Board::displayIsland()
+{
+        int posX, posY, minX, maxX, minY, maxY;
+        followVars(posX, posY, minX, maxX, minY, maxY);
+        
+        for(int j=maxY; j>=minY; --j)
+				{
+								displayRow(j);
+				}
+
+				cout <<endl;
+				cout << "KEY:  Terrain type:"<<YELLOW<<"	G=Grassy Meadow," <<BLUE<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYAN<<" W=Water,"<<GRAY<<" X=Unrevealed"<< RESET<<endl;
+				cout << "      SEEKER's location "<<BOLDRED << "@" << RESET;
+				cout << "      Excavation site" <<GRAY<< " (E)"<<RESET<<" reveals to " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTA<< "'J' Jewel." <<RESET<<endl;
+}
+
+void Board::displayRow(int rowNumber)
+{
+        int posX, posY, minX, maxX, minY, maxY;
+        followVars(posX, posY, minX, maxX, minY, maxY);
+
+        cout << endl;
+				cout << "		"; //left margin
+				int j=rowNumber;
+				for(int i=minX; i<=maxX; ++i)
+				{ 
+								boardArray[i][j]->printIslandTile(gameMgr->theSeeker->location);
+								cout << "  "; //space between tiles
+				}
+				cout << endl;
+				cout << "		";//left margin
+				for(int i=minX; i<=maxX; ++i)
+				{
+								boardArray[i][j]->printIslandTileR2(gameMgr->theSeeker->location);
+								cout << "  "; //space between tiles
+				}
+				cout << endl;
+}

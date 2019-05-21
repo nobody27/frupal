@@ -18,6 +18,9 @@
 //	are any of these sill needed ^ ?
 #include <assert.h>
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
+
 #include "resources.h"
 
 //constructor
@@ -30,7 +33,7 @@ GameManager::GameManager() : theIsland(nullptr), theSeeker(nullptr),
 	boardOptions = new BoardOptions(this);
 	resourcesOptions = new ResourcesOptions(this);
 	seekerOptions = new SeekerOptions(this);
-
+	randomSeed = time(0);
 	readConfigFile();
 }
 
@@ -45,9 +48,10 @@ GameManager::~GameManager() {
 }
 
 //Function to clear screen and reset curson
-void GameManager::clear_screen(){
+void GameManager::clear_screen() const {
 	if(SCREEN_CLEARING_ENABLED){	
-		cout << "\033[2J\033[1;1H";
+		//cout << "\033[2J\033[1;1H";
+		system("clear"); //this is cleaner
 	}
 }
 
@@ -236,8 +240,11 @@ void GameManager::initializeGame() {
 	theResources = new Resources(this, *resourcesOptions);
 	theSeeker = new Seeker(this, *seekerOptions);
 	initialized = true;
+
+	//seed rand function  - FOR NOW find this at the beginning of main  TODO discuss
+
 	//print introduction
-	system("clear");
+	clear_screen();
 	cout << endl << endl << "*****************************" << endl;
 	cout << "You have landed on Frupal Island!" << endl;
 	cout << "As you explore, you will uncover treasure as well as tools to help you on your quest." << endl;
@@ -247,3 +254,17 @@ void GameManager::initializeGame() {
 	cout << "press ENTER to continue";
 	cin.get();
 }
+
+void GameManager::displayIslandAndSeeker() {
+	clear_screen();
+	theIsland->visitLocationAndNeighbors(theSeeker->getLocation(), false);
+	theIsland->displayIsland();
+	theSeeker->display();
+}
+
+void GameManager::requestEnter() const {
+	cout << "\n\n\n";
+	cout << "press ENTER to continue";
+	cin.get();
+}
+

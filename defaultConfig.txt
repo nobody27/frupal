@@ -1,4 +1,4 @@
-1,boardSize,10
+1,boardSize,15
 1,startEnergy,100
 1,startMoney,100
 1,startX,0

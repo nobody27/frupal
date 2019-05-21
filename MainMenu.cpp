@@ -16,10 +16,6 @@
 #include <fstream>
 #include <iomanip>
 
-
-#define RESET "\033[0m"
-#define BOLDMAGENTA "\033[1;35m"
-
 using namespace std;
 
 //TODO add error handling
@@ -45,7 +41,7 @@ bool MainMenu::call() {
 }
 
 void MainMenu::displayExitScreen() {
-	system("clear");
+	gameMgr->clear_screen();
 	cout << BOLDMAGENTA << splashText << RESET << "\n\n";
 	cout << "Thank you for playing Frupal Island!" << endl;
 	cout << "Please leave a rating in your app store." << endl;
@@ -54,7 +50,7 @@ void MainMenu::displayExitScreen() {
 
 void MainMenu::display() const {
 	//prepare the screen
-	system("clear");
+	gameMgr->clear_screen();
 	cout << BOLDMAGENTA << splashText << RESET << "\n\n";
 	cout << "Welcome to Frupal Island!" << endl;
     cout << "\n";
@@ -76,12 +72,14 @@ bool MainMenu::getAndExecuteCommand() {
 		display();
 		//request the command
 		cin >> choice;
+		cin.ignore(100, '\n');
 		switch (toupper(choice)) {
 			case 'P':
 				//before playing we must make sure everything is initialized
 				if(!gameMgr->initialized) {
 					gameMgr->initializeGame();
 				}
+				gameMgr->displayIslandAndSeeker();
 				quit = gameMenu.call();
 				break;
 			case 'O':

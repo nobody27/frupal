@@ -15,10 +15,21 @@
 								//board and tile to separate files
 #include "seeker.h"				//owned by John
 #include "MainMenu.h"			//owned by Elyse
-//#include "configurations.h"		//owned by Max
-//#include "tools.h"				//owned by John (maybe help from Leior)
-//#include "obstacles.h"			//TBD (maybe John or Leior)
 #include "resources.h"
+
+
+#define RESET "\033[0m"
+#define BOLDRED "\033[31;1m"
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define YELLOW "\033[33m"
+#define BLUE "\033[34m"
+#define MAGENTA "\033[35m"
+#define BOLDMAGENTA "\033[1;35m"
+#define CYAN "\033[36m"
+#define GRAY "\033[90m"
+#define LIGHT_GREEN "\033[92m"
+#define LIGHT_YELLOW "\033[93m"
 
 using namespace std;
 
@@ -54,7 +65,7 @@ public:
 	//TODO verify the game is only initialized once unless we implement 
 
 	//function to clear the screen and reset cursor
-	void clear_screen();
+	void clear_screen() const;
 
 	//Function to obtain and verify a custom file name
 	string getFileName();
@@ -67,6 +78,11 @@ public:
 
 	//a reset command
 	void initializeGame();	
+
+	//display the island and seeker information
+	void displayIslandAndSeeker();
+
+	void requestEnter() const;
 
 	////global data////
 	//TODO is there a reason to hide as private and use set/get methods?
@@ -114,7 +130,7 @@ public:
 	//indicate if we have initialized the game (board, seeker, etc.)
 	//init to false
 	bool initialized;
-
+	int randomSeed;
 };
 
 #endif // GAME_INTERFACE_H
