@@ -103,6 +103,7 @@ public:
 		Tile*  getLocation(int x, int y) const;
 		Tile* randJewelTile();
 		int size() const {return boardSize;}
+    void followVars(int&posX, int&posY, int&minX, int&maxX, int&minY, int&maxY);
 private:
 		GameManager* gameMgr;
 		int boardSize;

@@ -433,3 +433,32 @@ void Board::initTerrainMap()
 
 }
 
+void Board::followVars(int&posX, int&posY, int&minX, int&maxX, int&minY, int&maxY)
+{
+    posX = gameMgr->theSeeker->getLocation()->xValue;
+    posY = gameMgr->theSeeker->getLocation()->yValue;
+
+    minX = posX - 4;
+    maxX = posX + 5;
+    if (minX < 0) {
+      minX = 0;
+      maxX = minX + 9;
+    }
+    else if (maxX >= boardSize) {
+      maxX = boardSize - 1;
+      minX = maxX - 9;
+    }
+
+    minY = posY - 4;
+    maxY = posY + 5;
+    if (minY < 0) {
+      minY = 0;
+      maxY = minY + 9;
+    }
+    else if (maxY >= boardSize) {
+      maxY = boardSize - 1;
+      minY = maxY - 9;
+    }
+    return;
+}
+
