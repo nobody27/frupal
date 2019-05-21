@@ -38,7 +38,7 @@ void Terrain::displayShortName() const
 }
 
 
-//by default set terrain to grassy meadow for now
+//tile constructor
 Tile::Tile(int x, int y, Terrain* theTerrain): xValue(x), 
 				yValue(y),
 				obstacle(NULL),
@@ -47,7 +47,6 @@ Tile::Tile(int x, int y, Terrain* theTerrain): xValue(x),
 {
 				//make sure that terrain is not a null pointer
 				assert(terrain);
-				//treasureName=("none"); //no treasure - later string withe description
 				if(treasureChar != 'J') treasureChar = 'n';
 				
 				//make sure that the amount of money is not negative and also make sure
@@ -69,12 +68,12 @@ void Tile::tileDisplay() const
 				cout << ". ";
 				if(money) 
 				{	
-					cout << "There is gold here with a value of $" << 
-						money << "!! ";
+					cout << "There is $" << 
+						money << " gold here!! ";
 				} 
 				else 
 				{
-					cout << "There is no gold left to find here. ";
+					cout << "There is no gold left here. ";
 				} 
 				if (treasureChar == 'n')
 				{
@@ -100,7 +99,7 @@ void Tile::printIslandTile(Tile* location)
 				//terrain type
 				if(!visited)
 				{
-								cout<< "X";
+								cout<<GRAY<< "X"<<RESET;
 				}
 				else
 				{
@@ -113,12 +112,12 @@ void Tile::printIslandTile(Tile* location)
 				}
 				else
 				{
-								cout << "_";
+								cout << GRAY <<"_"<<RESET;
 				}
 				//treasure E for excavation, or Letter for treasure type
 				if(!visited)
 				{
-								cout << "E";
+								cout <<GRAY<< "E"<<RESET;
 				}
 				else
 				{
@@ -130,8 +129,8 @@ void Tile::printIslandTileR2(Tile* location)
 {
 				if(!visited) 
 				{
-					cout<< "O";
-					cout << "X"; //unknown amount of money
+					cout<<GRAY<< "O";
+					cout << "XX"<<RESET; //unknown amount of money
 				}
 				else
 				{
@@ -139,12 +138,9 @@ void Tile::printIslandTileR2(Tile* location)
 						cout << obstacle->symbol; 
 					} else {
 						cout << "o"; // no obstacle;
-						
 					}
-					cout << money;
+					cout << "$" << money;
 				}
-				//space to expand functionality
-				cout << "X";
 }
 
 
@@ -188,7 +184,7 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 				boardArray[i]= new Tile*[boardSize];
 				for(int j=0; j<boardSize; ++j)
 				{
-						//perparation for options: if location exists in options
+						//preparation for options: if location exists in options
 						//set according to it, otherwise set default
 						int border = -.3*boardSize + .8*boardSize;
 						if(j > border)
@@ -246,10 +242,10 @@ void Board::displayIsland() const
 				{
 								displayRow(j);
 				}
-cout << "KEY:  Top left shows terrain type:"<<YELLOW<<"	G=Grassy Meadow," <<GRAY<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYAN<<" W=Water,"<<RESET<<" X=Unrevealed"<<endl;
-				cout << "    Top center shows the SEEKER's location "<<BOLDRED << "@" << RESET;
-				cout << "    Top right is the Excavation site(E). Reveals to " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTA<< "'J' Jewel." <<RESET<<endl;
-				cout << "    Bottom left shows obstacles. Bottom center shows money." <<endl;
+cout << "KEY:  Top left shows terrain type:"<<YELLOW<<"	G=Grassy Meadow," <<BLUE<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYAN<<" W=Water,"<<GRAY<<" X=Unrevealed"<< RESET<<endl;
+				cout << "      Top center shows the SEEKER's location "<<BOLDRED << "@" << RESET;
+				cout << "      Top right is the Excavation site(E). Reveals to " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTA<< "'J' Jewel." <<RESET<<endl;
+				cout << "      Bottom left shows obstacles. Bottom center shows money." <<endl;
 }
 
 void Board::displayRow(int rowNumber) const
