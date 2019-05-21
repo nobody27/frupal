@@ -269,7 +269,8 @@ bool OptionsMenu::setRandomSeed() {
 	size_t min = 0;
 	size_t max = INT32_MAX;
 	gameMgr->clear_screen();
-	cout << "\nPlease enter a seed for the pseudorandom generator " << 
+	cout << "\nThe current seed is: " << gameMgr->boardOptions->randomSeed <<
+		"\nPlease enter a new seed for the pseudorandom generator " << 
 		endl << "\n>";
 	//TODO error handling and check for good range
 	cin >> seed; 

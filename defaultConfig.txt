@@ -1,3 +1,4 @@
+1,randomSeed,10
 1,boardSize,15
 1,startEnergy,100
 1,startMoney,100

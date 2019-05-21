@@ -150,6 +150,8 @@ void GameManager::readConfigFile(bool useCustom){
 				seekerOptions->hasBoat = stoi(value);
 			}else if(!name.compare("hasBinoculars")){
 				seekerOptions->hasBinoculars = stoi(value);
+			}else if(!name.compare("randomSeed")){
+				boardOptions->randomSeed = stoi(value);
 			}else if(!name.compare("binocularCost")){
 				//TODO: put this value in the right place
 			}
