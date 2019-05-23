@@ -1,4 +1,4 @@
-//ATeam Jessica, Elyse, Max, Leior, John
+//ATeam Jessica, Elyse, Max, Leior, Johng
 //cs300
 //April 10, 2019
 //boardNtile.h

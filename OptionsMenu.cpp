@@ -562,6 +562,7 @@ void OptionsMenu::removeObstacle(){
 	}
 }
 void OptionsMenu::modifyObstacle(int obstacleNum){
+
 	char reply = ' ';
 	string input;
 	int value;
