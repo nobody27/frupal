@@ -405,33 +405,49 @@ void Board::initTerrainMap()
 
 }
 
+//TODO these values should be fields in Board
 void Board::followVars(int&posX, int&posY, int&minX, int&maxX, int&minY, int&maxY)
 {
-				posX = gameMgr->theSeeker->getLocation()->xValue;
-				posY = gameMgr->theSeeker->getLocation()->yValue;
+	int followSize = 9; //TODO make this global or configurable. best result if odd number
+	//deal with small boards
+	if(followSize > boardSize) {
+		followSize = boardSize;
+	}
+	int leftMargin = followSize/2; //half of size rounded down
+	int rightMargin = followSize - leftMargin -1;
 
-				minX = posX - 4;
-				maxX = posX + 5;
-				if (minX < 0) {
-								minX = 0;
-								maxX = minX + boardSize - 1;
-				}
-				else if (maxX >= boardSize) {
-								maxX = boardSize - 1;
-								minX = maxX - (boardSize - 1);
-				}
 
-				minY = posY - 4;
-				maxY = posY + 5;
-				if (minY < 0) {
-								minY = 0;
-								maxY = minY + (boardSize - 1);
-				}
-				else if (maxY >= boardSize) {
-								maxY = boardSize - 1;
-								minY = maxY - (boardSize - 1);
-				}
-				return;
+    posX = gameMgr->theSeeker->getLocation()->xValue;
+    posY = gameMgr->theSeeker->getLocation()->yValue;
+
+    minX = posX - leftMargin;
+    maxX = posX + rightMargin;
+    if (minX < 0) {
+      minX = 0;
+      maxX = followSize - 1;
+    } else if (maxX >= boardSize) {
+      maxX = boardSize - 1;
+      minX = maxX - followSize + 1;
+    }
+    assert (minX >= 0);
+    assert(maxX < boardSize);
+
+	//TODO this should be a method that is called once for x and again for y
+    minY = posY - leftMargin;
+    if (minY < 0) {
+      minY = 0;
+      maxY = followSize - 1;
+    } else if (maxY >= boardSize) {
+      maxY = boardSize - 1;
+      minY = maxX - followSize;
+    } else {
+      minY = posY - leftMargin;
+      maxY = posY + rightMargin;
+    }
+    assert (minY >= 0);
+    assert(maxY < boardSize);
+
+    return;
 }
 
 //follow**********************
@@ -474,20 +490,23 @@ void Board::displayRow(int rowNumber)
 				int posX, posY, minX, maxX, minY, maxY;
 				followVars(posX, posY, minX, maxX, minY, maxY);
 
-				cout << endl;
-				cout << "		"; //left margin
-				int j=rowNumber;
-				for(int i=minX; i<=maxX; ++i)
-				{ 
-								boardArray[i][j]->printIslandTile(gameMgr->theSeeker->location);
-								cout << "  "; //space between tiles
-				}
-				cout << endl;
-				cout << "		";//left margin
-				for(int i=minX; i<=maxX; ++i)
-				{
-								boardArray[i][j]->printIslandTileR2(gameMgr->theSeeker->location);
-								cout << "  "; //space between tiles
-				}
-				cout << endl;
+		assert(rowNumber < boardSize);
+		assert(minX >= 0);
+		assert(maxX < boardSize);
+        cout << endl;
+		cout << "		"; //left margin
+		int j=rowNumber;
+		for(int i=minX; i<=maxX; ++i)
+		{ 
+						boardArray[i][j]->printIslandTile(gameMgr->theSeeker->location);
+						cout << "  "; //space between tiles
+		}
+		cout << endl;
+		cout << "		";//left margin
+		for(int i=minX; i<=maxX; ++i)
+		{
+						boardArray[i][j]->printIslandTileR2(gameMgr->theSeeker->location);
+						cout << "  "; //space between tiles
+		}
+		cout << endl;
 }
