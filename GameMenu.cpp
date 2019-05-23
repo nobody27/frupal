@@ -46,11 +46,11 @@ void GameMenu::display() const {
 	cout << setw(15) << left << "(L) move East" << endl;
     cout << setw(15) << left << "(B)uy an item" << endl;
 	cout << setw(15) << left << "(D)isplay the seeker's location" << endl;
-    //cout << setw(15) << left << "(M) display the full map" << endl; //TODO
+    cout << setw(15) << left << "(M) display the full map" << endl;
+    cout << setw(15) << left << "(W)in the game!" << endl;
 	cout << setw(15) << left << "(R)eturn to the Main Menu" << endl;
 	cout << setw(15) << left << "(Q)uit the program" << endl;
 	cout << "\n>";
-	//TODO buy tool, use tool
 }
 
 bool GameMenu::getAndExecuteCommand() {
@@ -78,13 +78,18 @@ bool GameMenu::getAndExecuteCommand() {
             case 'L':
                 gameMgr->theSeeker->move(Seeker::EAST);
                 break;
-                //TODO buy tool, use tool, view board
 			case 'D':
-				gameMgr->displayIslandAndSeeker();
+				gameMgr->displayIslandAndSeeker("local");
 				//gameMgr->clear_screen();
 				//gameMgr->theIsland->displayIsland();
 				//gameMgr->theSeeker->display();
 				break;
+            case 'M':
+                gameMgr->displayIslandAndSeeker("full");
+                break;
+            case 'W':
+                gameMgr->theSeeker->location = gameMgr->theIsland->jewelTile; 
+                break;
             case 'R':
                 cout << "returning to main menu" << endl;
                 done = true;
@@ -106,6 +111,8 @@ bool GameMenu::getAndExecuteCommand() {
 			gameMgr->theSeeker->display();
             cout << endl << "You are out of energy!";
             cout << endl << endl << "GAME OVER" << endl << endl;
+            gameMgr->displayIslandAndSeeker("endgame");
+            gameMgr->requestEnter();
 			quit = true;
 		}
 		else if(gameMgr->theSeeker->location->treasureChar == 'J') {
@@ -116,6 +123,8 @@ bool GameMenu::getAndExecuteCommand() {
 			cout << GREEN << "WELL DONE! You are the greatest treasure seeker ever and you have found the jewel!" <<RESET<<endl;
 			quit = true;
 			gameMgr->requestEnter();
+            gameMgr->displayIslandAndSeeker("endgame");
+            gameMgr->requestEnter();
 		}
 	}
 	return done;

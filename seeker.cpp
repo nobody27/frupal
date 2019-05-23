@@ -109,7 +109,7 @@ void Seeker::move(direction_t direction) {
       money += theIsland->getLocation(x,y)->takeMoney();
     }
 	//gameMgr->requestEnter();
-	gameMgr->displayIslandAndSeeker();
+	gameMgr->displayIslandAndSeeker("local");
     return;
 } 
 void Seeker::addTool(Tool* newTool) {

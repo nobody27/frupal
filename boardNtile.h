@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <unordered_map>
+#include <string>
 //#include "GameManager.h"
 //#include "seeker.h"
 
@@ -48,7 +49,7 @@ public:
 		Tile(int xValue, int yValue, Terrain* theTerrain); //constructor
 		//~Tile();
 		void tileDisplay() const;
-		void printIslandTile(Tile* location);
+		void printIslandTile(Tile* location, string command);
 		void printIslandTileR2(Tile* location);
 		void displayTerrain() {terrain->display();} 
 		void displayLocation() const;
@@ -91,8 +92,8 @@ public:
 		Board(GameManager* gameManager, const BoardOptions& options); //constructor - argument from user sizeBoardxsizeBoard
 		~Board();
 		void display();
-		void displayIsland();
-		void displayRow(int rowNumber);
+		void displayIsland(string command);
+		void displayRow(int rowNumber, string command);
 		bool onIsland(int x, int y);
 		void visitLocationAndNeighbors(Tile* location, bool endRecursion);
 		void displayLocation(Tile* location);
@@ -105,6 +106,7 @@ public:
 		int size() const {return boardSize;}
     void followVars(int&posX, int&posY, int&minX, int&maxX, int&minY, int&maxY);
 		void putInObstacles();
+        Tile* jewelTile;
 private:
 		GameManager* gameMgr;
 		int boardSize;

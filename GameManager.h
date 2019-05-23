@@ -16,6 +16,7 @@
 #include "seeker.h"				//owned by John
 #include "MainMenu.h"			//owned by Elyse
 #include "resources.h"
+#include <string>
 
 
 #define RESET "\033[0m"
@@ -81,7 +82,7 @@ public:
 	void initializeGame();	
 
 	//display the island and seeker information
-	void displayIslandAndSeeker();
+	void displayIslandAndSeeker(string command);
 
 	void requestEnter() const;
 
