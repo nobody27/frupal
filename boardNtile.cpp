@@ -410,7 +410,7 @@ void Board::initTerrainMap()
 }
 
 //TODO these values should be fields in Board
-void Board::followVars(int&posX, int&posY, int&minX, int&maxX, int&minY, int&maxY)
+void Board::followVars(int&posX, int&posY, int&minX, int&maxX, int&minY, int&maxY) const
 {
 	int followSize = 9; //TODO make this global or configurable. best result if odd number
 	//deal with small boards
@@ -455,7 +455,7 @@ void Board::followVars(int&posX, int&posY, int&minX, int&maxX, int&minY, int&max
 }
 
 //follow**********************
-void Board::display() 
+void Board::display() const
 {
 				int posX, posY, minX, maxX, minY, maxY;
 				followVars(posX, posY, minX, maxX, minY, maxY);
@@ -473,7 +473,7 @@ void Board::display()
 				}
 }
 
-void Board::displayIsland(string command)
+void Board::displayIsland(string command) const
 {
         int posX, posY, minX, maxX, minY, maxY;
         followVars(posX, posY, minX, maxX, minY, maxY);
@@ -503,7 +503,7 @@ void Board::displayIsland(string command)
 
 }
 
-void Board::displayRow(int rowNumber, string command)
+void Board::displayRow(int rowNumber, string command) const
 {
 				int posX, posY, minX, maxX, minY, maxY;
 				followVars(posX, posY, minX, maxX, minY, maxY);
