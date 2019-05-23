@@ -170,7 +170,7 @@ int Tile::takeMoney()
 //init by default to size of 10 but allow users to override the default
 BoardOptions::BoardOptions(GameManager* gameManager) : size(10), gameMgr(gameManager)
 {
-	randomSeed = time(0);
+				randomSeed = time(0);
 }
 
 
@@ -179,15 +179,15 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 				boardSize(options.size),
 				randomSeed(options.randomSeed)
 {
-		srand(randomSeed);
-		cerr << "seed = " << randomSeed <<endl;
-		int random = rand(); //TODO erase
-		cerr << "random = " << random << endl; //TODO erase
-		initTerrainMap();
-		//init the board
-		boardArray = new Tile**[boardSize];	
-		for(int i=0; i<boardSize; ++i)
-		{
+				srand(randomSeed);
+				cerr << "seed = " << randomSeed <<endl;
+				int random = rand(); //TODO erase
+				cerr << "random = " << random << endl; //TODO erase
+				initTerrainMap();
+				//init the board
+				boardArray = new Tile**[boardSize];	
+				for(int i=0; i<boardSize; ++i)
+				{
 								boardArray[i]= new Tile*[boardSize];
 								for(int j=0; j<boardSize; ++j)
 								{
@@ -204,18 +204,37 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 																boardArray[i][j]=new Tile(i,j, terrainMap["grassy_meadow"]);
 												}
 								}
-		}
-		//add river
-		putInRiver();
-		//OBSTACLE TESTING *********
-		boardArray[1][2]->obstacle = new Obstacle("BUSH", 5, 'B', true);
-		boardArray[2][2]->obstacle = new Obstacle("ROCK", 10, 'R', false);
-		//these lines below add Jewel
-		Tile* jewelTile = randJewelTile();
-		jewelTile->treasureChar = 'J';
-		//use for testing how map looks
-		//visitAllTiles();
+				}
+				//RIVER*******
+				putInRiver();
+				//OBSTACLES *********
+				putInObstacles();
+				//these lines below add Jewel
+				Tile* jewelTile = randJewelTile();
+				jewelTile->treasureChar = 'J';
+				//use for testing how map looks
+				visitAllTiles();
 }
+
+void Board::putInObstacles()
+{
+				// number = boardsize. put in that number of Bushes, rocks and trees)
+				for(int i=0; i<boardSize; ++i) //BUSHES
+				{
+								int rand1 = rand()%boardSize;
+								int rand2 = rand()%boardSize;
+								boardArray[rand1][rand2]->obstacle = new Obstacle("BUSH", 5, 'B', true);
+				}
+				for(int i=0; i<boardSize; ++i) //ROCKS
+				{
+								int rand1 = rand()%boardSize;
+								int rand2 = rand()%boardSize;
+								boardArray[rand1][rand2]->obstacle = new Obstacle("ROCK", 10, 'V', false);
+				}
+				boardArray[1][2]->obstacle = new Obstacle("VORTEX", 100, 'V', false);
+				boardArray[2][2]->obstacle = new Obstacle("ROCK", 10, 'R', false);
+}
+
 
 void Board::putInRiver()
 {
@@ -252,53 +271,6 @@ Board::~Board()
 				}
 }
 
-/*
-void Board::display() const
-{
-				cout << "Displaying your island: " <<endl;
-				for(int i=0; i<boardSize; ++i)
-				{
-								for(int j=0; j<boardSize; ++j)
-								{
-												cout <<"the Tile at (" << i << ", " << j <<") has  data" <<endl;
-												boardArray[i][j]->tileDisplay();
-								}
-								cout <<endl;
-				}
-}
-
-void Board::displayIsland() const
-{
-				for(int j=(boardSize-1); j>=0; --j)
-				{
-								displayRow(j);
-				}
-				cout << "KEY:  Terrain type:"<<YELLOW<<"	G=Grassy Meadow," <<BLUE<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYAN<<" W=Water,"<<GRAY<<" X=Unrevealed"<< RESET<<endl;
-				cout << "      SEEKER's location "<<BOLDRED << "@" << RESET;
-				cout << "      Excavation site" <<GRAY<< " (E)"<<RESET<<" reveals to " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTA<< "'J' Jewel." <<RESET<<endl;
-				//cout << "      Bottom left shows obstacles. Bottom center shows money." <<endl;
-}
-
-void Board::displayRow(int rowNumber) const
-{
-				cout << endl;
-				cout << "		"; //left margin
-				int j=rowNumber;
-				for(int i=0; i<boardSize; ++i)
-				{ 
-								boardArray[i][j]->printIslandTile(gameMgr->theSeeker->location);
-								cout << "  "; //space between tiles
-				}
-				cout << endl;
-				cout << "		";//left margin
-				for(int i=0; i<boardSize; ++i)
-				{
-								boardArray[i][j]->printIslandTileR2(gameMgr->theSeeker->location);
-								cout << "  "; //space between tiles
-				}
-				cout <<endl;
-}
-*/
 
 void Board::visitAllTiles()
 {
@@ -428,47 +400,47 @@ void Board::initTerrainMap()
 				terrainMap["grassy_meadow"] = new Terrain("grassy_meadow", 'G', 1, YELLOW);
 				terrainMap["bog"] = new Terrain("bog", 'B', 2, BLUE);
 				terrainMap["forest"] = new Terrain("forest", 'F', 2, GREEN);
-				terrainMap["water"] = new Terrain("water", 'W', 0, CYAN);
+				terrainMap["water"] = new Terrain("water", 'W', 0, CYANonBLUE);
 
 
 }
 
 void Board::followVars(int&posX, int&posY, int&minX, int&maxX, int&minY, int&maxY)
 {
-    posX = gameMgr->theSeeker->getLocation()->xValue;
-    posY = gameMgr->theSeeker->getLocation()->yValue;
+				posX = gameMgr->theSeeker->getLocation()->xValue;
+				posY = gameMgr->theSeeker->getLocation()->yValue;
 
-    minX = posX - 4;
-    maxX = posX + 5;
-    if (minX < 0) {
-      minX = 0;
-      maxX = minX + boardSize - 1;
-    }
-    else if (maxX >= boardSize) {
-      maxX = boardSize - 1;
-      minX = maxX - (boardSize - 1);
-    }
+				minX = posX - 4;
+				maxX = posX + 5;
+				if (minX < 0) {
+								minX = 0;
+								maxX = minX + boardSize - 1;
+				}
+				else if (maxX >= boardSize) {
+								maxX = boardSize - 1;
+								minX = maxX - (boardSize - 1);
+				}
 
-    minY = posY - 4;
-    maxY = posY + 5;
-    if (minY < 0) {
-      minY = 0;
-      maxY = minY + (boardSize - 1);
-    }
-    else if (maxY >= boardSize) {
-      maxY = boardSize - 1;
-      minY = maxY - (boardSize - 1);
-    }
-    return;
+				minY = posY - 4;
+				maxY = posY + 5;
+				if (minY < 0) {
+								minY = 0;
+								maxY = minY + (boardSize - 1);
+				}
+				else if (maxY >= boardSize) {
+								maxY = boardSize - 1;
+								minY = maxY - (boardSize - 1);
+				}
+				return;
 }
 
 //follow**********************
 void Board::display() 
 {
-        int posX, posY, minX, maxX, minY, maxY;
-        followVars(posX, posY, minX, maxX, minY, maxY);
-        
-				
+				int posX, posY, minX, maxX, minY, maxY;
+				followVars(posX, posY, minX, maxX, minY, maxY);
+
+
 				cout << "Displaying your island: " <<endl;
 				for(int i=minX; i<=maxX; ++i)
 				{
@@ -483,10 +455,10 @@ void Board::display()
 
 void Board::displayIsland()
 {
-        int posX, posY, minX, maxX, minY, maxY;
-        followVars(posX, posY, minX, maxX, minY, maxY);
-        
-        for(int j=maxY; j>=minY; --j)
+				int posX, posY, minX, maxX, minY, maxY;
+				followVars(posX, posY, minX, maxX, minY, maxY);
+
+				for(int j=maxY; j>=minY; --j)
 				{
 								displayRow(j);
 				}
@@ -499,10 +471,10 @@ void Board::displayIsland()
 
 void Board::displayRow(int rowNumber)
 {
-        int posX, posY, minX, maxX, minY, maxY;
-        followVars(posX, posY, minX, maxX, minY, maxY);
+				int posX, posY, minX, maxX, minY, maxY;
+				followVars(posX, posY, minX, maxX, minY, maxY);
 
-        cout << endl;
+				cout << endl;
 				cout << "		"; //left margin
 				int j=rowNumber;
 				for(int i=minX; i<=maxX; ++i)
