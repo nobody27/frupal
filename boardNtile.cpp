@@ -102,13 +102,10 @@ void Tile::printIslandTile(Tile* location, string command)
 						cout << BOLDRED << "@" << RESET;
                     else if (treasureChar == 'J' && visited == true)
                         cout << MAGENTA << treasureChar << RESET;
-				    else
-					{
-                        if (!visited)
-                            cout << GRAY << "X" << RESET;
-                        else
-                            terrain->displayShortName();
-                    }
+				    else if (!visited)
+                        cout << GRAY << "X" << RESET;
+                    else
+                        terrain->displayShortName();
                 }
                 else
                 { 
@@ -214,7 +211,7 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 				//OBSTACLES *********
 				putInObstacles();
 				//these lines below add Jewel
-				Tile* jewelTile = randJewelTile();
+				jewelTile = randJewelTile();
 				jewelTile->treasureChar = 'J';
 				//use for testing how map looks
 				visitAllTiles();
@@ -319,7 +316,7 @@ Tile* Board::randJewelTile()
 {
 				int jewelX = 0;
 				int jewelY = 0;
-				int halfBoard = .5*boardSize; //this should round down and give an int
+				int halfBoard = boardSize/2; //this should round down and give an int
 				int rand1 = (rand())%halfBoard; // rand1 will be a random int between 0 and halfBoard so that when subtracted
 				//from boardsize will be in top right quadrant - jewel will be in the quarter of the board furthest from the start
 				jewelX = (boardSize - 1 - rand1);
@@ -330,6 +327,9 @@ Tile* Board::randJewelTile()
 				cerr << "jewelX" << jewelX <<endl;
 				cerr << "jewelY" << jewelY <<endl;
 
+				assert(jewelX >=0 && jewelX < boardSize);
+				assert(jewelY >=0 && jewelY < boardSize);
+				assert( boardArray[jewelX][jewelY] ); //make sure it's not a null ptr
 				return boardArray[jewelX][jewelY];
 }
 
@@ -438,6 +438,7 @@ void Board::followVars(int&posX, int&posY, int&minX, int&maxX, int&minY, int&max
 
 	//TODO this should be a method that is called once for x and again for y
     minY = posY - leftMargin;
+    maxY = posY + rightMargin;
     if (minY < 0) {
       minY = 0;
       maxY = followSize - 1;
@@ -485,22 +486,14 @@ void Board::displayIsland(string command) const
 				{
 								displayRow(j, command);
 				}
+				cout <<endl;
+				cout << "KEY:  Terrain type: "<<YELLOW<<"	 G=Grassy Meadow," <<BLUE<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYAN<<" W=Water,"<<GRAY<<" X=Unrevealed"<< RESET<<endl;
+				cout << "      SEEKER's location: "<<BOLDRED << "@" << RESET;
         if (command == "local")
         {
-				cout <<endl;
-				cout << "KEY:  Terrain type: "<<YELLOW<<"	 G=Grassy Meadow," <<BLUE<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYAN<<" W=Water,"<<GRAY<<" X=Unrevealed"<< RESET<<endl;
-				cout << "      SEEKER's location: "<<BOLDRED << "@" << RESET;
 				cout << "      Excavation site:" <<GRAY<< " (E)"<<RESET<<" reveals to " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTA<< "'J' Jewel." <<RESET<<endl;
-                cout << endl;
         }
-        else
-        {
-				cout <<endl;
-				cout << "KEY:  Terrain type: "<<YELLOW<<"	 G=Grassy Meadow," <<BLUE<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYAN<<" W=Water,"<<GRAY<<" X=Unrevealed"<< RESET<<endl;
-				cout << "      SEEKER's location: "<<BOLDRED << "@" << RESET;
                 cout << endl;
-        }
-
 }
 
 void Board::displayRow(int rowNumber, string command) const
