@@ -132,45 +132,49 @@ bool GameMenu::getAndExecuteCommand() {
 bool GameMenu::shopMenu()
 {
   int choice = -1;
-  vector<Tool>& resources = gameMgr->theResources->resources; //shortcut for convenience
-  cout << "entering shop" << endl;
-  gameMgr->theSeeker->displayTools();
-  cout << endl << "**Tools for sale**" << endl << endl;
-  cout << left << 0 << ": " << "Cancel -- Leave Shop" << endl;
-  gameMgr->theResources->displayResources();
-  //TODO display tools and available money
-  //TODO command to buy an item
-  cout << endl << "Money: $" << gameMgr->theSeeker->money << endl << endl;
-  
-  int numRes = static_cast<int>(resources.size());
-  
-  //make sure its a valid choice and they have enough money
-  while(choice < 0 || choice > numRes+1 || 
-		(choice != 0 && gameMgr->theSeeker->money <
-  resources[choice-1].price) )
+  while (choice != 0)
   {
-    cout << "Enter valid choice you can afford: ";
-    cin >> choice;
-	if(cin.fail()) {
-      cin.clear();
-      cin.ignore(100, '\n');
+    vector<Tool>& resources = gameMgr->theResources->resources; //shortcut for convenience
+    cout << "entering shop" << endl;
+    gameMgr->theSeeker->displayTools();
+    cout << endl << "**Tools for sale**" << endl << endl;
+    cout << left << 0 << ": " << "Cancel -- Leave Shop" << endl;
+    gameMgr->theResources->displayResources();
+    //TODO display tools and available money
+    //TODO command to buy an item
+    cout << endl << "Money: $" << gameMgr->theSeeker->money << endl << endl;
+    
+    int numRes = static_cast<int>(resources.size());
+    
+    //make sure its a valid choice and they have enough money
+    while(choice < 0 || choice > numRes+1 || 
+      (choice != 0 && gameMgr->theSeeker->money <
+    resources[choice-1].price) )
+    {
+      cout << "Enter valid choice you can afford: ";
+      cin >> choice;
+    if(cin.fail()) {
+        cin.clear();
+        cin.ignore(100, '\n');
+      }
     }
+
+    if(choice == 0)
+    {
+      return false;
+    }
+
+    choice--;
+
+    //subtract the cost from the seekers money
+    gameMgr->theSeeker->money -= resources[choice].price;
+
+    //add tool to seeker's inventory
+    gameMgr->theSeeker->addTool(&resources[choice]);
+
+    //switch statement for purchase
+    choice = -1;
   }
-
-  if(choice == 0)
-  {
-    return false;
-  }
-
-  choice--;
-
-  //subtract the cost from the seekers money
-  gameMgr->theSeeker->money -= resources[choice].price;
-
-  //add tool to seeker's inventory
-  gameMgr->theSeeker->addTool(&resources[choice]);
-
-  //switch statement for purchase
   return true;
 }
 
