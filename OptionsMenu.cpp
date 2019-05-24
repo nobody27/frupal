@@ -194,7 +194,7 @@ bool OptionsMenu::setBoardSize() {
 	bool fail = false;
 	size_t size = 0;
 	size_t min = 2;
-	size_t max = 20;
+	size_t max = 80;
 	gameMgr->clear_screen();
 	cout << "\nPlease enter desired board size between " << 
 		min << " and " << max << endl

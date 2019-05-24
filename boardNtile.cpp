@@ -455,51 +455,42 @@ void Board::followVars(int&posX, int&posY, int&minX, int&maxX, int&minY, int&max
     return;
 }
 
-//follow**********************
-void Board::display() const
-{
-				int posX, posY, minX, maxX, minY, maxY;
-				followVars(posX, posY, minX, maxX, minY, maxY);
-
-
-				cout << "Displaying your island: " <<endl;
-				for(int i=minX; i<=maxX; ++i)
-				{
-								for(int j=minY; j<=maxY; ++j)
-								{
-												cout <<"the Tile at (" << i << ", " << j <<") has  data" <<endl;
-												boardArray[i][j]->tileDisplay();
-								}
-								cout <<endl;
-				}
-}
-
 void Board::displayIsland(string command) const
 {
         int posX, posY, minX, maxX, minY, maxY;
-        followVars(posX, posY, minX, maxX, minY, maxY);
+		if(command == "local") {
+			followVars(posX, posY, minX, maxX, minY, maxY);
+		} else {
+			minY = 0;
+			maxY = boardSize - 1;
+		}
 
         if (command != "local")
             cout << "The Island of Frupal:" << endl;
 
         for(int j=maxY; j>=minY; --j)
-				{
-								displayRow(j, command);
-				}
-				cout <<endl;
-				cout << "KEY:  Terrain type: "<<YELLOW<<"	 G=Grassy Meadow," <<BLUE<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYAN<<" W=Water,"<<GRAY<<" X=Unrevealed"<< RESET<<endl;
-				cout << "      SEEKER's location: "<<BOLDRED << "@" << RESET;
+		{
+				displayRow(j, command);
+		}
+		cout <<endl;
+		cout << "KEY:  Terrain type: "<<YELLOW<<"	 G=Grassy Meadow," <<BLUE<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYAN<<" W=Water,"<<GRAY<<" X=Unrevealed"<< RESET<<endl;
+		cout << "      SEEKER's location: "<<BOLDRED << "@" << RESET;
         if (command == "local")
         {
 				cout << "      Excavation site:" <<GRAY<< " (E)"<<RESET<<" reveals to " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTA<< "'J' Jewel." <<RESET<<endl;
         }
-                cout << endl;
+		cout << endl;
 }
 
 void Board::displayRow(int rowNumber, string command) const
 {
-				int posX, posY, minX, maxX, minY, maxY;
-				followVars(posX, posY, minX, maxX, minY, maxY);
+		int posX, posY, minX, maxX, minY, maxY;
+		if(command == "local") {
+			followVars(posX, posY, minX, maxX, minY, maxY);
+		} else {
+			minX = minY = 0;
+			maxX = maxY = boardSize - 1;
+		}
 
 		assert(rowNumber < boardSize);
 		assert(minX >= 0);

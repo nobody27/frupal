@@ -115,7 +115,7 @@ bool GameMenu::getAndExecuteCommand() {
             gameMgr->requestEnter();
 			quit = true;
 		}
-		else if(gameMgr->theSeeker->location->treasureChar == 'J') {
+		else if(gameMgr->theSeeker->location == gameMgr->theIsland->jewelTile) {
             gameMgr->displayIslandAndSeeker("endgame");
 			cout << GREEN <<  "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
 			cout << BLUE << "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
