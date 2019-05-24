@@ -433,8 +433,8 @@ void Board::followVars(int&posX, int&posY, int&minX, int&maxX, int&minY, int&max
       maxX = boardSize - 1;
       minX = maxX - followSize + 1;
     }
-    assert (minX >= 0);
-    assert(maxX < boardSize);
+    assert(minX >= 0);
+    assert(maxX - minX <= followSize);
 
 	//TODO this should be a method that is called once for x and again for y
     minY = posY - leftMargin;
@@ -444,14 +444,15 @@ void Board::followVars(int&posX, int&posY, int&minX, int&maxX, int&minY, int&max
       maxY = followSize - 1;
     } else if (maxY >= boardSize) {
       maxY = boardSize - 1;
-      minY = maxX - followSize;
+      minY = maxY - followSize;
     } else {
       minY = posY - leftMargin;
       maxY = posY + rightMargin;
     }
-    assert (minY >= 0);
-    assert(maxY < boardSize);
+    assert(minY >= 0);
+    assert(maxY - minY <= followSize);
 
+	assert(followSize <= boardSize);
     return;
 }
 
@@ -488,8 +489,8 @@ void Board::displayRow(int rowNumber, string command) const
 		if(command == "local") {
 			followVars(posX, posY, minX, maxX, minY, maxY);
 		} else {
-			minX = minY = 0;
-			maxX = maxY = boardSize - 1;
+			minX = 0;
+			maxX = boardSize - 1;
 		}
 
 		assert(rowNumber < boardSize);

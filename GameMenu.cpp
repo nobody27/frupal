@@ -108,10 +108,9 @@ bool GameMenu::getAndExecuteCommand() {
                 again = true;
         }
 		if(gameMgr->theSeeker->energy <= 0) {
-			gameMgr->theSeeker->display();
+            gameMgr->displayIslandAndSeeker("endgame");
             cout << endl << "You are out of energy!";
             cout << endl << endl << "GAME OVER" << endl << endl;
-            gameMgr->displayIslandAndSeeker("endgame");
             gameMgr->requestEnter();
 			quit = true;
 		}
