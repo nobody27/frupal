@@ -38,17 +38,21 @@ bool GameMenu::call() {
 
 void GameMenu::display() const {
 	//print the options
-    cout << "\n";
+	//line 1
+	cout << "\n";
 	cout << "Make Your Choice: " << endl;
-	cout << setw(15) << left << "(I) move North" << endl;
-	cout << setw(15) << left << "(J) move West" << endl;
-	cout << setw(15) << left << "(K) move South" << endl;
-	cout << setw(15) << left << "(L) move East" << endl;
-    cout << setw(15) << left << "(B)uy an item" << endl;
-	cout << setw(15) << left << "(D)isplay the seeker's location" << endl;
-    //cout << setw(15) << left << "(M) display the full map" << endl; //TODO
-	cout << setw(15) << left << "(R)eturn to the Main Menu" << endl;
-	cout << setw(15) << left << "(Q)uit the program" << endl;
+	cout << setw(29) << right << "(I) move North";
+	cout << setw(18) << left << " ";
+	cout << setw(19) << left << "(B)uy an item";
+	cout << setw(15) << left << "(D)isplay seeker's location" << endl;
+
+	//line 2
+	cout << setw(15) << left << "(J) move West";
+	cout << setw(15) << left << "(K) move South";
+	cout << setw(17) << left << "(L) move East";
+	cout << setw(19) << left << "(Q)uit the program";
+	cout << setw(17) << left << "(R)eturn to Menu";
+	cout << setw(15) << left << "(W)in!" << endl; //TODO
 	cout << "\n>";
 	//TODO buy tool, use tool
 }
@@ -56,56 +60,58 @@ void GameMenu::display() const {
 bool GameMenu::getAndExecuteCommand() {
 	bool done = false;
 	bool again = true;
-	
-    while(again) {
-        again = false;
-        char choice = 0;
-        //display the menu options
-        display();
-        //request the command
-        cin >> choice;
+
+	while(again) {
+		again = false;
+		char choice = 0;
+		//display the menu options
+		display();
+		//request the command
+		cin >> choice;
 		cin.ignore(100, '\n');
-        switch (toupper(choice)) {
-            case 'I':
-                gameMgr->theSeeker->move(Seeker::NORTH);
-                break;
-            case 'J':
-                gameMgr->theSeeker->move(Seeker::WEST);
-                break;
-            case 'K':
-                gameMgr->theSeeker->move(Seeker::SOUTH);
-                break;
-            case 'L':
-                gameMgr->theSeeker->move(Seeker::EAST);
-                break;
-                //TODO buy tool, use tool, view board
+		switch (toupper(choice)) {
+			case 'I':
+				gameMgr->theSeeker->move(Seeker::NORTH);
+				break;
+			case 'J':
+				gameMgr->theSeeker->move(Seeker::WEST);
+				break;
+			case 'K':
+				gameMgr->theSeeker->move(Seeker::SOUTH);
+				break;
+			case 'L':
+				gameMgr->theSeeker->move(Seeker::EAST);
+				break;
+				//TODO buy tool, use tool, view board
 			case 'D':
 				gameMgr->displayIslandAndSeeker();
 				//gameMgr->clear_screen();
 				//gameMgr->theIsland->displayIsland();
 				//gameMgr->theSeeker->display();
 				break;
-            case 'R':
-                cout << "returning to main menu" << endl;
-                done = true;
-                break;
-            case 'Q':
-                //exit - quick quit 
-                cout << "quitting the game" << endl;
-                done = true;
-                quit = true;
-                break;
-            case 'B':
-                shopMenu();        
-                break;
-            default:
-                cout << "'" << choice << "' is not a valid command in the game menu..." << endl;
-                again = true;
-        }
+			case 'R':
+				cout << "returning to main menu" << endl;
+				done = true;
+				break;
+			case 'Q':
+				//exit - quick quit 
+				cout << "quitting the game" << endl;
+				done = true;
+				quit = true;
+				break;
+			case 'B':
+				gameMgr->displayIslandAndSeeker();
+				shopMenu();        
+				break;
+			default:
+				gameMgr->displayIslandAndSeeker();
+				cout << "'" << choice << "' is not a valid command in the game menu..." << endl;
+				again = true;
+		}
 		if(gameMgr->theSeeker->energy <= 0) {
 			gameMgr->theSeeker->display();
-            cout << endl << "You are out of energy!";
-            cout << endl << endl << "GAME OVER" << endl << endl;
+			cout << endl << "You are out of energy!";
+			cout << endl << endl << "GAME OVER" << endl << endl;
 			quit = true;
 		}
 		else if(gameMgr->theSeeker->location->treasureChar == 'J') {
@@ -123,46 +129,46 @@ bool GameMenu::getAndExecuteCommand() {
 
 bool GameMenu::shopMenu()
 {
-  int choice = -1;
-  vector<Tool>& resources = gameMgr->theResources->resources; //shortcut for convenience
-  cout << "entering shop" << endl;
-  gameMgr->theSeeker->displayTools();
-  cout << endl << "**Tools for sale**" << endl << endl;
-  cout << left << 0 << ": " << "Cancel -- Leave Shop" << endl;
-  gameMgr->theResources->displayResources();
-  //TODO display tools and available money
-  //TODO command to buy an item
-  cout << endl << "Money: $" << gameMgr->theSeeker->money << endl << endl;
-  
-  int numRes = static_cast<int>(resources.size());
-  
-  //make sure its a valid choice and they have enough money
-  while(choice < 0 || choice > numRes+1 || 
-		(choice != 0 && gameMgr->theSeeker->money <
-  resources[choice-1].price) )
-  {
-    cout << "Enter valid choice you can afford: ";
-    cin >> choice;
-	if(cin.fail()) {
-      cin.clear();
-      cin.ignore(100, '\n');
-    }
-  }
+	int choice = -1;
+	vector<Tool>& resources = gameMgr->theResources->resources; //shortcut for convenience
+	cout << "entering shop" << endl;
+	gameMgr->theSeeker->displayTools();
+	cout << endl << "**Tools for sale**" << endl << endl;
+	cout << left << 0 << ": " << "Cancel -- Leave Shop" << endl;
+	gameMgr->theResources->displayResources();
+	//TODO display tools and available money
+	//TODO command to buy an item
+	cout << endl << "Money: $" << gameMgr->theSeeker->money << endl << endl;
 
-  if(choice == 0)
-  {
-    return false;
-  }
+	int numRes = static_cast<int>(resources.size());
 
-  choice--;
+	//make sure its a valid choice and they have enough money
+	while(choice < 0 || choice > numRes+1 || 
+			(choice != 0 && gameMgr->theSeeker->money <
+			 resources[choice-1].price) )
+	{
+		cout << "Enter valid choice you can afford: ";
+		cin >> choice;
+		if(cin.fail()) {
+			cin.clear();
+			cin.ignore(100, '\n');
+		}
+	}
 
-  //subtract the cost from the seekers money
-  gameMgr->theSeeker->money -= resources[choice].price;
+	if(choice == 0)
+	{
+		return false;
+	}
 
-  //add tool to seeker's inventory
-  gameMgr->theSeeker->addTool(&resources[choice]);
+	choice--;
 
-  //switch statement for purchase
-  return true;
+	//subtract the cost from the seekers money
+	gameMgr->theSeeker->money -= resources[choice].price;
+
+	//add tool to seeker's inventory
+	gameMgr->theSeeker->addTool(&resources[choice]);
+
+	//switch statement for purchase
+	return true;
 }
 
