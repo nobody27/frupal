@@ -480,7 +480,6 @@ void Board::displayIsland(string command) const
         {
 				cout << "      Excavation site:" <<GRAY<< " (E)"<<RESET<<" reveals to " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTA<< "'J' Jewel." <<RESET<<endl;
         }
-		cout << endl;
 }
 
 void Board::displayRow(int rowNumber, string command) const

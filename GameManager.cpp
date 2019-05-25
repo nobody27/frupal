@@ -269,8 +269,8 @@ void GameManager::displayIslandAndSeeker(string command) {
 }
 
 void GameManager::requestEnter() const {
-	cout << "\n\n\n";
-	cout << "press ENTER to continue";
+	cout << "\n";
+	cout << "Press ENTER to continue. ";
 	cin.get();
 }
 

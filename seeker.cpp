@@ -39,7 +39,7 @@ Seeker::Seeker(GameManager* gameManager, const SeekerOptions& options) :
 
 
 void Seeker::display() {
-    theIsland->displayLocation(location);
+    //theIsland->displayLocation(location);
 	cout << endl << endl << "You currently have " << energy << " energy and " << money << " gold pieces." << endl;
 }
 
@@ -60,6 +60,7 @@ void Seeker::displayTools() {
 
 //TODO check terrain ahead for each call
 void Seeker::move(direction_t direction) {
+	gameMgr->displayIslandAndSeeker("local");
 	//TODO we need a better interface
 	int x = getLocation()->xValue + (direction == EAST) - (direction == WEST);
 	int y = getLocation()->yValue + (direction == NORTH) - (direction == SOUTH);
@@ -88,9 +89,8 @@ void Seeker::move(direction_t direction) {
 		//this is water and you don't have a boat.
 		//charge one energy and abort the move
 		energy--;
-		cout << "You wade through the water but it is too deep." << endl <<
-		"You think to yourself... I could really use a boat right now..." << 
-		endl << endl;
+		cout << "\nYou wade through the water but it is too deep." << endl <<
+		"You think to yourself... I could really use a boat right now...";
 		gameMgr->requestEnter();
 		//gameMgr->displayIslandAndSeeker();
 		return;
