@@ -34,12 +34,6 @@ private:
 	//execute a main menu command
 	//current implementation is directly in the cpp file
 	//TODO consider greating an enum with commands to place in this header file
-	//for now try to keep this comment up to date:
-	// S - set board size
-	// E - set seeker's initial energy level
-	// M - set seeker's initial money (gold) level
-	// R - return to main menu
-	// Q - exit (quick quit)
 	bool getAndExecuteCommand();
 
 	//read size_t arg and set the size
@@ -55,8 +49,10 @@ private:
 	bool setSeekerMoney();
 
 	//read in a specific random seed to recreate a specific game
-	//TODO allow this to be red from the config file
 	bool setRandomSeed();
+
+	void displayControls();
+	void setControls();
 
 	void configureGeneralSettings();
 
@@ -74,6 +70,9 @@ private:
 	int getPositiveInt();	
 	//utility function to get a string
 	string getAName();
+
+	//utility function to getnd verify a char
+	char getAChar();
 
 	GameManager* gameMgr;
 

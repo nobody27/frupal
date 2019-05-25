@@ -133,6 +133,17 @@ public:
 	//init to false
 	bool initialized;
 	int randomSeed;
+
+	char NORTHBUTTON = 'I';
+	char WESTBUTTON = 'J';
+	char SOUTHBUTTON = 'K';
+	char EASTBUTTON = 'L';
+	char BUYBUTTON = 'B';
+	char DISPLAYBUTTON = 'V';
+	char QUITBUTTON = 'Q';
+	char RETURNBUTTON = 'R';
+	char WINBUTTON = 'C';
+
 };
 
 #endif // GAME_INTERFACE_H

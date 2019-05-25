@@ -18,6 +18,7 @@
 
 using namespace std;
 
+
 GameMenu::GameMenu(GameManager* gameManager) : gameMgr(gameManager), quit(false){
 	//sub-menu default constructors should be enough
 }
@@ -41,18 +42,20 @@ void GameMenu::display() const {
 	//line 1
 	cout << "\n";
 	cout << "Make Your Choice: " << endl;
-	cout << setw(29) << right << "(I) move North";
+	cout << setw(15) << right << "(" << gameMgr->NORTHBUTTON << ") move North";
 	cout << setw(18) << left << " ";
-	cout << setw(19) << left << "(B)uy an item";
-	cout << setw(15) << left << "(D)isplay seeker's location" << endl;
+	cout << "(" << gameMgr->BUYBUTTON << ") Buy an item";
+	cout << setw(6) << " ";
+	cout << "(" << gameMgr->DISPLAYBUTTON << ") View seeker's location" << endl;
 
 	//line 2
-	cout << setw(15) << left << "(J) move West";
-	cout << setw(15) << left << "(K) move South";
-	cout << setw(17) << left << "(L) move East";
-	cout << setw(19) << left << "(Q)uit the program";
-	cout << setw(17) << left << "(R)eturn to Menu";
-	cout << setw(15) << left << "(W)in!" << endl; //TODO
+	cout << "(" << gameMgr->WESTBUTTON << ") move West";
+	cout << " (" << gameMgr->SOUTHBUTTON << ") move South";
+	cout << " (" << gameMgr->EASTBUTTON << ") move East";
+	cout << setw(4) << " ";
+	cout << "(" << gameMgr->QUITBUTTON << ") Quit the program";
+	cout << " (" << gameMgr->RETURNBUTTON << ") Return to Menu";
+	cout << " (" << gameMgr->WINBUTTON << ") Cheat!" << endl; //TODO
 	cout << "\n>";
 }
 
@@ -68,21 +71,10 @@ bool GameMenu::getAndExecuteCommand() {
 		//request the command
 		cin >> choice;
 		cin.ignore(100, '\n');
-		switch (toupper(choice)) {
-			case 'I':
-				gameMgr->theSeeker->move(Seeker::NORTH);
-				break;
-			case 'J':
-				gameMgr->theSeeker->move(Seeker::WEST);
-				break;
-			case 'K':
-				gameMgr->theSeeker->move(Seeker::SOUTH);
-				break;
-			case 'L':
-				gameMgr->theSeeker->move(Seeker::EAST);
-				break;
+		choice = toupper(choice);
+		switch (choice) {
 				//TODO buy tool, use tool, view board
-			case 'D':
+			case 'V':
 				gameMgr->displayIslandAndSeeker("local");
 				//gameMgr->clear_screen();
 				//gameMgr->theIsland->displayIsland();
@@ -91,7 +83,7 @@ bool GameMenu::getAndExecuteCommand() {
 			case 'M':
 				gameMgr->displayIslandAndSeeker("full");
 				break;
-			case 'W':
+			case 'C':
 				gameMgr->theSeeker->location = gameMgr->theIsland->jewelTile; 
 				break;
 			case 'R':
@@ -109,9 +101,19 @@ bool GameMenu::getAndExecuteCommand() {
 				shopMenu();        
 				break;
 			default:
-				gameMgr->displayIslandAndSeeker("local");
-				cout << "'" << choice << "' is not a valid command in the game menu..." << endl;
-				again = true;
+				if(choice == gameMgr->NORTHBUTTON){
+					gameMgr->theSeeker->move(Seeker::NORTH);
+				}else if(choice == gameMgr->WESTBUTTON){
+					gameMgr->theSeeker->move(Seeker::WEST);
+				}else if(choice == gameMgr->SOUTHBUTTON){
+					gameMgr->theSeeker->move(Seeker::SOUTH);
+				}else if(choice == gameMgr->EASTBUTTON){
+					gameMgr->theSeeker->move(Seeker::EAST);
+				}else{
+					gameMgr->displayIslandAndSeeker("local");
+					cout << "'" << choice << "' is not a valid command in the game menu..." << endl;
+					again = true;
+				}
 		}
 		if(gameMgr->theSeeker->energy <= 0) {
 			gameMgr->displayIslandAndSeeker("endgame");

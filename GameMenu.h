@@ -40,6 +40,7 @@ private:
 	// L - move east
 	// R - return to main menu
 	// Q - exit (quit quit)
+
 	bool getAndExecuteCommand();
   bool shopMenu();
 	GameManager* gameMgr;

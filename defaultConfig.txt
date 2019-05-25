@@ -2,12 +2,12 @@
 
 #The first character of each line is a character
 #that specifies what type of configuration that line contains.
-#Type 1 configurations are integers
+#Type 1 configurations are single variables
 #Type 2 configurations are obstacles
 #type 3 configurations are tools
 
 
-#Integer configurations consist of:
+#Variable configurations consist of:
 #A variable name and a value
 #------------------------------------------------------------------
 1,boardSize,15
@@ -16,6 +16,10 @@
 1,hasBoat,0
 1,hasBinoculars,0
 1,binocularCost,25
+1,NORTHBUTTON,I
+1,WESTBUTTON,J
+1,SOUTHBUTTON,K
+1,EASTBUTTON,L
 
 
 #Obstacles consist of:

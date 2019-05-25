@@ -84,29 +84,6 @@ bool OptionsMenu::getAndExecuteCommand() {
 					configureGeneralSettings();
 				}
 				break;
-				/*		
-						case 'S':
-						if(gameMgr->initialized) {
-						unsupportedAfterInitialization = true;
-						} else {
-						again = !setBoardSize(); //try again if command fails
-						}
-						break;
-						case 'E':
-						if(gameMgr->initialized) {
-						unsupportedAfterInitialization = true;
-						} else {
-						again = !setSeekerEnergy(); //try again if command fails
-						}
-						break;
-						case 'M':
-						if(gameMgr->initialized) {
-						unsupportedAfterInitialization = true;
-						} else {
-						again = !setSeekerMoney(); //try again if command fails
-						}
-						break;
-				 */
 			case '2':
 				if(gameMgr->initialized){
 					unsupportedAfterInitialization = true;
@@ -159,7 +136,7 @@ void OptionsMenu::configureGeneralSettings(){
 			"\n(2) Amount of energy at start" <<
 			"\n(3) Amount of money at start" <<
 			"\n(4) Random seed" << 
-			//"\n(N) Start position" <<
+			"\n(5) Controls" << 
 			"\n(R)eturn to options menu" <<
 			"\n\n>";
 
@@ -175,12 +152,11 @@ void OptionsMenu::configureGeneralSettings(){
 			case '3':
 				setSeekerMoney();
 				break;
-			case 'N':
-				cout << "\nNot yet implemented!";
-				//setSeekerPosition();
-				break;
 			case '4':
 				setRandomSeed();
+				break;
+			case '5':
+				setControls();
 				break;
 			default:
 				break;	
@@ -287,6 +263,81 @@ bool OptionsMenu::setRandomSeed() {
 	cout << "your new random seed is: " << seed << endl;
 	return true; //success
 }
+
+void OptionsMenu::setControls(){
+	char north = gameMgr->NORTHBUTTON;
+	char west = gameMgr->WESTBUTTON;
+	char south = gameMgr->SOUTHBUTTON;
+	char east = gameMgr->EASTBUTTON;
+	bool done = false;
+	char reply = ' ';	
+
+	while(!done){
+		gameMgr->clear_screen();
+		cout << "\nCurrent controls: " << endl;
+		cout << setw(15) << right << "(" << north << ") move North" << endl;
+		cout << "(" << west << ") move West";
+		cout << " (" << south << ") move South";
+		cout << " (" << east << ") move East";
+		cout << "\n\nWhich button would you like to configure?" <<
+			"\n(1) North button" <<
+			"\n(2) West button" <<
+			"\n(3) South button" <<
+			"\n(4) East button" << 
+			"\n(R)eturn to general settings menu"
+			"\n\n>";
+		cin >> reply;
+		while(cin.fail()){
+			cin.clear();
+			cin.ignore(100, '\n');
+			cout << "\nInvalid choice. Please try again. \n\n>";
+			cin >> reply;
+		}
+		reply = toupper(reply);
+		switch(reply){
+			case '1':
+				reply = getAChar();
+				while(reply == west || reply == south || reply == east){
+					cout << "\nConflict detected. Please try again.";
+					reply = getAChar();	
+				}
+				north = reply;
+				break;
+			case '2':
+				reply = getAChar();
+				while(reply == north || reply == south || reply == east){
+					cout << "\nConflict detected. Please try again.";
+					reply = getAChar();	
+				}
+				west = reply;
+				break;
+			case '3':
+				reply = getAChar();
+				while(reply == west || reply == north || reply == east){
+					cout << "\nConflict detected. Please try again.";
+					reply = getAChar();	
+				}
+				south = reply;
+				break;
+			case '4':
+				reply = getAChar();
+				while(reply == west || reply == south || reply == north){
+					cout << "\nConflict detected. Please try again.";
+					reply = getAChar();	
+				}
+				east = reply;
+				break;
+			case 'R':
+				done = true;
+				break;
+		}
+	}
+	gameMgr->NORTHBUTTON = north;
+	gameMgr->WESTBUTTON = west;
+	gameMgr->SOUTHBUTTON = south;
+	gameMgr->EASTBUTTON = east;
+}
+
 
 //Main tool menu
 void OptionsMenu::configureTools(){
@@ -659,4 +710,30 @@ string OptionsMenu::getAName(){
 		cin >> input;
 	}
 	return input;
+}
+
+char OptionsMenu::getAChar(){
+	char buy = gameMgr->BUYBUTTON;
+	char display = gameMgr->DISPLAYBUTTON;
+	char quit = gameMgr->QUITBUTTON;
+	char ret = gameMgr->RETURNBUTTON;
+	char win = gameMgr->WINBUTTON;
+
+	char k;
+	cout << "\nEnter a key other than "<< buy <<
+		", " << display << 
+		", " << quit <<
+		", " << ret <<
+		" or " << win <<
+		": ";
+	cin >> k;
+	k = toupper(k);	
+	while(cin.fail() || k == buy || k == display || k == quit || k == ret || k == win){
+		cin.clear();
+		cin.ignore(100, '\n');
+		cout << "\nInvalid entry. Enter a new key: ";
+		cin >> k;
+	}
+		
+	return toupper(k);
 }

@@ -152,8 +152,14 @@ void GameManager::readConfigFile(bool useCustom){
 				seekerOptions->hasBinoculars = stoi(value);
 			}else if(!name.compare("randomSeed") && useCustom){
 				boardOptions->randomSeed = stoi(value);
-			}else if(!name.compare("binocularCost")){
-				//TODO: put this value in the right place
+			}else if(!name.compare("NORTHBUTTON")){
+				NORTHBUTTON = value[0];
+			}else if(!name.compare("WESTBUTTON")){
+				WESTBUTTON = value[0];
+			}else if(!name.compare("SOUTHBUTTON")){
+				SOUTHBUTTON = value[0];
+			}else if(!name.compare("EASTBUTTON")){
+				EASTBUTTON = value[0];
 			}
 		}else if(type[0] == OBSTACLE_CONFIGURATION){	//obstacle configs contain a value for each
 			getline(configFile, obstacleName, ',');	//field contained in the obstacle class
