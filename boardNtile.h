@@ -1,4 +1,4 @@
-//ATeam Jessica, Elyse, Max, Leior, John
+//ATeam Jessica, Elyse, Max, Leior, Johng
 //cs300
 //April 10, 2019
 //boardNtile.h
@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <unordered_map>
+#include <string>
 //#include "GameManager.h"
 //#include "seeker.h"
 
@@ -48,7 +49,7 @@ public:
 		Tile(int xValue, int yValue, Terrain* theTerrain); //constructor
 		//~Tile();
 		void tileDisplay() const;
-		void printIslandTile(Tile* location);
+		void printIslandTile(Tile* location, string command);
 		void printIslandTileR2(Tile* location);
 		void displayTerrain() {terrain->display();} 
 		void displayLocation() const;
@@ -90,9 +91,9 @@ public:
 		//Board(); //constructor - this default creates a 10x10 board. Calls Board(10)
 		Board(GameManager* gameManager, const BoardOptions& options); //constructor - argument from user sizeBoardxsizeBoard
 		~Board();
-		void display();
-		void displayIsland();
-		void displayRow(int rowNumber);
+		void display() const;
+		void displayIsland(string command) const;
+		void displayRow(int rowNumber, string command) const;
 		bool onIsland(int x, int y);
 		void visitLocationAndNeighbors(Tile* location, bool endRecursion);
 		void displayLocation(Tile* location);
@@ -103,8 +104,9 @@ public:
 		Tile*  getLocation(int x, int y) const;
 		Tile* randJewelTile();
 		int size() const {return boardSize;}
-    void followVars(int&posX, int&posY, int&minX, int&maxX, int&minY, int&maxY);
+    void followVars(int&posX, int&posY, int&minX, int&maxX, int&minY, int&maxY) const;
 		void putInObstacles();
+        Tile* jewelTile;
 private:
 		GameManager* gameMgr;
 		int boardSize;

@@ -109,7 +109,7 @@ void Seeker::move(direction_t direction) {
       money += theIsland->getLocation(x,y)->takeMoney();
     }
 	//gameMgr->requestEnter();
-	gameMgr->displayIslandAndSeeker();
+	gameMgr->displayIslandAndSeeker("local");
     return;
 } 
 void Seeker::addTool(Tool* newTool) {
@@ -158,63 +158,74 @@ char Seeker::moveObstacle(Tile* nextTile)
       }
     }
     
-    //if you've got the tool let them move and tell them they cleared obstacle
+    //if you've got the tool, check if they're down with losing reduced nrg
     if (relevantTool)
     {
-      //remove the obstacle 
-      if (theObstacle->removable)
-      {
-        nextTile->obstacle = NULL;
-      }
-      //currently does not still add additional cost on top of moving because we
-      //don't check with the user
-		
-      if(relevantTool->singleUse) {
-        //reduce tool count by 1 and/or remove from inventory 
-        if (relevantTool->quantity == 1)
-        {
-
-          for (auto it = begin(inventory); it != end(inventory); ++it)
-          {
-            if ((*it) == relevantTool)
-            {
-              inventory.erase(it);
-              break;
-            }
-          }
-        }
-        relevantTool->quantity -= 1;
-      }
-      cout << "You used your " << relevantTool->name << " to get past the " 
-      << theObstacle->name << "." << endl;
-      return 'Y'; 
-    }
-
-    //if they don't have the tool ask them
-    else
-    {
-      cout << "You don't have a relevant Tool to deal with the " << theObstacle->name 
-			<< ", would you like waste the extra "
-      		<< theObstacle->energyCost << " energy to get through by hand? [Y/N]" 
-			<< endl;
+      //prompt for ok to lose reduced energy and clear object
+      cout << "Use your " << relevantTool->name << " and " << 
+      theObstacle->energyCost - relevantTool->energySaved << " additional energy" <<
+      " to get past the " << theObstacle->name << "? [Y/N]" << endl;
+      
       cin >> choice;
       cin.ignore(100,'\n');
       choice = toupper(choice);
       if (choice == 'Y')
       {
-        if (theObstacle->removable)
-        {
-          nextTile->obstacle = NULL;
-        }
-        energy -= theObstacle->energyCost;
-        cout << "You managed to get through the " << theObstacle->name 
-        << " with your bare hands!" << endl;
-        return choice;
+         if(relevantTool->singleUse) {
+         //reduce tool count by 1 and/or remove from inventory 
+         if (relevantTool->quantity == 1)
+         {
+           for (auto it = begin(inventory); it != end(inventory); ++it)
+           {
+             if ((*it) == relevantTool)
+             {
+               inventory.erase(it);
+               break;
+             }
+           }
+         }
+         else {
+           relevantTool->quantity -= 1;
+         }
       }
-      else
+
+      if (theObstacle->removable)
       {
-        return 'N';
+        nextTile->obstacle = NULL;
       }
+      energy -= theObstacle->energyCost - relevantTool->energySaved;
+      cout << "You used your " << relevantTool->name << " to get through the "
+      << theObstacle->name;
+      return choice;
     }
+    return 'N';
+  }
+     
+  //if they don't have the tool ask them
+  else
+  {
+    cout << "You don't have a relevant Tool to deal with the " << theObstacle->name 
+    << ", would you like use the extra "
+    << theObstacle->energyCost << " energy to get through by hand? [Y/N]"
+    << endl;
+    cin >> choice;
+    cin.ignore(100,'\n');
+    choice = toupper(choice);
+    if (choice == 'Y')
+    {
+      if (theObstacle->removable)
+      {
+        nextTile->obstacle = NULL;
+      }
+      energy -= theObstacle->energyCost;
+      cout << "You managed to get through the " << theObstacle->name 
+      << " with your bare hands!" << endl;
+      return choice;
+    }
+    else
+    {
+      return 'N';
+    }
+  }
 }
 

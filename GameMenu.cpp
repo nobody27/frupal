@@ -54,7 +54,6 @@ void GameMenu::display() const {
 	cout << setw(17) << left << "(R)eturn to Menu";
 	cout << setw(15) << left << "(W)in!" << endl; //TODO
 	cout << "\n>";
-	//TODO buy tool, use tool
 }
 
 bool GameMenu::getAndExecuteCommand() {
@@ -84,10 +83,16 @@ bool GameMenu::getAndExecuteCommand() {
 				break;
 				//TODO buy tool, use tool, view board
 			case 'D':
-				gameMgr->displayIslandAndSeeker();
+				gameMgr->displayIslandAndSeeker("local");
 				//gameMgr->clear_screen();
 				//gameMgr->theIsland->displayIsland();
 				//gameMgr->theSeeker->display();
+				break;
+			case 'M':
+				gameMgr->displayIslandAndSeeker("full");
+				break;
+			case 'W':
+				gameMgr->theSeeker->location = gameMgr->theIsland->jewelTile; 
 				break;
 			case 'R':
 				cout << "returning to main menu" << endl;
@@ -100,21 +105,23 @@ bool GameMenu::getAndExecuteCommand() {
 				quit = true;
 				break;
 			case 'B':
-				gameMgr->displayIslandAndSeeker();
+				gameMgr->displayIslandAndSeeker("local");
 				shopMenu();        
 				break;
 			default:
-				gameMgr->displayIslandAndSeeker();
+				gameMgr->displayIslandAndSeeker("local");
 				cout << "'" << choice << "' is not a valid command in the game menu..." << endl;
 				again = true;
 		}
 		if(gameMgr->theSeeker->energy <= 0) {
-			gameMgr->theSeeker->display();
+			gameMgr->displayIslandAndSeeker("endgame");
 			cout << endl << "You are out of energy!";
 			cout << endl << endl << "GAME OVER" << endl << endl;
+			gameMgr->requestEnter();
 			quit = true;
 		}
-		else if(gameMgr->theSeeker->location->treasureChar == 'J') {
+		else if(gameMgr->theSeeker->location == gameMgr->theIsland->jewelTile) {
+			gameMgr->displayIslandAndSeeker("endgame");
 			cout << GREEN <<  "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
 			cout << BLUE << "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
 			cout << BOLDRED << "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;

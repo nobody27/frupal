@@ -257,11 +257,15 @@ void GameManager::initializeGame() {
 	cin.get();
 }
 
-void GameManager::displayIslandAndSeeker() {
+void GameManager::displayIslandAndSeeker(string command) {
 	clear_screen();
-	theIsland->visitLocationAndNeighbors(theSeeker->getLocation(), false);
-	theIsland->displayIsland();
-	theSeeker->display();
+    if (command == "endgame")
+        theIsland->visitAllTiles();
+    else
+        theIsland->visitLocationAndNeighbors(theSeeker->getLocation(), false);
+    theIsland->displayIsland(command);
+    if (command == "local")
+        theSeeker->display();
 }
 
 void GameManager::requestEnter() const {

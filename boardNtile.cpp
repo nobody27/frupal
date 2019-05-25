@@ -60,7 +60,6 @@ Terrain* Tile::getTerrain()
 				return terrain;
 }
 
-
 //for use in the "to the North lies ..." etc  should display Terrain, any obstacle, any treasure
 void Tile::tileDisplay() const
 {
@@ -95,35 +94,37 @@ void Tile::displayLocation() const
 
 
 
-void Tile::printIslandTile(Tile* location)
+void Tile::printIslandTile(Tile* location, string command)
 {
-				//terrain type
-				if(!visited)
-				{
-								cout<<GRAY<< "X"<<RESET;
-				}
-				else
-				{
-								terrain->displayShortName();
-				}
-				//seeker location
-				if (this == location)
-				{
-								cout << BOLDRED << "@" << RESET;
-				}
-				else
-				{
-								cout << GRAY <<"_"<<RESET;
-				}
-				//treasure E for excavation, or Letter for treasure type
-				if(!visited)
-				{
-								cout <<GRAY<< "E"<<RESET;
-				}
-				else
-				{
-								cout << MAGENTA << treasureChar <<RESET;
-				}
+                if (command == "full" || command == "endgame")
+                {
+                    if (this == location)
+						cout << BOLDRED << "@" << RESET;
+                    else if (treasureChar == 'J' && visited == true)
+                        cout << MAGENTA << treasureChar << RESET;
+				    else if (!visited)
+                        cout << GRAY << "X" << RESET;
+                    else
+                        terrain->displayShortName();
+                }
+                else
+                { 
+                    //terain 
+                    if(!visited)
+                        cout<<GRAY<< "X"<<RESET;
+                    else
+                        terrain->displayShortName();
+                    //seeker location
+                    if (this == location)
+                        cout << BOLDRED << "@" << RESET;
+                    else
+                        cout << GRAY <<"_"<<RESET;
+                    //treasure E for excavation, or Letter for treasure type
+                    if(!visited)
+                        cout <<GRAY<< "E"<<RESET;
+                    else
+                        cout << MAGENTA << treasureChar <<RESET;
+                }
 }
 
 void Tile::printIslandTileR2(Tile* location)
@@ -210,7 +211,7 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 				//OBSTACLES *********
 				putInObstacles();
 				//these lines below add Jewel
-				Tile* jewelTile = randJewelTile();
+				jewelTile = randJewelTile();
 				jewelTile->treasureChar = 'J';
 				//use for testing how map looks
 				visitAllTiles();
@@ -315,7 +316,7 @@ Tile* Board::randJewelTile()
 {
 				int jewelX = 0;
 				int jewelY = 0;
-				int halfBoard = .5*boardSize; //this should round down and give an int
+				int halfBoard = boardSize/2; //this should round down and give an int
 				int rand1 = (rand())%halfBoard; // rand1 will be a random int between 0 and halfBoard so that when subtracted
 				//from boardsize will be in top right quadrant - jewel will be in the quarter of the board furthest from the start
 				jewelX = (boardSize - 1 - rand1);
@@ -326,6 +327,9 @@ Tile* Board::randJewelTile()
 				cerr << "jewelX" << jewelX <<endl;
 				cerr << "jewelY" << jewelY <<endl;
 
+				assert(jewelX >=0 && jewelX < boardSize);
+				assert(jewelY >=0 && jewelY < boardSize);
+				assert( boardArray[jewelX][jewelY] ); //make sure it's not a null ptr
 				return boardArray[jewelX][jewelY];
 }
 
@@ -405,89 +409,114 @@ void Board::initTerrainMap()
 
 }
 
-void Board::followVars(int&posX, int&posY, int&minX, int&maxX, int&minY, int&maxY)
+//TODO these values should be fields in Board
+void Board::followVars(int&posX, int&posY, int&minX, int&maxX, int&minY, int&maxY) const
 {
-				posX = gameMgr->theSeeker->getLocation()->xValue;
-				posY = gameMgr->theSeeker->getLocation()->yValue;
+	int followSize = 9; //TODO make this global or configurable. best result if odd number
+	//deal with small boards
+	if(followSize > boardSize) {
+		followSize = boardSize;
+	}
+	int leftMargin = followSize/2; //half of size rounded down
+	int rightMargin = followSize - leftMargin -1;
 
-				minX = posX - 4;
-				maxX = posX + 5;
-				if (minX < 0) {
-								minX = 0;
-								maxX = minX + boardSize - 1;
-				}
-				else if (maxX >= boardSize) {
-								maxX = boardSize - 1;
-								minX = maxX - (boardSize - 1);
-				}
 
-				minY = posY - 4;
-				maxY = posY + 5;
-				if (minY < 0) {
-								minY = 0;
-								maxY = minY + (boardSize - 1);
-				}
-				else if (maxY >= boardSize) {
-								maxY = boardSize - 1;
-								minY = maxY - (boardSize - 1);
-				}
-				return;
+    posX = gameMgr->theSeeker->getLocation()->xValue;
+    posY = gameMgr->theSeeker->getLocation()->yValue;
+
+    minX = posX - leftMargin;
+    maxX = posX + rightMargin;
+    if (minX < 0) {
+      minX = 0;
+      maxX = followSize - 1;
+    } else if (maxX >= boardSize) {
+      maxX = boardSize - 1;
+      minX = maxX - followSize + 1;
+    }
+    assert(minX >= 0);
+    assert(maxX - minX <= followSize);
+
+	//TODO this should be a method that is called once for x and again for y
+    minY = posY - leftMargin;
+    maxY = posY + rightMargin;
+    if (minY < 0) {
+      minY = 0;
+      maxY = followSize - 1;
+    } else if (maxY >= boardSize) {
+      maxY = boardSize - 1;
+      minY = maxY - followSize;
+    } else {
+      minY = posY - leftMargin;
+      maxY = posY + rightMargin;
+    }
+    assert(minY >= 0);
+    assert(maxY - minY <= followSize);
+
+	assert(followSize <= boardSize);
+    return;
 }
 
-//follow**********************
-void Board::display() 
+void Board::displayIsland(string command) const
 {
-				int posX, posY, minX, maxX, minY, maxY;
-				followVars(posX, posY, minX, maxX, minY, maxY);
+        int posX, posY, minX, maxX, minY, maxY;
+		if(command == "local") {
+			followVars(posX, posY, minX, maxX, minY, maxY);
+		} else {
+			minY = 0;
+			maxY = boardSize - 1;
+		}
 
+        if (command != "local")
+            cout << "The Island of Frupal:" << endl;
 
-				cout << "Displaying your island: " <<endl;
-				for(int i=minX; i<=maxX; ++i)
-				{
-								for(int j=minY; j<=maxY; ++j)
-								{
-												cout <<"the Tile at (" << i << ", " << j <<") has  data" <<endl;
-												boardArray[i][j]->tileDisplay();
-								}
-								cout <<endl;
-				}
+        for(int j=maxY; j>=minY; --j)
+		{
+				displayRow(j, command);
+		}
+		cout <<endl;
+		cout << "KEY:  Terrain type: "<<YELLOW<<"	 G=Grassy Meadow," <<BLUE<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYAN<<" W=Water,"<<GRAY<<" X=Unrevealed"<< RESET<<endl;
+		cout << "      SEEKER's location: "<<BOLDRED << "@" << RESET;
+        if (command == "local")
+        {
+				cout << "      Excavation site:" <<GRAY<< " (E)"<<RESET<<" reveals to " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTA<< "'J' Jewel." <<RESET<<endl;
+        }
+		cout << endl;
 }
 
-void Board::displayIsland()
+void Board::displayRow(int rowNumber, string command) const
 {
-				int posX, posY, minX, maxX, minY, maxY;
-				followVars(posX, posY, minX, maxX, minY, maxY);
+		int posX, posY, minX, maxX, minY, maxY;
+		if(command == "local") {
+			followVars(posX, posY, minX, maxX, minY, maxY);
+		} else {
+			minX = 0;
+			maxX = boardSize - 1;
+		}
 
-				for(int j=maxY; j>=minY; --j)
-				{
-								displayRow(j);
-				}
+		assert(rowNumber < boardSize);
+		assert(minX >= 0);
+		assert(maxX < boardSize);
+        cout << endl;
+        cout << "		"; //left margin
+        int j=rowNumber;
+        for(int i=minX; i<=maxX; ++i)
+        { 
 
-				cout <<endl;
-				cout << "KEY:  Terrain type:"<<YELLOW<<"	G=Grassy Meadow," <<BLUE<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYAN<<" W=Water,"<<GRAY<<" X=Unrevealed"<< RESET<<endl;
-				cout << "      SEEKER's location "<<BOLDRED << "@" << RESET;
-				cout << "      Excavation site" <<GRAY<< " (E)"<<RESET<<" reveals to " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTA<< "'J' Jewel." <<RESET<<endl;
+            boardArray[i][j]->printIslandTile(gameMgr->theSeeker->location, command);
+            if (command == "local")
+                cout << "  "; //space between tiles
+        }
+        //cout << endl;
+        if (command == "local")
+        {
+            cout << endl;
+            cout << "		";//left margin
+            for(int i=minX; i<=maxX; ++i)
+            {
+                boardArray[i][j]->printIslandTileR2(gameMgr->theSeeker->location);
+                cout << "  "; //space between tiles
+            }
+            cout << endl;
+        }
 }
 
-void Board::displayRow(int rowNumber)
-{
-				int posX, posY, minX, maxX, minY, maxY;
-				followVars(posX, posY, minX, maxX, minY, maxY);
-
-				cout << endl;
-				cout << "		"; //left margin
-				int j=rowNumber;
-				for(int i=minX; i<=maxX; ++i)
-				{ 
-								boardArray[i][j]->printIslandTile(gameMgr->theSeeker->location);
-								cout << "  "; //space between tiles
-				}
-				cout << endl;
-				cout << "		";//left margin
-				for(int i=minX; i<=maxX; ++i)
-				{
-								boardArray[i][j]->printIslandTileR2(gameMgr->theSeeker->location);
-								cout << "  "; //space between tiles
-				}
-				cout << endl;
-}

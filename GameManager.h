@@ -16,6 +16,7 @@
 #include "seeker.h"				//owned by John
 #include "MainMenu.h"			//owned by Elyse
 #include "resources.h"
+#include <string>
 
 
 #define RESET "\033[0m"
@@ -30,7 +31,7 @@
 #define GRAY "\033[90m"
 #define LIGHT_GREEN "\033[92m"
 #define LIGHT_YELLOW "\033[93m"
-#define CYANonBLUE "\033[34;36m"
+#define CYANonBLUE "\033[36;44m"
 
 using namespace std;
 
@@ -81,7 +82,7 @@ public:
 	void initializeGame();	
 
 	//display the island and seeker information
-	void displayIslandAndSeeker();
+	void displayIslandAndSeeker(string command);
 
 	void requestEnter() const;
 
