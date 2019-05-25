@@ -43,15 +43,22 @@ void OptionsMenu::display() const {
 		cout << GRAY;
 	}
 	//// Place text for options that are not available after initialization here ////
-	cout << setw(15) << left << "(1) Configure general settings\n";
+	cout << setw(15) << left << "(1) Configure starting conditions\n";
 	cout << setw(15) << left << "(2) Configure obstacles\n";
 	cout << setw(15) << left << "(3) Configure tools\n";
-	cout << setw(15) << left << "(4) Load configuration\n";
+	if(gameMgr->initialized) {
+		cout << RESET;
+	}
+	cout << setw(15) << left << "(4) Configure controls\n";
+	if(gameMgr->initialized) {
+		cout << GRAY;
+	}
+	cout << setw(15) << left << "(5) Load configuration\n";
 	/////////////////////////////////////////////////////////////////////////////////
 	if(gameMgr->initialized) {
 		cout << RESET;
 	}
-	cout << setw(15) << left << "(5) Save configuration\n";
+	cout << setw(15) << left << "(6) Save configuration\n";
 	cout << setw(15) << left << "(R)eturn to the Main Menu" << endl;
 	cout << setw(15) << left << "(Q)uit the program" << endl;
 	cout << "\n>";
@@ -99,9 +106,12 @@ bool OptionsMenu::getAndExecuteCommand() {
 				}
 				break;
 			case '4':
-				gameMgr->readConfigFile(true); //useCustom = true. We want to define the file.
+				setControls();
 				break;
 			case '5':
+				gameMgr->readConfigFile(true); //useCustom = true. We want to define the file.
+				break;
+			case '6':
 				gameMgr->writeConfigFile();
 				break;
 				//TODO other options
@@ -136,7 +146,6 @@ void OptionsMenu::configureGeneralSettings(){
 			"\n(2) Amount of energy at start" <<
 			"\n(3) Amount of money at start" <<
 			"\n(4) Random seed" << 
-			"\n(5) Controls" << 
 			"\n(R)eturn to options menu" <<
 			"\n\n>";
 
@@ -154,9 +163,6 @@ void OptionsMenu::configureGeneralSettings(){
 				break;
 			case '4':
 				setRandomSeed();
-				break;
-			case '5':
-				setControls();
 				break;
 			default:
 				break;	
@@ -329,6 +335,8 @@ void OptionsMenu::setControls(){
 				break;
 			case 'R':
 				done = true;
+				break;
+			default:
 				break;
 		}
 	}
