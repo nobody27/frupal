@@ -182,8 +182,6 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 {
 				srand(randomSeed);
 				cerr << "seed = " << randomSeed <<endl;
-				int random = rand(); //TODO erase
-				cerr << "random = " << random << endl; //TODO erase
 				initTerrainMap();
 				//init the board
 				boardArray = new Tile**[boardSize];	
@@ -194,11 +192,23 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 								{
 												//preparation for options: if location exists in options
 												//set according to it, otherwise set default
-												int slope = -.3;
-												int yInt = .8*boardSize;
-												if(j > slope*i + yInt)
+												float slope = (-.5);
+												float xVal = i; //now i have a float to use (instead of int i)
+												float yInt = .5*boardSize;
+												int checkValue = (slope*xVal + yInt);  //having floats in calculation avoids too much rounding
+												float slope2 = 2;
+												float yInt2 = -.8*boardSize;
+												int checkValue2 = (slope2*xVal + yInt2);  //having floats in calculation avoids too much rounding
+												if(j >= checkValue)
 												{
-																boardArray[i][j]=new Tile(i,j, terrainMap["forest"]);
+																if(j <= checkValue2)
+																{
+																				boardArray[i][j]= new Tile(i,j, terrainMap["bog"]);
+																}
+																else
+																{
+																				boardArray[i][j]=new Tile(i,j, terrainMap["forest"]);
+																}
 												}
 												else
 												{	
@@ -402,7 +412,7 @@ void Board::displayLocation(Tile* location)
 void Board::initTerrainMap()
 {
 				terrainMap["grassy_meadow"] = new Terrain("grassy_meadow", 'G', 1, YELLOW);
-				terrainMap["bog"] = new Terrain("bog", 'B', 2, BLUE);
+				terrainMap["bog"] = new Terrain("bog", 'B', 2, CYAN);
 				terrainMap["forest"] = new Terrain("forest", 'F', 2, GREEN);
 				terrainMap["water"] = new Terrain("water", 'W', 0, CYANonBLUE);
 
@@ -474,8 +484,8 @@ void Board::displayIsland(string command) const
 				displayRow(j, command);
 		}
 		cout <<endl;
-		cout << "G=Grassy Meadow," <<BLUE<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYAN<<" W=Water"<<RESET;
-		cout << "  SEEKER's location: "<<BOLDRED << "@" << RESET;
+		cout << YELLOW<<"G=Grassy Meadow," <<CYAN<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYANonBLUE<<" W=Water"<<RESET;
+		cout << "  SEEKER's location:" <<RED<<" @" << RESET;
       if (command == "local")
         {
 				cout  <<GRAY<< " (E)xcavation site"<<RESET<<" reveals to " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTA<< "'J' Jewel." <<RESET;
