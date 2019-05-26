@@ -102,7 +102,7 @@ void GameManager::readConfigFile(bool useCustom){
 	string fileName = DEFAULT_CONFIG_FILE;	//set in GameManager.h 
 	//most of these fields temporarily store values to pass to tool/obstacle constructors
 	ifstream configFile;
-	string type;
+	char type;
 	string name;
 	string value;
 	string toolName;
@@ -132,8 +132,10 @@ void GameManager::readConfigFile(bool useCustom){
 	resourcesOptions->eraseObstacles();//erase the vectors so they can be repopulated from file
 
 	configFile.open(fileName);
-	while(getline(configFile, type, ',')){	//read first digit of each line into type
-		if(type[0] == GENERAL_CONFIGURATION){	//general configs are just a variable name and an int
+	while(!configFile.eof()){	//read first digit of each line into type
+		configFile.get(type);
+		configFile.ignore(1);
+		if(type == GENERAL_CONFIGURATION){	//general configs are just a variable name and an int
 			getline(configFile, name, ',');			//get the name
 			getline(configFile, value, '\n');		//get the int
 			if(!name.compare("boardSize")){			//determine which setting it is.
@@ -161,7 +163,7 @@ void GameManager::readConfigFile(bool useCustom){
 			}else if(!name.compare("EASTBUTTON")){
 				EASTBUTTON = value[0];
 			}
-		}else if(type[0] == OBSTACLE_CONFIGURATION){	//obstacle configs contain a value for each
+		}else if(type == OBSTACLE_CONFIGURATION){	//obstacle configs contain a value for each
 			getline(configFile, obstacleName, ',');	//field contained in the obstacle class
 			getline(configFile, value, ',');
 			energyCost =stoi(value);
@@ -172,7 +174,7 @@ void GameManager::readConfigFile(bool useCustom){
 			//after getting the values, create an obstacle and push it to the vector
 			Obstacle newObstacle(obstacleName, energyCost, symbol, removable);
 			resourcesOptions->theObstacles.push_back(newObstacle);
-		}else if(type[0] == TOOL_CONFIGURATION){	//tool configs contain a value for each
+		}else if(type == TOOL_CONFIGURATION){	//tool configs contain a value for each
 			getline(configFile, toolName, ',');	//field contained in the tool class
 			getline(configFile, obstacleName, ',');
 			getline(configFile, value, ',');
@@ -186,7 +188,7 @@ void GameManager::readConfigFile(bool useCustom){
 			//after getting the values, create a tool and push it to the vector	
 			Tool newTool(toolName, obstacleName, energySaved, singleUse, price, quantity);
 			resourcesOptions->theResources.push_back(newTool);
-		}else if(type[0] == COMMENT){
+		}else if(type == COMMENT){
 			configFile.ignore(100, '\n');
 		}
 	}
