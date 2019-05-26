@@ -195,10 +195,17 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 												//preparation for options: if location exists in options
 												//set according to it, otherwise set default
 												int slope = -.3;
-												int yInt = .8*boardSize;
+												int yInt = .5*boardSize;
 												if(j > slope*i + yInt)
 												{
+																if( j==8)
+																{
+																boardArray[i][j]=new Tile(i,j, terrainMap["bog"]);
+																}
+																else
+																{
 																boardArray[i][j]=new Tile(i,j, terrainMap["forest"]);
+																}
 												}
 												else
 												{	
