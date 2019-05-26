@@ -224,26 +224,46 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 				jewelTile = randJewelTile();
 				jewelTile->treasureChar = 'J';
 				//use for testing how map looks
-				//visitAllTiles();
+				visitAllTiles();
 }
 
 void Board::putInObstacles()
 {
+				
+								const char W = 'W';
 				// number = boardsize. put in that number of Bushes, rocks and trees)
 				for(int i=0; i<boardSize; ++i) //BUSHES
 				{
 								int rand1 = rand()%boardSize;
 								int rand2 = rand()%boardSize;
+								if(boardArray[rand1][rand2]->terrain->getShortName() != W)
+												
 								boardArray[rand1][rand2]->obstacle = new Obstacle("BUSH", 5, 'B', true);
 				}
 				for(int i=0; i<boardSize; ++i) //ROCKS
 				{
 								int rand1 = rand()%boardSize;
 								int rand2 = rand()%boardSize;
-								boardArray[rand1][rand2]->obstacle = new Obstacle("ROCK", 10, 'V', false);
+								
+								boardArray[rand1][rand2]->obstacle = new Obstacle("ROCK", 10, 'R', false);
+								/*
+								if(boardArray[rand1][rand2]->terrain->getShortName() != W)
+								{
+												*/
 				}
-				boardArray[1][2]->obstacle = new Obstacle("VORTEX", 100, 'V', false);
-				boardArray[2][2]->obstacle = new Obstacle("ROCK", 10, 'R', false);
+				for(int i=0; i<boardSize; ++i) //TREES
+				{
+								int rand1 = rand()%boardSize;
+								int rand2 = rand()%boardSize;
+								boardArray[rand1][rand2]->obstacle = new Obstacle("TREES", 10, 'T', false);
+				}
+				
+				for(int i=0; i<boardSize; ++i) //Vortex / vorticies
+				{
+								int rand1 = rand()%boardSize;
+								int rand2 = rand()%boardSize;
+								boardArray[rand1][rand2]->obstacle = new Obstacle("VORTEX", 100, 'V', false);
+				}
 }
 
 
