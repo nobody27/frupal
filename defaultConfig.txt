@@ -10,7 +10,7 @@
 #Variable configurations consist of:
 #A variable name and a value
 #-----------------------------------------------------------------,
-1,boardSize,5
+1,boardSize,15
 1,startEnergy,100
 1,startMoney,100
 1,hasBoat,0
