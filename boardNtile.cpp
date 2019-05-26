@@ -197,7 +197,7 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 												float yInt = .5*boardSize;
 												int checkValue = (slope*xVal + yInt);  //having floats in calculation avoids too much rounding
 												float slope2 = 2;
-												float yInt2 = -.8*boardSize;
+												float yInt2 = -.6*boardSize;
 												int checkValue2 = (slope2*xVal + yInt2);  //having floats in calculation avoids too much rounding
 												if(j >= checkValue)
 												{
@@ -505,7 +505,7 @@ void Board::displayIsland(string command) const
 		}
 		cout <<endl;
 		cout << YELLOW<<"G=Grassy Meadow," <<CYAN<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYANonBLUE<<" W=Water"<<RESET;
-		cout << "  SEEKER's location:" <<RED<<" @" << RESET;
+		cout << "  SEEKER's location:" <<RED<<" @ " << RESET;
       if (command == "local")
         {
 				cout  <<GRAY<< " (E)xcavation site"<<RESET<<" reveals to " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTA<< "'J' Jewel." <<RESET;
