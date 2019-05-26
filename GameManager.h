@@ -44,6 +44,7 @@ const string DEFAULT_CONFIG_OUTPUT = "savedConfig.txt";
 const char GENERAL_CONFIGURATION = '1';
 const char OBSTACLE_CONFIGURATION = '2';
 const char TOOL_CONFIGURATION = '3';
+const char COMMENT = '#';
 
 //forward declarations of classes used by GameManager
 class Board;
