@@ -1,4 +1,4 @@
-/////////////////////////////////////////////////
+////////////////////////////////////////////////
 // ATeam Jessica, Elyse, Max, Leior, John
 // CS 300
 // Spring 2019
@@ -474,11 +474,11 @@ void Board::displayIsland(string command) const
 				displayRow(j, command);
 		}
 		cout <<endl;
-		cout << "KEY:  Terrain type: "<<YELLOW<<"	 G=Grassy Meadow," <<BLUE<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYAN<<" W=Water,"<<GRAY<<" X=Unrevealed"<< RESET<<endl;
-		cout << "      SEEKER's location: "<<BOLDRED << "@" << RESET;
-        if (command == "local")
+		cout << "G=Grassy Meadow," <<BLUE<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYAN<<" W=Water"<<RESET;
+		cout << "  SEEKER's location: "<<BOLDRED << "@" << RESET;
+      if (command == "local")
         {
-				cout << "      Excavation site:" <<GRAY<< " (E)"<<RESET<<" reveals to " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTA<< "'J' Jewel." <<RESET<<endl;
+				cout  <<GRAY<< " (E)xcavation site"<<RESET<<" reveals to " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTA<< "'J' Jewel." <<RESET;
         }
 }
 
