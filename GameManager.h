@@ -32,6 +32,9 @@
 #define LIGHT_GREEN "\033[92m"
 #define LIGHT_YELLOW "\033[93m"
 #define CYANonBLUE "\033[36;44m"
+#define BLACKonGREEN "\033[30;42m"
+#define BLACKonWHITE "\033[30;47m"
+#define GREENonWHITE "\033[32;47m"
 
 using namespace std;
 

@@ -109,7 +109,7 @@ void Tile::printIslandTile(Tile* location, string command)
                 }
                 else
                 { 
-                    //terain 
+                    //terrain 
                     if(!visited)
                         cout<<GRAY<< "X"<<RESET;
                     else
@@ -214,7 +214,7 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 				jewelTile = randJewelTile();
 				jewelTile->treasureChar = 'J';
 				//use for testing how map looks
-				//visitAllTiles();
+				visitAllTiles();
 }
 
 void Board::putInObstacles()
@@ -401,12 +401,17 @@ void Board::displayLocation(Tile* location)
 
 void Board::initTerrainMap()
 {
-				terrainMap["grassy_meadow"] = new Terrain("grassy_meadow", 'G', 1, YELLOW);
-				terrainMap["bog"] = new Terrain("bog", 'B', 2, BLUE);
-				terrainMap["forest"] = new Terrain("forest", 'F', 2, GREEN);
+				terrainMap["grassy_meadow"] = new Terrain("grassy_meadow", 'G', 1,GREENonWHITE);
+				terrainMap["bog"] = new Terrain("bog", 'B', 2, BLACKonWHITE);
+				terrainMap["forest"] = new Terrain("forest", 'F', 2, BLACKonGREEN);
 				terrainMap["water"] = new Terrain("water", 'W', 0, CYANonBLUE);
 
-
+/*
+#define CYANonBLUE "\033[36;44m"
+#define BLACKonGREEN "\033[30;42m"
+#define BLACKonWHITE "\033[30;42m"
+#define GREENonWHITE "\033[30;47m"
+*/
 }
 
 //TODO these values should be fields in Board
@@ -474,7 +479,7 @@ void Board::displayIsland(string command) const
 				displayRow(j, command);
 		}
 		cout <<endl;
-		cout << "G=Grassy Meadow," <<BLUE<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYAN<<" W=Water"<<RESET;
+		cout << GREENonWHITE << "G=Grassy Meadow," << BLACKonWHITE <<" B=Bog,"<< BLACKonGREEN <<" F=Forrest,"<<CYANonBLUE<<" W=Water"<<RESET;
 		cout << "  SEEKER's location: "<<BOLDRED << "@" << RESET;
       if (command == "local")
         {
