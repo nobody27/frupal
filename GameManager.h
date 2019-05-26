@@ -32,9 +32,9 @@
 #define LIGHT_GREEN "\033[92m"
 #define LIGHT_YELLOW "\033[93m"
 #define CYANonBLUE "\033[36;44m"
-#define BLACKonGREEN "\033[30;42m"
-#define BLACKonWHITE "\033[30;47m"
-#define GREENonWHITE "\033[32;47m"
+#define BLACKonGREEN "\033[30;102m"
+#define BLACKonWHITE "\033[34;43m"
+#define GREENonWHITE "\033[93;42m"
 
 using namespace std;
 
@@ -47,6 +47,7 @@ const string DEFAULT_CONFIG_OUTPUT = "savedConfig.txt";
 const char GENERAL_CONFIGURATION = '1';
 const char OBSTACLE_CONFIGURATION = '2';
 const char TOOL_CONFIGURATION = '3';
+const char COMMENT = '#';
 
 //forward declarations of classes used by GameManager
 class Board;

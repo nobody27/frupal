@@ -186,6 +186,8 @@ void GameManager::readConfigFile(bool useCustom){
 			//after getting the values, create a tool and push it to the vector	
 			Tool newTool(toolName, obstacleName, energySaved, singleUse, price, quantity);
 			resourcesOptions->theResources.push_back(newTool);
+		}else if(type[0] == COMMENT){
+			configFile.ignore(100, '\n');
 		}
 	}
 	configFile.close();
