@@ -214,7 +214,7 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 				jewelTile = randJewelTile();
 				jewelTile->treasureChar = 'J';
 				//use for testing how map looks
-				visitAllTiles();
+				//visitAllTiles();
 }
 
 void Board::putInObstacles()
