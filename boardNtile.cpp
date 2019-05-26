@@ -401,9 +401,9 @@ void Board::displayLocation(Tile* location)
 
 void Board::initTerrainMap()
 {
-				terrainMap["grassy_meadow"] = new Terrain("grassy_meadow", 'G', 1,GREENonWHITE);
-				terrainMap["bog"] = new Terrain("bog", 'B', 2, BLACKonWHITE);
-				terrainMap["forest"] = new Terrain("forest", 'F', 2, BLACKonGREEN);
+				terrainMap["grassy_meadow"] = new Terrain("grassy_meadow", 'G', 1,LIGHTYELLOWonGREEN);
+				terrainMap["bog"] = new Terrain("bog", 'B', 2, BLUEonYELLOW);
+				terrainMap["forest"] = new Terrain("forest", 'F', 2, BLACKonLIGHTGREEN);
 				terrainMap["water"] = new Terrain("water", 'W', 0, CYANonBLUE);
 
 /*
@@ -479,7 +479,7 @@ void Board::displayIsland(string command) const
 				displayRow(j, command);
 		}
 		cout <<endl;
-		cout << GREENonWHITE << "G=Grassy Meadow," << BLACKonWHITE <<" B=Bog,"<< BLACKonGREEN <<" F=Forrest,"<<CYANonBLUE<<" W=Water"<<RESET;
+		cout << LIGHTYELLOWonGREEN << "G=Grassy Meadow," << BLUEonYELLOW <<" B=Bog,"<< BLACKonLIGHTGREEN <<" F=Forrest,"<<CYANonBLUE<<" W=Water"<<RESET;
 		cout << "  SEEKER's location: "<<BOLDRED << "@" << RESET;
       if (command == "local")
         {
