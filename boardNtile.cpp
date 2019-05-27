@@ -459,8 +459,6 @@ void Board::initTerrainMap()
 				terrainMap["bog"] = new Terrain("bog", 'B', 2, CYAN);
 				terrainMap["forest"] = new Terrain("forest", 'F', 2, GREEN);
 				terrainMap["water"] = new Terrain("water", 'W', 0, CYANonBLUE);
-
-
 }
 
 //TODO these values should be fields in Board
