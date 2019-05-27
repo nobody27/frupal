@@ -156,18 +156,22 @@ void OptionsMenu::configureGeneralSettings(){
 		switch(reply){
 			case '1':
 				setBoardSize();
+				gameMgr->currentConfig = "Custom";
 				break;
 			case '2':
 				setSeekerEnergy();
+				gameMgr->currentConfig = "Custom";
 				break;
 			case '3':
 				setSeekerMoney();
+				gameMgr->currentConfig = "Custom";
 				break;
 			case '4':
 				setRandomSeed();
 				break;
 			case '5':
 				setObstacleDensity();
+				gameMgr->currentConfig = "Custom";
 				break;
 			case '6':
 				setDifficulty();
