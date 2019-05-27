@@ -154,6 +154,8 @@ void GameManager::readConfigFile(bool useCustom){
 				seekerOptions->hasBinoculars = stoi(value);
 			}else if(!name.compare("randomSeed") && useCustom){
 				boardOptions->randomSeed = stoi(value);
+			}else if(!name.compare("obstacleDensity")){
+				obstacleDensity = stoi(value);
 			}else if(!name.compare("NORTHBUTTON")){
 				NORTHBUTTON = value[0];
 			}else if(!name.compare("WESTBUTTON")){

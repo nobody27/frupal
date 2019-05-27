@@ -56,6 +56,8 @@ private:
 
 	void configureGeneralSettings();
 
+	void setObstacleDensity();
+
 	void configureTools();
 	void addTool();
 	void removeTool();

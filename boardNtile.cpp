@@ -251,8 +251,9 @@ void Board::putInObstacles()
 				// tile percentage variable
 				// so numberEach (the number of each type of obstacle) needs to scale with teh square of boardsize
 				// numberEach = boardSize*boardSize times obstaclePercentage and by 4 because four types of obstaclesA
-				float obstacleDensity = .5;
-				int numberEach = boardSize*boardSize*obstacleDensity/4;
+				float obstacleDensity = (gameMgr->obstacleDensity)/100.0;
+				int obstacleCount = 4;
+				int numberEach = boardSize*boardSize*obstacleDensity/obstacleCount;
 				for(int i=0; i<numberEach; ++i) //BUSHES
 				{
 								int rand1 = rand()%boardSize;
@@ -271,7 +272,7 @@ void Board::putInObstacles()
 				{
 								int rand1 = rand()%boardSize;
 								int rand2 = rand()%boardSize;
-								boardArray[rand1][rand2]->obstacle = new Obstacle("TREES", 10, 'T', false);
+								boardArray[rand1][rand2]->obstacle = new Obstacle("TREE", 10, 'T', false);
 				}
 				for(int i=0; i<numberEach; ++i) //Vortex / vorticies
 				{

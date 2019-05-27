@@ -135,6 +135,8 @@ public:
 	bool initialized;
 	int randomSeed;
 
+	int obstacleDensity = 50;	
+	
 	char NORTHBUTTON = 'I';
 	char WESTBUTTON = 'J';
 	char SOUTHBUTTON = 'K';

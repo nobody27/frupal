@@ -146,6 +146,7 @@ void OptionsMenu::configureGeneralSettings(){
 			"\n(2) Amount of energy at start" <<
 			"\n(3) Amount of money at start" <<
 			"\n(4) Random seed" << 
+			"\n(5) Obstacle density" <<
 			"\n(R)eturn to options menu" <<
 			"\n\n>";
 
@@ -163,6 +164,9 @@ void OptionsMenu::configureGeneralSettings(){
 				break;
 			case '4':
 				setRandomSeed();
+				break;
+			case '5':
+				setObstacleDensity();
 				break;
 			default:
 				break;	
@@ -268,6 +272,22 @@ bool OptionsMenu::setRandomSeed() {
 	gameMgr->boardOptions->randomSeed=seed;
 	cout << "your new random seed is: " << seed << endl;
 	return true; //success
+}
+
+void OptionsMenu::setObstacleDensity(){
+	int density = gameMgr->obstacleDensity;
+	int newDensity = density;
+	gameMgr->clear_screen();
+	cout << "\nCurrent obstacle density percentage: " << density <<
+		"\nPlease enter a new value between 0 and 100.\n\n>";
+	cin >> newDensity;
+	while(cin.fail() || newDensity < 0 || newDensity > 100){
+		cin.clear();
+		cin.ignore(100, '\n');
+		cout << "\nInvalid Entry. Please enter a new value between 0 and 100.\n\n>";
+		cin >> newDensity;
+	}
+	gameMgr->obstacleDensity = newDensity;
 }
 
 void OptionsMenu::setControls(){
