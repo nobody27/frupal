@@ -138,6 +138,7 @@ public:
 	int randomSeed;
 
 	int obstacleDensity = 50;	
+	string currentConfig = DEFAULT_CONFIG_FILE;
 	
 	char NORTHBUTTON = 'I';
 	char WESTBUTTON = 'J';

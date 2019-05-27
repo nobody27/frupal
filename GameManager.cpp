@@ -93,6 +93,7 @@ string GameManager::getFileName(){
 			fileName = name;
 		}
 	}
+	currentConfig = fileName;
 	return fileName;
 }
 
@@ -116,7 +117,9 @@ void GameManager::readConfigFile(string config){
 	bool removable;
 	char reply = ' ';
 
-	if(fileName.compare(DEFAULT_CONFIG_FILE) != 0){
+	if(fileName.compare(DEFAULT_CONFIG_FILE) != 0 &&
+	   fileName.compare(EASY_CONFIG_FILE) != 0 &&
+	   fileName.compare(HARD_CONFIG_FILE) != 0){
 		cout << "\nReading from file \"" << fileName << "\"." <<
 			"\nRead from a different file?" <<
 			"\nPress 'Y' to change the file name, " <<
@@ -128,6 +131,8 @@ void GameManager::readConfigFile(string config){
 			fileName = getFileName();
 		}
 	}
+	currentConfig = fileName;
+
 	resourcesOptions->eraseResources();//if there are hard-coded tools/obstacles
 	resourcesOptions->eraseObstacles();//erase the vectors so they can be repopulated from file
 

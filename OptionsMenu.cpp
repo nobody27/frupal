@@ -297,11 +297,24 @@ void OptionsMenu::setObstacleDensity(){
 void OptionsMenu::setDifficulty(){
 	char reply = ' ';
 	bool done = false;
+	string cf = gameMgr->currentConfig;
 	while(!done){
 		gameMgr->clear_screen();
-			cout << "\nOverwrite settings?" <<
+		cf = gameMgr->currentConfig;
+		cout << "\nCurrent difficulty: ";
+		if(!cf.compare(DEFAULT_CONFIG_FILE)){
+			cout << "Normal";
+		}else if(!cf.compare(EASY_CONFIG_FILE)){
+			cout << "Easy";
+		}else if(!cf.compare(HARD_CONFIG_FILE)){
+			cout << "Hard";
+		}else{
+			cout << "Custom";
+		}
+		cout << "\n\nOverwrite settings?" <<
 			"\n(1) Easy mode" <<
-			"\n(2) Hard mode" <<
+			"\n(2) Normal mode" <<
+			"\n(3) Hard mode" <<
 			"\n(R)eturn to general settings menu\n\n>";
 		cin >> reply;
 		while(cin.fail()){
@@ -316,6 +329,9 @@ void OptionsMenu::setDifficulty(){
 				gameMgr->readConfigFile(EASY_CONFIG_FILE);
 				break;
 			case '2':
+				gameMgr->readConfigFile(DEFAULT_CONFIG_FILE);
+				break;
+			case '3':
 				gameMgr->readConfigFile(HARD_CONFIG_FILE);
 				break;
 			case 'R':
@@ -766,7 +782,7 @@ int OptionsMenu::getPositiveInt(){
 
 string OptionsMenu::getAName(){
 	string input;
-		cout << "\nEnter a new name: ";
+	cout << "\nEnter a new name: ";
 	cin >> input;
 	while(cin.fail()){
 		cin.clear();
@@ -799,6 +815,6 @@ char OptionsMenu::getAChar(){
 		cout << "\nInvalid entry. Enter a new key: ";
 		cin >> k;
 	}
-		
+
 	return toupper(k);
 }
