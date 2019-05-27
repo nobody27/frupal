@@ -34,7 +34,7 @@ GameManager::GameManager() : theIsland(nullptr), theSeeker(nullptr),
 	resourcesOptions = new ResourcesOptions(this);
 	seekerOptions = new SeekerOptions(this);
 	randomSeed = time(0);
-	readConfigFile();
+	readConfigFile(DEFAULT_CONFIG_FILE);
 }
 
 //destructor
@@ -98,8 +98,8 @@ string GameManager::getFileName(){
 
 
 //Funtion to read data from config file into the appropriate fields
-void GameManager::readConfigFile(bool useCustom){
-	string fileName = DEFAULT_CONFIG_FILE;	//set in GameManager.h 
+void GameManager::readConfigFile(string config){
+	string fileName = config;	//set in GameManager.h 
 	//most of these fields temporarily store values to pass to tool/obstacle constructors
 	ifstream configFile;
 	char type;
@@ -116,11 +116,11 @@ void GameManager::readConfigFile(bool useCustom){
 	bool removable;
 	char reply = ' ';
 
-	if(useCustom){
+	if(fileName.compare(DEFAULT_CONFIG_FILE) != 0){
 		cout << "\nReading from file \"" << fileName << "\"." <<
 			"\nRead from a different file?" <<
 			"\nPress 'Y' to change the file name, " <<
-			"or any other key to skip." <<
+			"or any other key to accept." <<
 			"\n\n>";
 		cin >> reply;
 		reply = toupper(reply);
@@ -152,7 +152,7 @@ void GameManager::readConfigFile(bool useCustom){
 				seekerOptions->hasBoat = stoi(value);
 			}else if(!name.compare("hasBinoculars")){
 				seekerOptions->hasBinoculars = stoi(value);
-			}else if(!name.compare("randomSeed") && useCustom){
+			}else if(!name.compare("randomSeed")){
 				boardOptions->randomSeed = stoi(value);
 			}else if(!name.compare("obstacleDensity")){
 				obstacleDensity = stoi(value);
@@ -211,7 +211,7 @@ void GameManager::writeConfigFile(){
 	cout << "\nWriting to file \"" << fileName << "\"." <<
 		"\nWrite to a different file?" <<
 		"\nPress 'Y' to change the file name, " <<
-		"or any other key to skip." <<
+		"or any other key to accept." <<
 		"\n\n>";
 	cin >> reply;
 	reply = toupper(reply);

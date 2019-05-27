@@ -109,7 +109,7 @@ bool OptionsMenu::getAndExecuteCommand() {
 				setControls();
 				break;
 			case '5':
-				gameMgr->readConfigFile(true); //useCustom = true. We want to define the file.
+				gameMgr->readConfigFile("CUSTOM"); //No file provided, will prompt
 				break;
 			case '6':
 				gameMgr->writeConfigFile();
@@ -147,6 +147,7 @@ void OptionsMenu::configureGeneralSettings(){
 			"\n(3) Amount of money at start" <<
 			"\n(4) Random seed" << 
 			"\n(5) Obstacle density" <<
+			"\n(6) Difficulty" <<
 			"\n(R)eturn to options menu" <<
 			"\n\n>";
 
@@ -167,6 +168,9 @@ void OptionsMenu::configureGeneralSettings(){
 				break;
 			case '5':
 				setObstacleDensity();
+				break;
+			case '6':
+				setDifficulty();
 				break;
 			default:
 				break;	
@@ -288,6 +292,39 @@ void OptionsMenu::setObstacleDensity(){
 		cin >> newDensity;
 	}
 	gameMgr->obstacleDensity = newDensity;
+}
+
+void OptionsMenu::setDifficulty(){
+	char reply = ' ';
+	bool done = false;
+	while(!done){
+		gameMgr->clear_screen();
+			cout << "\nOverwrite settings?" <<
+			"\n(1) Easy mode" <<
+			"\n(2) Hard mode" <<
+			"\n(R)eturn to general settings menu\n\n>";
+		cin >> reply;
+		while(cin.fail()){
+			cin.clear();
+			cin.ignore(100, '\n');
+			cout << "\nInvalid choice. Please try again. \n\n>";
+			cin >> reply;
+		}
+		reply = toupper(reply);
+		switch(reply){
+			case '1':
+				gameMgr->readConfigFile(EASY_CONFIG_FILE);
+				break;
+			case '2':
+				gameMgr->readConfigFile(HARD_CONFIG_FILE);
+				break;
+			case 'R':
+				done = true;
+				break;
+			default:
+				break;
+		}
+	}
 }
 
 void OptionsMenu::setControls(){

@@ -40,6 +40,8 @@ const bool SCREEN_CLEARING_ENABLED = true;
 
 //default config file io parameters
 const string DEFAULT_CONFIG_FILE = "defaultConfig.txt";
+const string EASY_CONFIG_FILE = "easymode.txt";
+const string HARD_CONFIG_FILE = "hardmode.txt";
 const string DEFAULT_CONFIG_OUTPUT = "savedConfig.txt";
 const char GENERAL_CONFIGURATION = '1';
 const char OBSTACLE_CONFIGURATION = '2';
@@ -74,7 +76,7 @@ public:
 	string getFileName();
 
 	//function to read options from the config file
-	void readConfigFile(bool useCustom = false);
+	void readConfigFile(string config);
 
 	//function to write options to config file
 	void writeConfigFile();
