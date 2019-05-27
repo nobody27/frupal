@@ -71,6 +71,7 @@ private:
 
 	//utility function to get and verify a positive number (no upper bound)
 	int getPositiveInt();	
+	int getValueBetween(int min, int max);
 	//utility function to get a string
 	string getAName();
 

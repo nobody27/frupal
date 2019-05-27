@@ -185,72 +185,34 @@ void OptionsMenu::configureGeneralSettings(){
 
 //TODO create utility method that does the repetative work
 bool OptionsMenu::setBoardSize() {
-	bool fail = false;
 	size_t size = 0;
 	size_t min = 2;
 	size_t max = 80;
 	gameMgr->clear_screen();
-	cout << "\nPlease enter desired board size between " << 
-		min << " and " << max << endl
-		<< "\n>";
-	//TODO error handling and check for good range
-	cin >> size; 
-	if(cin.fail()) {
-		fail = true;
-		cin.clear();
-		cin.ignore(100, '\n');
-	}
-	if (fail || size < min || size > max) {
-		cout << "invalid size -- aborting command" << endl; 
-		return false; //failure
-	}
+	cout << "\nCurrent board size: " << gameMgr->boardOptions->size;
+	size = getValueBetween(min, max);
 	gameMgr->boardOptions->size=size;
 	return true; //success
 }
 
 bool OptionsMenu::setSeekerEnergy() {
-	bool fail = false;
 	size_t energy = 0;
 	size_t min = 1;
-	size_t max = 99;
+	size_t max = 999;
 	gameMgr->clear_screen();
-	cout << "\nPlease enter how much energy the seeker will start with, between " << 
-		min << " and " << max << endl
-		<< "\n>";
-	//TODO error handling and check for good range
-	cin >> energy; 
-	if(cin.fail()) {
-		fail = true;
-		cin.clear();
-		cin.ignore(100, '\n');
-	}
-	if (fail || energy < min || energy > max) {
-		cout << "invalid energy -- aborting command" << endl; 
-		return false; //failure
-	}
+	cout << "\nCurrent starting energy: " << gameMgr->seekerOptions->theEnergy;
+	energy = getValueBetween(min, max);
 	gameMgr->seekerOptions->theEnergy=energy;
 	return true; //success
 }
 
 bool OptionsMenu::setSeekerMoney() {
-	bool fail = false;
 	size_t money = 0;
 	size_t min = 0;
-	size_t max = 99;
+	size_t max = 999;
 	gameMgr->clear_screen();
-	cout << "\nPlease enter how much money the seeker will start with, between " <<
-		min << " and " << max << endl << "\n>";
-	//TODO error handling and check for good range
-	cin >> money; 
-	if(cin.fail()) {
-		fail = true;
-		cin.clear();
-		cin.ignore(100, '\n');
-	}
-	if (fail || money < min || money > max) {
-		cout << "invalid money -- aborting command" << endl; 
-		return false; //failure
-	}
+	cout << "\nCurrent starting money: " << gameMgr->seekerOptions->theMoney;
+	money = getValueBetween(min, max);
 	gameMgr->seekerOptions->theMoney=money;
 	return true; //success
 }
@@ -258,43 +220,25 @@ bool OptionsMenu::setSeekerMoney() {
 //Main tool menu
 
 bool OptionsMenu::setRandomSeed() {
-	bool fail = false;
 	size_t seed = 0;
 	size_t min = 0;
 	size_t max = INT32_MAX;
 	gameMgr->clear_screen();
-	cout << "\nThe current seed is: " << gameMgr->boardOptions->randomSeed <<
-		"\nPlease enter a new seed for the pseudorandom generator " << 
-		endl << "\n>";
-	//TODO error handling and check for good range
-	cin >> seed; 
-	if(cin.fail()) {
-		fail = true;
-		cin.clear();
-		cin.ignore(100, '\n');
-	}
-	if (fail || seed < min || seed > max) {
-		cout << "invalid seed -- aborting command" << endl; 
-		return false; //failure
-	}
+	cout << "\nCurrent map seed: " << gameMgr->boardOptions->randomSeed;
+	seed = getValueBetween(min, max);
 	gameMgr->boardOptions->randomSeed=seed;
-	cout << "your new random seed is: " << seed << endl;
+	cout << "New map seed: " << seed << endl;
 	return true; //success
 }
 
 void OptionsMenu::setObstacleDensity(){
 	int density = gameMgr->obstacleDensity;
 	int newDensity = density;
+	int min = 0;
+	int max = 100;
 	gameMgr->clear_screen();
-	cout << "\nCurrent obstacle density percentage: " << density <<
-		"\nPlease enter a new value between 0 and 100.\n\n>";
-	cin >> newDensity;
-	while(cin.fail() || newDensity < 0 || newDensity > 100){
-		cin.clear();
-		cin.ignore(100, '\n');
-		cout << "\nInvalid Entry. Please enter a new value between 0 and 100.\n\n>";
-		cin >> newDensity;
-	}
+	cout << "\nCurrent obstacle density percentage: " << density;
+	newDensity = getValueBetween(min, max);
 	gameMgr->obstacleDensity = newDensity;
 }
 
@@ -821,4 +765,19 @@ char OptionsMenu::getAChar(){
 	}
 
 	return toupper(k);
+}
+
+int OptionsMenu::getValueBetween(int min, int max){
+	int value;
+	cout << "\nPlease enter a value between " << 
+	min << " and " << max << endl << "\n>";
+	cin >> value;
+	while(cin.fail() || value < min || value > max) {
+		cin.clear();
+		cin.ignore(100, '\n');
+		cout << "Invalid value. Please enter a value between " << 
+		min << " and " << max << endl << "\n>";
+		cin >> value;
+	}
+	return value;
 }
