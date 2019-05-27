@@ -186,10 +186,10 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 				//init the board
 				boardArray = new Tile**[boardSize];	
 				float varianceSlope1 = (.1)*(rand()%11);  //this is a number from 0 to 1.0. below will subtract it from slope -.5
-				float varianceSlope2 = rand()%4; //this is a number 0, 1, 2, or 3. below will add it to slope22 of 1
+				float varianceSlope2 = rand()%4; //this is a number 0, 1, 2, or 3. below will add it to slope2 of 1
+				bool forrestAbove =  rand()%2;
 				for(int i=0; i<boardSize; ++i)
 				{
-												bool forrestAbove =  rand()%2;
 								boardArray[i]= new Tile*[boardSize];
 								for(int j=0; j<boardSize; ++j)
 								{
