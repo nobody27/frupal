@@ -311,7 +311,7 @@ void OptionsMenu::setControls(){
 			"\n(2) West button" <<
 			"\n(3) South button" <<
 			"\n(4) East button" << 
-			"\n(R)eturn to general settings menu"
+			"\n(R)eturn to options menu"
 			"\n\n>";
 		cin >> reply;
 		while(cin.fail()){
