@@ -68,8 +68,7 @@ void Tile::tileDisplay() const
 				cout << ". ";
 				if(money) 
 				{	
-								cout << "There is $" << 
-												money << " gold here!! ";
+								cout << "There is $" << money << " gold here!! ";
 				}
 				else
 				{
@@ -186,8 +185,11 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 				initTerrainMap();
 				//init the board
 				boardArray = new Tile**[boardSize];	
+				float varianceSlope1 = (.1)*(rand()%11);  //this is a number from 0 to 1.0. below will subtract it from slope -.5
+				float varianceSlope2 = rand()%4; //this is a number 0, 1, 2, or 3. below will add it to slope22 of 1
 				for(int i=0; i<boardSize; ++i)
 				{
+												bool forrestAbove =  rand()%2;
 								boardArray[i]= new Tile*[boardSize];
 								for(int j=0; j<boardSize; ++j)
 								{
@@ -196,19 +198,33 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 												float slope = (-.5);
 												float xVal = i; //now i have a float to use (instead of int i)
 												float yInt = .5*boardSize;
-												int checkValue = (slope*xVal + yInt);  //having floats in calculation avoids too much rounding
-												float slope2 = 2;
+												int checkValue = ((slope-varianceSlope1)*xVal + yInt);  //having floats in calculation avoids too much rounding
+												float slope2 = 1;
 												float yInt2 = -.6*boardSize;
-												int checkValue2 = (slope2*xVal + yInt2);  //having floats in calculation avoids too much rounding
+												int checkValue2 = ((slope2+varianceSlope2)*xVal + yInt2);  //having floats in calculation avoids too much rounding
 												if(j >= checkValue)
 												{
-																if(j <= checkValue2)
+																if(forrestAbove)
 																{
-																				boardArray[i][j]= new Tile(i,j, terrainMap["bog"]);
+																				if(j <= checkValue2)
+																				{
+																								boardArray[i][j]= new Tile(i,j, terrainMap["bog"]);
+																				}
+																				else
+																				{
+																								boardArray[i][j]=new Tile(i,j, terrainMap["forest"]);
+																				}
 																}
 																else
 																{
-																				boardArray[i][j]=new Tile(i,j, terrainMap["forest"]);
+																				if(j > checkValue2)
+																				{
+																								boardArray[i][j]= new Tile(i,j, terrainMap["bog"]);
+																				}
+																				else
+																				{
+																								boardArray[i][j]=new Tile(i,j, terrainMap["forest"]);
+																				}
 																}
 												}
 												else
