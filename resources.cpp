@@ -138,7 +138,7 @@ void Resources::displayResources()
 	int i = 1;
 	//note that the price header is moved one char to the left
 	//to compensate for the "$" 
-	cout << i << " " << setw(14) << left << "Tool" 
+	cout << "  " << setw(14) << left << "Tool" 
 		<< " " << setw(8) << left << "Price" 
 		<< " " << setw(15) << left << "Energy saved"
 		<< " " << setw(15) << left << "Quantity" 

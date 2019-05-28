@@ -33,6 +33,18 @@ Seeker::Seeker(GameManager* gameManager, const SeekerOptions& options) :
 	location = theIsland->getLocation(options.x, options.y);
     location->visitTile();
   inventory.push_back(&gameManager->theResources->resources.front());
+  
+  for (auto it = begin(inventory); it != end(inventory); ++it) 
+  {
+    if ((*it)->name == "BINOCULARS")
+    {
+      hasBinoculars = true;
+    }
+    else if ((*it)->name == "BOAT")
+    {
+      hasBoat = true;
+    }
+  }
 }
 
 
