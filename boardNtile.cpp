@@ -496,7 +496,7 @@ void Board::followVars(int&posX, int&posY, int&minX, int&maxX, int&minY, int&max
 								maxY = followSize - 1;
 				} else if (maxY >= boardSize) {
 								maxY = boardSize - 1;
-								minY = maxY - followSize;
+								minY = maxY - followSize + 1;
 				} else {
 								minY = posY - leftMargin;
 								maxY = posY + rightMargin;
