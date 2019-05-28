@@ -97,7 +97,6 @@ bool GameMenu::getAndExecuteCommand() {
 				quit = true;
 				break;
 			case 'B':
-				gameMgr->displayIslandAndSeeker("local");
 				shopMenu();        
 				break;
 			default:
@@ -136,7 +135,17 @@ bool GameMenu::getAndExecuteCommand() {
 	return done;
 }
 
-bool GameMenu::shopMenu()
+void GameMenu::shopMenu()
+{
+	do
+	{
+		gameMgr->displayIslandAndSeeker("local");
+	}
+	while(buyTool());
+	gameMgr->displayIslandAndSeeker("local");
+}
+
+bool GameMenu::buyTool()
 {
 	int choice = -1;
 	vector<Tool>& resources = gameMgr->theResources->resources; //shortcut for convenience
@@ -161,6 +170,7 @@ bool GameMenu::shopMenu()
 		if(cin.fail()) {
 			cin.clear();
 			cin.ignore(100, '\n');
+			choice = -1;
 		}
 	}
 
