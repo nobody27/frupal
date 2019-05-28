@@ -40,6 +40,10 @@ Seeker::Seeker(GameManager* gameManager, const SeekerOptions& options) :
     {
       hasBinoculars = true;
     }
+    else if ((*it)->name == "BOAT")
+    {
+      hasBoat = true;
+    }
   }
 }
 
