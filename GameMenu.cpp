@@ -187,9 +187,6 @@ bool GameMenu::buyTool()
 	//add tool to seeker's inventory
 	gameMgr->theSeeker->addTool(&resources[choice]);
 
-  //print updated inventory
-	gameMgr->theSeeker->displayTools();
-
 	//switch statement for purchase
 	return true;
 }
