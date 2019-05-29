@@ -5,10 +5,6 @@
 1,hasBinoculars,0
 1,binocularCost,25
 1,obstacleDensity,0
-1,NORTHBUTTON,I
-1,WESTBUTTON,J
-1,SOUTHBUTTON,K
-1,EASTBUTTON,L
 2,ROCK,5,%,1
 2,TREE,5,#,1
 2,BUSH,5,*,1
