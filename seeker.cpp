@@ -36,11 +36,11 @@ Seeker::Seeker(GameManager* gameManager, const SeekerOptions& options) :
   
   for (auto it = begin(inventory); it != end(inventory); ++it) 
   {
-    if ((*it)->name == "BINOCULARS")
+    if ((*it)->name == "BINOCULARS" && (*it)->quantity > 0)
     {
       hasBinoculars = true;
     }
-    else if ((*it)->name == "BOAT")
+    else if ((*it)->name == "BOAT" && (*it)->quantity > 0)
     {
       hasBoat = true;
     }
