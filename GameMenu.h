@@ -42,7 +42,8 @@ private:
 	// Q - exit (quit quit)
 
 	bool getAndExecuteCommand();
-  bool shopMenu();
+	void shopMenu();
+	bool buyTool();
 	GameManager* gameMgr;
 
 	//option to quickly quit the game instead of just returning to MainMenu
