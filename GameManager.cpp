@@ -60,6 +60,7 @@ string GameManager::getFileName(){
 	bool confirmed = false;
 	string fileName;
 	string name;
+	ifstream test;
 
 	while(!confirmed){	//loop until user confirms choice
 		cout << "\nEnter the new file name: ";
@@ -89,8 +90,13 @@ string GameManager::getFileName(){
 			reply = toupper(reply);
 		}	
 		if(reply == 'Y'){	//if the user has confirmed, set the filename and break
+			test.open(name);
+			if(test.peek() == ifstream::traits_type::eof()){
+				cout << "\nFile is empty or does not exist. Please try again.";
+			}else{
 			confirmed = true;
 			fileName = name;
+			}
 		}
 	}
 	currentConfig = fileName;
@@ -116,6 +122,10 @@ void GameManager::readConfigFile(string config){
 	char symbol;
 	bool removable;
 	char reply = ' ';
+
+	if(!fileName.compare("CUSTOM")){
+		fileName = getFileName();
+	}
 
 	if(fileName.compare(DEFAULT_CONFIG_FILE) != 0 &&
 	   fileName.compare(EASY_CONFIG_FILE) != 0 &&
