@@ -762,6 +762,7 @@ char OptionsMenu::getAChar(){
 		cin.ignore(100, '\n');
 		cout << "\nInvalid entry. Enter a new key: ";
 		cin >> k;
+		k = toupper(k);
 	}
 
 	return toupper(k);
