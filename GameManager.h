@@ -48,6 +48,8 @@ class GameManager {
 public:
 	//constructor
 	GameManager();
+	//constructor with arg
+	GameManager(string file);
 	//destructor is needed to delete the board seaker, etc.
 	~GameManager();
 

@@ -37,6 +37,20 @@ GameManager::GameManager() : theIsland(nullptr), theSeeker(nullptr),
 	readConfigFile(DEFAULT_CONFIG_FILE);
 }
 
+//constructor with comments
+GameManager::GameManager(string file) : theIsland(nullptr), theSeeker(nullptr),
+	theResources(nullptr) ,   initialized(false) 
+{
+	//TODO configure at least on terrain or arrange for a default terrain
+
+	mainMenu = new MainMenu(this);
+	boardOptions = new BoardOptions(this);
+	resourcesOptions = new ResourcesOptions(this);
+	seekerOptions = new SeekerOptions(this);
+	randomSeed = time(0);
+	readConfigFile(file);
+}
+
 //destructor
 GameManager::~GameManager() {
 	delete theIsland;
@@ -50,7 +64,6 @@ GameManager::~GameManager() {
 //Function to clear screen and reset curson
 void GameManager::clear_screen() const {
 	if(SCREEN_CLEARING_ENABLED){	
-		//cout << "\033[2J\033[1;1H";
 		system("clear"); //this is cleaner
 	}
 }
@@ -90,16 +103,10 @@ string GameManager::getFileName(){
 			reply = toupper(reply);
 		}	
 		if(reply == 'Y'){	//if the user has confirmed, set the filename and break
-			test.open(name);
-			if(test.peek() == ifstream::traits_type::eof()){
-				cout << "\nFile is empty or does not exist. Please try again.";
-			}else{
-			confirmed = true;
-			fileName = name;
-			}
+				confirmed = true;
+				fileName = name;
 		}
 	}
-	currentConfig = fileName;
 	return fileName;
 }
 
@@ -108,6 +115,7 @@ string GameManager::getFileName(){
 void GameManager::readConfigFile(string config){
 	string fileName = config;	//set in GameManager.h 
 	//most of these fields temporarily store values to pass to tool/obstacle constructors
+	ifstream test;
 	ifstream configFile;
 	char type;
 	string name;
@@ -122,23 +130,36 @@ void GameManager::readConfigFile(string config){
 	char symbol;
 	bool removable;
 	char reply = ' ';
+	bool confirmed = false;
 
 	if(!fileName.compare("CUSTOM")){
 		fileName = getFileName();
 	}
 
 	if(fileName.compare(DEFAULT_CONFIG_FILE) != 0 &&
-	   fileName.compare(EASY_CONFIG_FILE) != 0 &&
-	   fileName.compare(HARD_CONFIG_FILE) != 0){
-		cout << "\nReading from file \"" << fileName << "\"." <<
-			"\nRead from a different file?" <<
-			"\nPress 'Y' to change the file name, " <<
-			"or any other key to accept." <<
-			"\n\n>";
-		cin >> reply;
-		reply = toupper(reply);
-		if(reply == 'Y'){	//prompt user for and verify new config file name
-			fileName = getFileName();
+	   fileName.compare(EASY_CONFIG_FILE)    != 0 &&
+	   fileName.compare(HARD_CONFIG_FILE)    != 0){
+		while(!confirmed){
+			clear_screen();
+			test.open(fileName);
+			if(test.peek() == ifstream::traits_type::eof()){
+				cout << "\nFile is empty or does not exist. Please try again.";
+				cout << " (HINT: try \"" << EASY_CONFIG_FILE <<  "\")";
+				fileName = getFileName();
+			}else{
+				confirmed = true;
+				cout << "\nReading from file \"" << fileName << "\"." <<
+					"\nPress 'Y' to launch the game, " <<
+					"or any other key to use a different file." <<
+					"\n\n>";
+				cin >> reply;
+				reply = toupper(reply);
+				if(reply != 'Y'){	//prompt user for and verify new config file name
+					fileName = getFileName();
+					confirmed = false;
+				}
+			}
+			test.close();
 		}
 	}
 	currentConfig = fileName;
@@ -224,13 +245,11 @@ void GameManager::writeConfigFile(){
 	clear_screen();
 
 	cout << "\nWriting to file \"" << fileName << "\"." <<
-		"\nWrite to a different file?" <<
-		"\nPress 'Y' to change the file name, " <<
-		"or any other key to accept." <<
+		"\nPress 'Y' to confirm, or any other key to use a different file." <<
 		"\n\n>";
 	cin >> reply;
 	reply = toupper(reply);
-	if(reply == 'Y'){		//prompt user for and verify new config file name
+	if(reply != 'Y'){		//prompt user for and verify new config file name
 		fileName = getFileName();
 	}
 
@@ -286,13 +305,13 @@ void GameManager::initializeGame() {
 
 void GameManager::displayIslandAndSeeker(string command) {
 	clear_screen();
-    if (command == "endgame")
-        theIsland->visitAllTiles();
-    else
-        theIsland->visitLocationAndNeighbors(theSeeker->getLocation(), false);
-    theIsland->displayIsland(command);
-    if (command == "local")
-        theSeeker->display();
+	if (command == "endgame")
+		theIsland->visitAllTiles();
+	else
+		theIsland->visitLocationAndNeighbors(theSeeker->getLocation(), false);
+	theIsland->displayIsland(command);
+	if (command == "local")
+		theSeeker->display();
 }
 
 void GameManager::requestEnter() const {
