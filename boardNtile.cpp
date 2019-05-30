@@ -261,6 +261,9 @@ for(auto it = begin(gameMgr->resourcesOptions->theObstacles); it != end(gameMgr-
 		int rand1 = rand()%boardSize;
 		int rand2 = rand()%boardSize;
 		boardArray[rand1][rand2]->obstacle = new Obstacle(it->name, it->energyCost, it->symbol, it->removable);
+		if(!it->name.compare("VORTEX")){
+			i++;
+		}
 	}
 }
 }

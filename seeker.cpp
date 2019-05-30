@@ -32,8 +32,7 @@ Seeker::Seeker(GameManager* gameManager, const SeekerOptions& options) :
 {
 	location = theIsland->getLocation(options.x, options.y);
     location->visitTile();
-  inventory.push_back(&gameManager->theResources->resources.front());
-  
+//inventory.push_back(&gameManager->theResources->resources.front());
   for (auto it = begin(inventory); it != end(inventory); ++it) 
   {
     if ((*it)->name == "BINOCULARS" && (*it)->quantity > 0)
@@ -65,7 +64,7 @@ void Seeker::displayTools() {
   { 
     for (auto it = begin(inventory); it != end(inventory); ++it) 
     {
-      cout << (*it)->name << setw(5) << right << (*it)->quantity << endl;
+      cout << (*it)->name << setw(5) << right << endl;// (*it)->quantity << endl;
     }
   }
 }
