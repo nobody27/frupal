@@ -252,9 +252,19 @@ void Board::putInObstacles()
 				// so numberEach (the number of each type of obstacle) needs to scale with teh square of boardsize
 				// numberEach = boardSize*boardSize times obstaclePercentage and by 4 because four types of obstaclesA
 				float obstacleDensity = (gameMgr->obstacleDensity)/100.0;
-				int obstacleCount = 4;
+				int obstacleCount = gameMgr->resourcesOptions->theObstacles.size();
 				int numberEach = boardSize*boardSize*obstacleDensity/obstacleCount;
+
+for(auto it = begin(gameMgr->resourcesOptions->theObstacles); it != end(gameMgr->resourcesOptions->theObstacles); ++it){
+	for(int i = 0; i < numberEach; ++i){
+		int rand1 = rand()%boardSize;
+		int rand2 = rand()%boardSize;
+		boardArray[rand1][rand2]->obstacle = new Obstacle(it->name, it->energyCost, it->symbol, it->removable);
+	}
+}
+/*
 				for(int i=0; i<numberEach; ++i) //BUSHES
+
 				{
 								int rand1 = rand()%boardSize;
 								int rand2 = rand()%boardSize;
@@ -280,6 +290,7 @@ void Board::putInObstacles()
 								int rand2 = rand()%boardSize;
 								boardArray[rand1][rand2]->obstacle = new Obstacle("VORTEX", 100, 'V', false);
 				}
+*/
 }
 
 
