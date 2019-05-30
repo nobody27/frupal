@@ -9,6 +9,8 @@
 #include <iostream>
 #include <string>
 
+#include "colors.h"
+
 using namespace std;
 
 class GameManager;
@@ -58,7 +60,7 @@ public:
     	void displayObstacles();
 	void eraseResources();
 	void eraseObstacles();
-	
+	void printObstacleKey();	
 private:
 	GameManager* gameMgr;
 };

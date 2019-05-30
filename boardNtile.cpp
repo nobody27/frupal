@@ -137,7 +137,7 @@ void Tile::printIslandTileR2(Tile* location)
 				else
 				{
 								if(obstacle) {
-												cout << BLACKonLIGHT_RED << obstacle->symbol << RESET; 
+												cout << OBSTACLE_COLOR << obstacle->symbol << RESET; 
 								} else {
 												cout << "o"; // no obstacle;
 								}
@@ -548,6 +548,9 @@ void Board::displayIsland(string command) const
 				{
 								cout  <<GRAY<< " (E)xcavation site"<<RESET<<" reveals to " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTA<< "'J' Jewel." <<RESET;
 				}
+	
+				cout << endl;
+				gameMgr->resourcesOptions->printObstacleKey();
 }
 
 void Board::displayRow(int rowNumber, string command) const

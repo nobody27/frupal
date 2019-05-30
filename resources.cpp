@@ -120,6 +120,12 @@ void ResourcesOptions::displayObstacles(){
 		cout << endl;
 	}
 }
+void ResourcesOptions::printObstacleKey(){
+	cout << "Obstacle key: ";
+	for(auto it = begin(theObstacles); it != end(theObstacles); ++it){
+		cout << it->name << " = " << OBSTACLE_COLOR << it->symbol << RESET << "   ";
+	}
+}
 
 void ResourcesOptions::eraseResources(){
 	theResources.erase(theResources.begin(), theResources.begin()+theResources.size());
