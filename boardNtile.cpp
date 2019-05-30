@@ -137,7 +137,7 @@ void Tile::printIslandTileR2(Tile* location)
 				else
 				{
 								if(obstacle) {
-												cout << obstacle->symbol; 
+												cout << BLACKonLIGHT_RED << obstacle->symbol << RESET; 
 								} else {
 												cout << "o"; // no obstacle;
 								}
@@ -256,11 +256,13 @@ void Board::putInObstacles()
 				int numberEach = boardSize*boardSize*obstacleDensity/obstacleCount;
 
 for(auto it = begin(gameMgr->resourcesOptions->theObstacles); it != end(gameMgr->resourcesOptions->theObstacles); ++it){
+	if(it->name.compare("WATER") != 0){
 	for(int i = 0; i < numberEach; ++i){
 		int rand1 = rand()%boardSize;
 		int rand2 = rand()%boardSize;
 		boardArray[rand1][rand2]->obstacle = new Obstacle(it->name, it->energyCost, it->symbol, it->removable);
 	}
+}
 }
 /*
 				for(int i=0; i<numberEach; ++i) //BUSHES
