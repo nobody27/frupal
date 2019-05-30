@@ -64,7 +64,7 @@ void Seeker::displayTools() {
   { 
     for (auto it = begin(inventory); it != end(inventory); ++it) 
     {
-      cout << (*it)->name << setw(5) << right << endl;// (*it)->quantity << endl;
+      cout << (*it)->name << endl;// (*it)->quantity << endl;
     }
   }
 }
