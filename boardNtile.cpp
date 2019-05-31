@@ -482,8 +482,8 @@ void Board::followVars(int&posX, int&posY, int&minX, int&maxX, int&minY, int&max
 {
 				int followSize = 9; //TODO make this global or configurable. best result if odd number
 				//deal with small boards
-				if(followSize > boardSize) {
-								followSize = boardSize;
+				if(followSize > boardSize + 2) {
+								followSize = boardSize + 2;
 				}
 				int leftMargin = followSize/2; //half of size rounded down
 				int rightMargin = followSize - leftMargin -1;
@@ -494,33 +494,30 @@ void Board::followVars(int&posX, int&posY, int&minX, int&maxX, int&minY, int&max
 
 				minX = posX - leftMargin;
 				maxX = posX + rightMargin;
-				if (minX < 0) {
-								minX = 0;
-								maxX = followSize - 1;
-				} else if (maxX >= boardSize) {
-								maxX = boardSize - 1;
+				if (minX < -1) {
+								minX = -1;
+								maxX = followSize - 2;
+				} else if (maxX > boardSize) {
+								maxX = boardSize;
 								minX = maxX - followSize + 1;
 				}
-				assert(minX >= 0);
+				assert(minX >= -1);
 				assert(maxX - minX <= followSize);
 
 				//TODO this should be a method that is called once for x and again for y
 				minY = posY - leftMargin;
 				maxY = posY + rightMargin;
-				if (minY < 0) {
-								minY = 0;
-								maxY = followSize - 1;
-				} else if (maxY >= boardSize) {
-								maxY = boardSize - 1;
+				if (minY < -1) {
+								minY = -1;
+								maxY = followSize - 2;
+				} else if (maxY > boardSize) {
+								maxY = boardSize;
 								minY = maxY - followSize + 1;
-				} else {
-								minY = posY - leftMargin;
-								maxY = posY + rightMargin;
 				}
-				assert(minY >= 0);
+				assert(minY >= -1);
 				assert(maxY - minY <= followSize);
 
-				assert(followSize <= boardSize);
+				assert(followSize <= boardSize +2);
 				return;
 }
 
@@ -530,18 +527,18 @@ void Board::displayIsland(string command) const
 				if(command == "local") {
 								followVars(posX, posY, minX, maxX, minY, maxY);
 				} else {
-								minY = 0;
-								maxY = boardSize - 1;
+								minY = -1;
+								maxY = boardSize;
 				}
 
 				if (command != "local")
 								cout << "The Island of Frupal:" << endl;
-
 				for(int j=maxY; j>=minY; --j)
 				{
 								displayRow(j, command);
 				}
 				cout <<endl;
+				cout << BLUE << (command == "local" ? "///" : "/") << "=Ocean, " << RESET;
 				cout << YELLOW<<"G=Grassy Meadow," <<CYAN<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYANonBLUE<<" W=Water"<<RESET;
 				cout << "  SEEKER's location:" <<RED<<" @ " << RESET;
 				if (command == "local")
@@ -555,26 +552,39 @@ void Board::displayIsland(string command) const
 
 void Board::displayRow(int rowNumber, string command) const
 {
+				string ocean("/"); 
+				string blueOcean1 = BLUE + ocean + RESET;
+				string blueOcean2 = BLUE + ocean + ocean + RESET;
+				string blueOcean3 = BLUE + ocean + ocean + ocean + RESET;
 				int posX, posY, minX, maxX, minY, maxY;
 				if(command == "local") {
 								followVars(posX, posY, minX, maxX, minY, maxY);
 				} else {
-								minX = 0;
-								maxX = boardSize - 1;
+								minX = -1;
+								maxX = boardSize;
 				}
 
-				assert(rowNumber < boardSize);
-				assert(minX >= 0);
-				assert(maxX < boardSize);
+				assert(rowNumber >= -1);
+				assert(rowNumber <= boardSize);
+				assert(minX >= -1);
+				assert(maxX <= boardSize);
+				int j=rowNumber;
 				cout << endl;
 				cout << "		"; //left margin
-				int j=rowNumber;
 				for(int i=minX; i<=maxX; ++i)
 				{ 
-
-								boardArray[i][j]->printIslandTile(gameMgr->theSeeker->location, command);
+								if(i>=0 && i<boardSize && j>=0 && j<boardSize) 
+								{
+									boardArray[i][j]->printIslandTile(gameMgr->theSeeker->location, command);
+								} else if(command == "local") {
+									cout << blueOcean3;	
+								} else {
+									cout <<blueOcean1; //endgame
+								}
 								if (command == "local")
-												cout << "  "; //space between tiles
+								{
+									cout << "  "; //space between tiles
+								}
 				}
 				//cout << endl;
 				if (command == "local")
@@ -583,8 +593,13 @@ void Board::displayRow(int rowNumber, string command) const
 								cout << "		";//left margin
 								for(int i=minX; i<=maxX; ++i)
 								{
-												boardArray[i][j]->printIslandTileR2(gameMgr->theSeeker->location);
-												cout << "  "; //space between tiles
+										if(i>=0 && i<boardSize && j>=0 && j<boardSize) 
+										{
+											boardArray[i][j]->printIslandTileR2(gameMgr->theSeeker->location);
+										} else {
+											cout << blueOcean3;	
+										}
+										cout << "  "; //space between tiles
 								}
 								cout << endl;
 				}
