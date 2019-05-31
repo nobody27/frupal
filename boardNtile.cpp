@@ -267,35 +267,6 @@ for(auto it = begin(gameMgr->resourcesOptions->theObstacles); it != end(gameMgr-
 	}
 }
 }
-/*
-				for(int i=0; i<numberEach; ++i) //BUSHES
-
-				{
-								int rand1 = rand()%boardSize;
-								int rand2 = rand()%boardSize;
-								//if(boardArray[rand1][rand2]->terrain->getShortName() != W)
-								boardArray[rand1][rand2]->obstacle = new Obstacle("BUSH", 5, 'B', true);
-				}
-				for(int i=0; i<numberEach; ++i) //ROCKS
-				{
-								int rand1 = rand()%boardSize;
-								int rand2 = rand()%boardSize;
-								boardArray[rand1][rand2]->obstacle = new Obstacle("ROCK", 10, 'R', false);
-								//if(boardArray[rand1][rand2]->terrain->getShortName() != W) 
-				}
-				for(int i=0; i<numberEach; ++i) //TREES
-				{
-								int rand1 = rand()%boardSize;
-								int rand2 = rand()%boardSize;
-								boardArray[rand1][rand2]->obstacle = new Obstacle("TREE", 10, 'T', false);
-				}
-				for(int i=0; i<numberEach; ++i) //Vortex / vorticies
-				{
-								int rand1 = rand()%boardSize;
-								int rand2 = rand()%boardSize;
-								boardArray[rand1][rand2]->obstacle = new Obstacle("VORTEX", 100, 'V', false);
-				}
-*/
 }
 
 
@@ -552,7 +523,7 @@ void Board::displayIsland(string command) const
 
 void Board::displayRow(int rowNumber, string command) const
 {
-				string ocean("/"); 
+				string ocean("~"); 
 				string blueOcean1 = BLUE + ocean + RESET;
 				string blueOcean2 = BLUE + ocean + ocean + RESET;
 				string blueOcean3 = BLUE + ocean + ocean + ocean + RESET;

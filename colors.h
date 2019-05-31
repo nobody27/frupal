@@ -2,8 +2,8 @@
 #define COLORS
 
 #define RESET "\033[0m"
-#define BOLDRED "\033[31;1m"
-#define RED "\033[31m"
+#define BOLDRED "\033[30;101m" //red background for seeker
+#define RED "\033[30"
 #define GREEN "\033[32m"
 #define YELLOW "\033[33m"
 #define BLUE "\033[34m"
@@ -14,6 +14,6 @@
 #define LIGHT_GREEN "\033[92m"
 #define LIGHT_YELLOW "\033[93m"
 #define CYANonBLUE "\033[36;44m"
-#define OBSTACLE_COLOR "\033[30;101m"
+#define OBSTACLE_COLOR "\033[31m"
 
 #endif
