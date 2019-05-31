@@ -538,7 +538,7 @@ void Board::displayIsland(string command) const
 								displayRow(j, command);
 				}
 				cout <<endl;
-				cout << BLUE << (command == "local" ? "///" : "/") << "=Ocean, " << RESET;
+				cout << CYAN << (command == "local" ? "~~~" : "~") << "=Ocean, " << RESET;
 				cout << YELLOW<<"G=Grassy Meadow," <<CYAN<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYANonBLUE<<" W=Water"<<RESET;
 				cout << "  SEEKER's location:" <<RED<<" @ " << RESET;
 				if (command == "local")
@@ -552,10 +552,9 @@ void Board::displayIsland(string command) const
 
 void Board::displayRow(int rowNumber, string command) const
 {
-				string ocean("/"); 
-				string blueOcean1 = BLUE + ocean + RESET;
-				string blueOcean2 = BLUE + ocean + ocean + RESET;
-				string blueOcean3 = BLUE + ocean + ocean + ocean + RESET;
+				string ocean("~"); 
+				string blueOcean1 = CYAN + ocean + RESET;
+				string blueOcean3 = CYAN + ocean + ocean + ocean + RESET;
 				int posX, posY, minX, maxX, minY, maxY;
 				if(command == "local") {
 								followVars(posX, posY, minX, maxX, minY, maxY);
