@@ -538,7 +538,7 @@ void Board::displayIsland(string command) const
 								displayRow(j, command);
 				}
 				cout <<endl;
-				cout << CYAN << (command == "local" ? "~~~" : "~") << "=Ocean, " << RESET;
+				cout << BLUE << (command == "local" ? "~~~" : "~") << "=Ocean, " << RESET;
 				cout << YELLOW<<"G=Grassy Meadow," <<CYAN<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYANonBLUE<<" W=Water"<<RESET;
 				cout << "  SEEKER's location:" <<RED<<" @ " << RESET;
 				if (command == "local")
