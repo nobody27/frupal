@@ -14,6 +14,7 @@
 #define LIGHT_GREEN "\033[92m"
 #define LIGHT_YELLOW "\033[93m"
 #define CYANonBLUE "\033[36;44m"
-#define OBSTACLE_COLOR "\033[30;101m"
+#define OBSTACLE_COLOR "\033[31m"
+//#define OBSTACLE_COLOR "\033[30;101m"
 
 #endif
