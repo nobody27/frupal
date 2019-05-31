@@ -76,7 +76,7 @@ private:
 	string getAName();
 
 	//utility function to getnd verify a char
-	char getAChar();
+	char getAChar(char arg1, char arg2, char arg3);
 
 	GameManager* gameMgr;
 

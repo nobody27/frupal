@@ -323,36 +323,16 @@ void OptionsMenu::setControls(){
 		reply = toupper(reply);
 		switch(reply){
 			case '1':
-				reply = getAChar();
-				while(reply == west || reply == south || reply == east){
-					cout << "\nConflict detected. Please try again.";
-					reply = getAChar();	
-				}
-				north = reply;
+				north = getAChar(west, south, east);
 				break;
 			case '2':
-				reply = getAChar();
-				while(reply == north || reply == south || reply == east){
-					cout << "\nConflict detected. Please try again.";
-					reply = getAChar();	
-				}
-				west = reply;
+				west = getAChar(north, south, east);
 				break;
 			case '3':
-				reply = getAChar();
-				while(reply == west || reply == north || reply == east){
-					cout << "\nConflict detected. Please try again.";
-					reply = getAChar();	
-				}
-				south = reply;
+				south = getAChar(west, north, east);
 				break;
 			case '4':
-				reply = getAChar();
-				while(reply == west || reply == south || reply == north){
-					cout << "\nConflict detected. Please try again.";
-					reply = getAChar();	
-				}
-				east = reply;
+				east = getAChar(west, south, north);
 				break;
 			case 'R':
 				done = true;
@@ -741,7 +721,7 @@ string OptionsMenu::getAName(){
 	return input;
 }
 
-char OptionsMenu::getAChar(){
+char OptionsMenu::getAChar(char arg1, char arg2, char arg3){
 	char buy = gameMgr->BUYBUTTON;
 	char display = gameMgr->DISPLAYBUTTON;
 	char quit = gameMgr->QUITBUTTON;
@@ -749,23 +729,29 @@ char OptionsMenu::getAChar(){
 	char win = gameMgr->WINBUTTON;
 
 	char k;
-	cout << "\nEnter a key other than "<< buy <<
-		", " << display << 
-		", " << quit <<
-		", " << ret <<
-		" or " << win <<
+	string message = string("Enter a key other than: ") + 
+		arg1 +
+		", " + arg2 +
+		", " + arg3 +
+		", " + buy +
+		", " + display +
+		", " + quit +
+		", " + ret +
+		" or " + win +
 		": ";
+	cout << endl << message;
 	cin >> k;
 	k = toupper(k);	
-	while(cin.fail() || k == buy || k == display || k == quit || k == ret || k == win){
+	while(cin.fail() || k == arg1 || k == arg2 || k == arg3 || 
+			k == buy || k == display || k == quit || k == ret || k == win){
 		cin.clear();
 		cin.ignore(100, '\n');
-		cout << "\nInvalid entry. Enter a new key: ";
+		cout << "\nInvalid entry. " << message;
 		cin >> k;
 		k = toupper(k);
 	}
 
-	return toupper(k);
+	return k;
 }
 
 int OptionsMenu::getValueBetween(int min, int max){
