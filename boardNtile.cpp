@@ -553,8 +553,8 @@ void Board::displayIsland(string command) const
 void Board::displayRow(int rowNumber, string command) const
 {
 				string ocean("~"); 
-				string blueOcean1 = CYAN + ocean + RESET;
-				string blueOcean3 = CYAN + ocean + ocean + ocean + RESET;
+				string blueOcean1 = BLUE + ocean + RESET;
+				string blueOcean3 = BLUE + ocean + ocean + ocean + RESET;
 				int posX, posY, minX, maxX, minY, maxY;
 				if(command == "local") {
 								followVars(posX, posY, minX, maxX, minY, maxY);
