@@ -123,13 +123,14 @@ void ResourcesOptions::displayObstacles(){
 void ResourcesOptions::printObstacleKey(){
 				cout << "Obstacle key: ";
 				for(auto it = begin(theObstacles); it != end(theObstacles); ++it){
-								//if(it->name == water) {
-								//				cout << it->name << " = " << BLUE << it->symbol << RESET << "   ";
-								//}
-								//else
-								//{
+								if(it->name.compare( "WATER")==0)
+								{
+												cout << it->name << " = " << BLUE << it->symbol << RESET << "   ";
+								}
+								else
+								{
 												cout << it->name << " = " << OBSTACLE_COLOR << it->symbol << RESET << "   ";
-								//}
+								}
 				}
 }
 
