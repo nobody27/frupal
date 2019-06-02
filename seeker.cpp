@@ -169,47 +169,38 @@ char Seeker::moveObstacle(Tile* nextTile)
       }
     }
     
-    //if you've got the tool, check if they're down with losing reduced nrg
+    //if you've got the tool just move
     if (relevantTool)
     {
       //prompt for ok to lose reduced energy and clear object
-      cout << "Use your " << relevantTool->name << " and " << 
-      theObstacle->energyCost - relevantTool->energySaved << " additional energy" <<
-      " to get past the " << theObstacle->name << "? [Y/N]" << endl;
-      
-      cin >> choice;
-      cin.ignore(100,'\n');
-      choice = toupper(choice);
-      if (choice == 'Y')
-      {
-         if(relevantTool->singleUse) {
-         //reduce tool count by 1 and/or remove from inventory 
-         if (relevantTool->quantity == 1)
-         {
-           for (auto it = begin(inventory); it != end(inventory); ++it)
-           {
-             if ((*it) == relevantTool)
-             {
-               inventory.erase(it);
-               break;
-             }
-           }
-         }
-         else {
-           relevantTool->quantity -= 1;
-         }
+      cout << "You used your " << relevantTool->name << " and " << 
+        theObstacle->energyCost - relevantTool->energySaved << " additional energy" <<
+        " to get past the " << theObstacle->name << endl;
+
+      if(relevantTool->singleUse) {
+        //reduce tool count by 1 and/or remove from inventory 
+        if (relevantTool->quantity == 1)
+        {
+          for (auto it = begin(inventory); it != end(inventory); ++it)
+          {
+            if ((*it) == relevantTool)
+            {
+              inventory.erase(it);
+              break;
+            }
+          }
+        }
+        else {
+          relevantTool->quantity -= 1;
+        }
       }
 
-      if (theObstacle->removable)
-      {
-        nextTile->obstacle = NULL;
-      }
-      energy -= theObstacle->energyCost - relevantTool->energySaved;
-      cout << "You used your " << relevantTool->name << " to get through the "
-      << theObstacle->name;
-      return choice;
+    if (theObstacle->removable)
+    {
+      nextTile->obstacle = NULL;
     }
-    return 'N';
+    energy -= theObstacle->energyCost - relevantTool->energySaved;
+    return 'Y';
   }
      
   //if they don't have the tool ask them

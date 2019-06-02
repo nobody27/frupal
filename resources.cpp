@@ -153,9 +153,10 @@ void Resources::displayResources()
 				//to compensate for the "$" 
 				cout << "  " << setw(14) << left << "Tool" 
 								<< " " << setw(8) << left << "Price" 
-								<< " " << setw(15) << left << "Energy saved"
+								<< " " << setw(15) << left << "Energy Saved"
 								//		<< " " << setw(15) << left << "Quantity" 
 								<< " " << setw(15) << left << "Obstacle" 
+                << " " << setw(12) << left << "Single Use"
 								<< endl;
 
 				for (auto it = begin(resources); it != end(resources); ++it, ++i) 
@@ -164,8 +165,15 @@ void Resources::displayResources()
 												"$" << setw(7) << left << it->price << 
 												" " << setw(15) << left << it->energySaved << 
 												//			" " << setw(15) << left << it->quantity << 
-												" " << setw(15) << left << it->relevantObstacle << 
-												endl;
+												" " << setw(15) << left << it->relevantObstacle <<
+                        " " << setw(12) << left;
+                        if(it->singleUse) { 
+                          cout << "YES";
+                        }
+                        else {
+                          cout << "NO";
+                        }
+                        cout << endl;
 				}
 				return;
 }

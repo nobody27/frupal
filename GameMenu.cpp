@@ -152,8 +152,8 @@ bool GameMenu::buyTool()
 	cout << "entering shop" << endl;
 	gameMgr->theSeeker->displayTools();
 	cout << endl << "**Tools for sale**" << endl << endl;
-	cout << left << 0 << ": " << "Cancel -- Leave Shop" << endl;
 	gameMgr->theResources->displayResources();
+	cout << endl << left << 0 << " " << "**EXIT SHOP**" << endl;
 	//TODO display tools and available money
 	//TODO command to buy an item
 	cout << endl << "Money: $" << gameMgr->theSeeker->money << endl << endl;
@@ -170,7 +170,7 @@ bool GameMenu::buyTool()
 		if(cin.fail()) {
 			cin.clear();
 			cin.ignore(100, '\n');
-			choice = -1;
+      return false;
 		}
 	}
 
@@ -180,6 +180,20 @@ bool GameMenu::buyTool()
 	}
 
 	choice--;
+ 
+  //check the tool isn't permanent and don't buy if they have it
+   
+  
+  for(auto it = begin(gameMgr->theSeeker->inventory); it !=
+  end(gameMgr->theSeeker->inventory); ++it)
+  {
+    if(resources[choice].name == (*it)->name && !resources[choice].singleUse)
+    {
+      cout << "you already have this multi-use tool!" << endl; 
+      return true;
+    }
+  }
+
 
 	//subtract the cost from the seekers money
 	gameMgr->theSeeker->money -= resources[choice].price;
