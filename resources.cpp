@@ -153,9 +153,9 @@ void Resources::displayResources()
 				//to compensate for the "$" 
 				cout << "  " << setw(14) << left << "Tool" 
 								<< " " << setw(8) << left << "Price" 
-								<< " " << setw(15) << left << "Energy Saved"
+								<< " " << setw(13) << left << "Energy Saved"
 								//		<< " " << setw(15) << left << "Quantity" 
-								<< " " << setw(15) << left << "Obstacle" 
+								<< " " << setw(10) << left << "Obstacle" 
                 << " " << setw(12) << left << "Single Use"
 								<< endl;
 
@@ -163,9 +163,9 @@ void Resources::displayResources()
 				{
 								cout << i << " " << setw(15) << left << it->name << 
 												"$" << setw(7) << left << it->price << 
-												" " << setw(15) << left << it->energySaved << 
+												" " << setw(13) << left << it->energySaved << 
 												//			" " << setw(15) << left << it->quantity << 
-												" " << setw(15) << left << it->relevantObstacle <<
+												" " << setw(10) << left << it->relevantObstacle <<
                         " " << setw(12) << left;
                         if(it->singleUse) { 
                           cout << "YES";
