@@ -517,10 +517,10 @@ void Board::displayIsland(string command) const
 				cout <<endl;
 				cout << GRAY << "Terrain Key:       " << GRAY << "OCEAN = " << BLUE << (command == "local" ? "'~~~'" : "'~'") << RESET;
 				cout << GRAY <<  "    GRASSY MEADOW = " << YELLOW << "'G'" << GRAY << "    BOG = " << CYAN << "'B'" << GRAY << "    FORREST = " << GREEN << "'F'" << GRAY << "    WATER = " << CYANonBLUE << "'W'" << RESET;
-				cout << endl << GRAY << "SEEKER's Location: '" << BOLDREDonYELLOW <<"&" << GRAY << "' ";
+				cout << endl << GRAY << "SEEKER's Location: '" << BOLDREDonYELLOW <<"&" << RESET <<  GRAY << "' " <<RESET;
 				if (command == "local")
 				{
-								cout << GRAY << endl << "Excavation Site:   'E' reveals to " << MAGENTA << "'n' none" << RESET << GRAY << " or " << MAGENTA << "'J' Jewel." << RESET;
+				cout << endl << GRAY << "Excavation Site:   'E' reveals to " << MAGENTA << "'n' none" << RESET << GRAY << " or " << MAGENTA << "'J' Jewel." << RESET;
 				}
                 cout << endl;
 				gameMgr->resourcesOptions->printObstacleKey();
