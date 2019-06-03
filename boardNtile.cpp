@@ -521,7 +521,7 @@ void Board::displayIsland(string command) const
 				cout << endl << BOARD_KEY_COLOR << "SEEKER's Location: '" << BOLDREDonYELLOW <<"&" << RESET << BOARD_KEY_COLOR << "' " << RESET;
 				if (command == "local")
 				{
-					cout << BOARD_KEY_COLOR << endl << "Excavation Site:   'E' reveals to " << MAGENTA << "'n' none" << RESET << BOARD_KEY_COLOR << " or " << MAGENTA << "'J' Jewel." << RESET;
+					cout << BOARD_KEY_COLOR << endl << "Excavation Site:   'E' reveals to " << MAGENTA << "'n' none" << RESET << BOARD_KEY_COLOR << " or " << MAGENTAonYELLOW << "'J' Jewel." << RESET;
 				}
                 cout << endl;
 				gameMgr->resourcesOptions->printObstacleKey();
