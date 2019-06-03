@@ -117,7 +117,7 @@ void Tile::printIslandTile(Tile* location, string command)
 												terrain->displayShortName();
 								//seeker location
 								if (this == location)
-												cout << BOLDRED << "&" << RESET;
+												cout << BOLDREDonYELLOW << "&" << RESET;
 								else
 												cout << GRAY <<"_"<<RESET;
 								//treasure E for excavation, or Letter for treasure type
@@ -245,17 +245,11 @@ Board::Board(GameManager* gameManager, const BoardOptions& options) :
 				//these lines below add Jewel
 				jewelTile = randJewelTile();
 				jewelTile->treasureChar = 'J';
-				//use for testing how map looks
-				//visitAllTiles();
 }
 
 void Board::putInObstacles()
 {
-				// we want the percentage of tiles with obstacles to be approximately the same independent of boardSize
-				// (approx 50% for now)
-				// tile percentage variable
-				// so numberEach (the number of each type of obstacle) needs to scale with teh square of boardsize
-				// numberEach = boardSize*boardSize times obstaclePercentage and by 4 because four types of obstaclesA
+				//the percentage of tiles with obstacles is configurable with game difficulty options
 				float obstacleDensity = (gameMgr->obstacleDensity)/100.0;
 				int obstacleCount = gameMgr->resourcesOptions->theObstacles.size();
 				int numberEach = boardSize*boardSize*obstacleDensity/obstacleCount;
@@ -280,35 +274,6 @@ for(auto it = begin(gameMgr->resourcesOptions->theObstacles); it != end(gameMgr-
 		}
 	}
 }
-/*
-				for(int i=0; i<numberEach; ++i) //BUSHES
-
-				{
-								int rand1 = rand()%boardSize;
-								int rand2 = rand()%boardSize;
-								//if(boardArray[rand1][rand2]->terrain->getShortName() != W)
-								boardArray[rand1][rand2]->obstacle = new Obstacle("BUSH", 5, 'B', true);
-				}
-				for(int i=0; i<numberEach; ++i) //ROCKS
-				{
-								int rand1 = rand()%boardSize;
-								int rand2 = rand()%boardSize;
-								boardArray[rand1][rand2]->obstacle = new Obstacle("ROCK", 10, 'R', false);
-								//if(boardArray[rand1][rand2]->terrain->getShortName() != W) 
-				}
-				for(int i=0; i<numberEach; ++i) //TREES
-				{
-								int rand1 = rand()%boardSize;
-								int rand2 = rand()%boardSize;
-								boardArray[rand1][rand2]->obstacle = new Obstacle("TREE", 10, 'T', false);
-				}
-				for(int i=0; i<numberEach; ++i) //Vortex / vorticies
-				{
-								int rand1 = rand()%boardSize;
-								int rand2 = rand()%boardSize;
-								boardArray[rand1][rand2]->obstacle = new Obstacle("VORTEX", 100, 'V', false);
-				}
-*/
 }
 
 
@@ -384,9 +349,7 @@ Tile* Board::getLocation(int x, int y) const {
 				return boardArray[x][y];
 }
 
-//randJewelTile return a Tile pointer that is in a random location in the top right quadarnt of the board
-//it takes no input
-//later could add cases to also make it possible for Jewel to be in top left or bottom right
+//randJewelTile return a Tile pointer that is in a random location of the board. The possible locations exclude the closest quadrant
 Tile* Board::randJewelTile()
 {
 				int jewelX = 0;
@@ -554,7 +517,7 @@ void Board::displayIsland(string command) const
 				cout <<endl;
 				cout << GRAY << "Terrain Key:       " << GRAY << "OCEAN = " << BLUE << (command == "local" ? "'~~~'" : "'~'") << RESET;
 				cout << GRAY <<  "    GRASSY MEADOW = " << YELLOW << "'G'" << GRAY << "    BOG = " << CYAN << "'B'" << GRAY << "    FORREST = " << GREEN << "'F'" << GRAY << "    WATER = " << CYANonBLUE << "'W'" << RESET;
-				cout << endl << GRAY << "SEEKER's Location:" << BOLDRED <<" '&' " << RESET;
+				cout << endl << GRAY << "SEEKER's Location: '" << BOLDREDonYELLOW <<"&" << GRAY << "' ";
 				if (command == "local")
 				{
 								cout << GRAY << endl << "Excavation Site:   'E' reveals to " << MAGENTA << "'n' none" << RESET << GRAY << " or " << MAGENTA << "'J' Jewel." << RESET;

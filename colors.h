@@ -3,6 +3,7 @@
 
 #define RESET "\033[0m"
 #define BOLDRED "\033[31;1m"
+#define BOLDREDonYELLOW "\033[31;1;43m"
 #define RED "\033[91m"
 #define GREEN "\033[32m"
 #define YELLOW "\033[33m"
@@ -15,7 +16,7 @@
 #define LIGHT_GREEN "\033[92m"
 #define LIGHT_YELLOW "\033[93m"
 #define CYANonBLUE "\033[36;44m"
-#define OBSTACLE_COLOR "\033[31m"
+#define OBSTACLE_COLOR "\033[31;1m"
 //#define OBSTACLE_COLOR "\033[30;101m"
 
 #endif
