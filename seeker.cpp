@@ -51,7 +51,7 @@ Seeker::Seeker(GameManager* gameManager, const SeekerOptions& options) :
 
 void Seeker::display() {
     //theIsland->displayLocation(location);
-	cout << endl << "You currently have " << energy << " energy and $" << money << endl;
+	cout << "You currently have " << energy << " energy and $" << money;
 }
 
 void Seeker::displayTools() {
