@@ -9,6 +9,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <string>
+#include "colors.h"
 //#include "GameManager.h"
 //#include "seeker.h"
 

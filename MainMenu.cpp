@@ -79,7 +79,7 @@ bool MainMenu::getAndExecuteCommand() {
 				if(!gameMgr->initialized) {
 					gameMgr->initializeGame();
 				}
-				gameMgr->displayIslandAndSeeker("local");
+				gameMgr->displayIslandAndSeeker("local", "null");
 				quit = gameMenu.call();
 				break;
 			case 'O':

@@ -51,7 +51,7 @@ Seeker::Seeker(GameManager* gameManager, const SeekerOptions& options) :
 
 void Seeker::display() {
     //theIsland->displayLocation(location);
-	cout << endl << endl << "You currently have " << energy << " energy and " << money << " gold pieces." << endl;
+	cout << endl << "You currently have " << energy << " energy and $" << money << endl;
 }
 
 void Seeker::displayTools() {
@@ -71,7 +71,7 @@ void Seeker::displayTools() {
 
 //TODO check terrain ahead for each call
 void Seeker::move(direction_t direction) {
-	gameMgr->displayIslandAndSeeker("local");
+	//gameMgr->displayIslandAndSeeker("local","null");
 	//TODO we need a better interface
 	int x = getLocation()->xValue + (direction == EAST) - (direction == WEST);
 	int y = getLocation()->yValue + (direction == NORTH) - (direction == SOUTH);
@@ -79,37 +79,37 @@ void Seeker::move(direction_t direction) {
     Tile* nextTile = nullptr; 
     Obstacle* theObstacle = nullptr;
     if (y >= theIsland->size() ) {
-		cout << endl << "You cannot move north!";
+		cout << endl << "You cannot move north!" << endl;
     return;
     }
 	else if (y < 0 ) {
-		cout << endl << "You cannot move south!";
+		cout << endl << "You cannot move south!" << endl;
     return;
     }
 	else if (x >= theIsland->size() ) {
-		cout << endl << "You cannot move east!";
+		cout << endl << "You cannot move east!" << endl;
     return;
     }
 	else if (x < 0 ) {
-		cout << endl << "You cannot move west!";
+		cout << endl << "You cannot move west!" << endl;
     return;
     }
+    string s;
     nextTile = theIsland->getLocation(x,y);
     theObstacle = nextTile->obstacle;
     if(!hasBoat && nextTile->getTerrain()->getName() == "water") {
 		//this is water and you don't have a boat.
 		//charge one energy and abort the move
 		energy--;
-		cout << "\nYou wade through the water but it is too deep." << endl <<
-		"You think to yourself... I could really use a boat right now...";
-		gameMgr->requestEnter();
-		//gameMgr->displayIslandAndSeeker();
+		s = "You wade through the water but it is too deep. \nYou think to yourself... I could really use a boat right now...";
+		//gameMgr->requestEnter();
+		gameMgr->displayIslandAndSeeker("local", s); //NEW
 		return;
     }
     if (theObstacle) 
-    {
     //theres an obstacle at that tile
-      choice = moveObstacle(nextTile); 
+    {
+      choice = moveObstacle(nextTile, s);  
     }
     //TODO check you have energy to move here
     if (choice == 'Y' || !theObstacle)
@@ -117,17 +117,26 @@ void Seeker::move(direction_t direction) {
       location = theIsland->getLocation(x,y);
       theIsland->getLocation(x,y)->visitTile();
       energy -= theIsland->getLocation(x,y)->getTerrain()->exertion;
-      money += theIsland->getLocation(x,y)->takeMoney();
+      int m = theIsland->getLocation(x,y)->takeMoney();
+      money += m;
+      if (m == 0)
+          s += "No money here, keep looking";
+      else 
+      {
+          s += "You just found $";
+          s += to_string(m);
+      }
     }
 	//gameMgr->requestEnter();
-	gameMgr->displayIslandAndSeeker("local");
+	gameMgr->displayIslandAndSeeker("local", s);
     return;
 } 
-void Seeker::addTool(Tool* newTool) {
+
+void Seeker::addTool(Tool* newTool, string& s) {
   //deal with special tools
   if(newTool->name == "POWER BAR") {
 	//eat the power bar, get the energy, don't add it to resources
-    cout << "Yum! I feel so much stronger now!" << endl;
+    s = "Yum! I feel so much stronger now!";
 	energy += newTool->energySaved;
 	//newTool->quantity--;
     return;
@@ -153,7 +162,7 @@ void Seeker::addTool(Tool* newTool) {
 
 
 //TODO need to check there is enough energy
-char Seeker::moveObstacle(Tile* nextTile)
+char Seeker::moveObstacle(Tile* nextTile, string& s)
 {
     char choice; 
     Tool *relevantTool = NULL;
@@ -195,9 +204,15 @@ char Seeker::moveObstacle(Tile* nextTile)
         }
       }
 
-    if (theObstacle->removable)
-    {
-      nextTile->obstacle = NULL;
+      if (theObstacle->removable)
+      {
+        nextTile->obstacle = NULL;
+      }
+      energy -= theObstacle->energyCost - relevantTool->energySaved;
+      s = "You used your " + relevantTool->name + " to get through the " + theObstacle->name + "\n\n";
+      //cout << "You used your " << relevantTool->name << " to get through the "
+      //<< theObstacle->name;
+      return choice;
     }
     energy -= theObstacle->energyCost - relevantTool->energySaved;
     return 'Y';
@@ -220,8 +235,7 @@ char Seeker::moveObstacle(Tile* nextTile)
         nextTile->obstacle = NULL;
       }
       energy -= theObstacle->energyCost;
-      cout << "You managed to get through the " << theObstacle->name 
-      << " with your bare hands!" << endl;
+      s = "You managed to get through the " + theObstacle->name + " with your bare hands! \n\n";
       return choice;
     }
     else

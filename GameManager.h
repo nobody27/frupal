@@ -74,7 +74,7 @@ public:
 	void initializeGame();	
 
 	//display the island and seeker information
-	void displayIslandAndSeeker(string command);
+	void displayIslandAndSeeker(string command, string s);
 
 	void requestEnter() const;
 
@@ -135,6 +135,7 @@ public:
 	char EASTBUTTON = 'L';
 	char BUYBUTTON = 'B';
 	char DISPLAYBUTTON = 'V';
+    char DISPLAYFULLBUTTON = 'M';
 	char QUITBUTTON = 'Q';
 	char RETURNBUTTON = 'R';
 	char WINBUTTON = 'C';

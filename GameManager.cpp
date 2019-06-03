@@ -294,22 +294,32 @@ void GameManager::initializeGame() {
 	//print introduction
 	clear_screen();
 	cout << endl << endl << "*****************************" << endl;
-	cout << "You have landed on Frupal Island!" << endl;
-	cout << "As you explore, you will uncover treasure as well as tools to help you on your quest." << endl;
-	cout << "Use caution! Moving around the island consumes energy. When you run out of energy, the game will end.";
+	cout << endl << "You have landed on Frupal Island!" << endl;
+	cout << endl << "As a world-famous treasure seeker, you are seeking the fabled " << MAGENTA << "JEWEL OF ANTIOCH" << RESET << " that is hidden somewhere on the island." << endl; 
+	cout << "Use caution! Moving around the island consumes energy. When you run out of energy, the game will end." << endl;
+    cout << endl << "As you explore, you will encounter different terrains and obstacles that will require different amounts of energy to cross." << endl;
+    cout << "Tools for tackling obstacles are available for purchase, as are power bars for boosting your energy." << endl;
+    cout << endl << "Somewhere on the island is the legendary " << RED << "VORTEX OF CERTAIN DEATH" << RESET << " which will kill you instantly. Be careful where you step!" << endl;
+    cout << endl << "Good Luck, Seeker!" << endl;
 	cout << endl << "*****************************" << endl;
 	cout << "\n\n\n";
 	cout << "press ENTER to continue";
 	cin.get();
 }
 
-void GameManager::displayIslandAndSeeker(string command) {
+void GameManager::displayIslandAndSeeker(string command, string s) {
 	clear_screen();
 	if (command == "endgame")
 		theIsland->visitAllTiles();
 	else
 		theIsland->visitLocationAndNeighbors(theSeeker->getLocation(), false);
 	theIsland->displayIsland(command);
+    cout << endl << endl << "***************************************" << endl;
+    if (s != "null")
+    {
+        cout << endl; 
+        cout << s << endl;
+    }
 	if (command == "local")
 		theSeeker->display();
 }

@@ -12,6 +12,7 @@
 #include "GameManager.h"
 #include "seeker.h"
 #include "boardNtile.h"
+#include "colors.h"
 #include <vector>
 #include <assert.h>
 #include <string>
@@ -116,7 +117,7 @@ void Tile::printIslandTile(Tile* location, string command)
 												terrain->displayShortName();
 								//seeker location
 								if (this == location)
-												cout << BOLDRED << "@" << RESET;
+												cout << BOLDRED << "&" << RESET;
 								else
 												cout << GRAY <<"_"<<RESET;
 								//treasure E for excavation, or Letter for treasure type
@@ -164,13 +165,9 @@ int Tile::takeMoney()
 				int retVal = 0;
 				if(money) 
 				{
-								cout << "You just found $" << money << endl;
+
 								retVal = money;
 								money = 0;
-				}
-				else 
-				{
-								cout << "No money here, keep looking" << endl;
 				}
 				return retVal;
 }
@@ -541,6 +538,7 @@ void Board::displayIsland(string command) const
 {
 				int posX, posY, minX, maxX, minY, maxY;
 				if(command == "local") {
+                                cout << endl << "Your current location:" << endl;
 								followVars(posX, posY, minX, maxX, minY, maxY);
 				} else {
 								minY = -1;
@@ -554,16 +552,16 @@ void Board::displayIsland(string command) const
 								displayRow(j, command);
 				}
 				cout <<endl;
-				cout << BLUE << (command == "local" ? "~~~" : "~") << "=Ocean, " << RESET;
-				cout << YELLOW<<"G=Grassy Meadow," <<CYAN<<" B=Bog,"<< GREEN <<" F=Forrest, "<<CYANonBLUE<<"W=Water"<<RESET;
-				cout << "  SEEKER's location:" <<BOLDRED<<" @ " << RESET;
+				cout << GRAY << "Terrain Key:       " << GRAY << "OCEAN = " << BLUE << (command == "local" ? "'~~~'" : "'~'") << RESET;
+				cout << GRAY <<  "    GRASSY MEADOW = " << YELLOW << "'G'" << GRAY << "    BOG = " << CYAN << "'B'" << GRAY << "    FORREST = " << GREEN << "'F'" << GRAY << "    WATER = " << CYANonBLUE << "'W'" << RESET;
+				cout << endl << GRAY << "SEEKER's Location:" << BOLDRED <<" '&' " << RESET;
 				if (command == "local")
 				{
-								cout  <<GRAY<< " (E)xcavation sites"<<RESET<<" reveal " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTAonYELLOW<< "'J' Jewel." <<RESET;
+								cout << GRAY << endl << "Excavation Site:   'E' reveals to " << MAGENTA << "'n' none" << RESET << GRAY << " or " << MAGENTA << "'J' Jewel." << RESET;
 				}
-	
-				cout << endl;
+                cout << endl;
 				gameMgr->resourcesOptions->printObstacleKey();
+                cout << RESET;
 }
 
 void Board::displayRow(int rowNumber, string command) const

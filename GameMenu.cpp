@@ -11,6 +11,7 @@
 #include "OptionsMenu.h"
 #include "seeker.h"
 #include "boardNtile.h"
+#include "colors.h"
 
 //include libraries
 #include <iostream>
@@ -40,23 +41,32 @@ bool GameMenu::call() {
 void GameMenu::display() const {
 	//print the options
 	//line 1
+
+
+    cout << endl << "***************************************" << endl;
 	cout << "\n";
-	cout << "Make Your Choice: " << endl;
+	cout << GRAY << "Make Your Choice: " << endl << endl;
 	cout << setw(15) << right << "(" << gameMgr->NORTHBUTTON << ") move North";
 	cout << setw(18) << left << " ";
 	cout << "(" << gameMgr->BUYBUTTON << ") Buy an item";
-	cout << setw(6) << " ";
-	cout << "(" << gameMgr->DISPLAYBUTTON << ") View seeker's location" << endl;
+	cout << setw(8) << " ";
+	cout << "(" << gameMgr->DISPLAYBUTTON << ") View seeker's location";
+	cout << setw(3) << " ";
+    cout << "(" << gameMgr->DISPLAYFULLBUTTON << ") View full island" << endl;
 
 	//line 2
 	cout << "(" << gameMgr->WESTBUTTON << ") move West";
-	cout << " (" << gameMgr->SOUTHBUTTON << ") move South";
+	cout << "               ";
 	cout << " (" << gameMgr->EASTBUTTON << ") move East";
 	cout << setw(4) << " ";
-	cout << "(" << gameMgr->QUITBUTTON << ") Quit the program";
-	cout << " (" << gameMgr->RETURNBUTTON << ") Return to Menu";
-	cout << " (" << gameMgr->WINBUTTON << ") Cheat!" << endl; //TODO
+	cout << GRAY << "(" << gameMgr->QUITBUTTON << ") Quit the program";
+	cout << "   (" << gameMgr->RETURNBUTTON << ") Return to Menu";
+	cout << "           (" << gameMgr->WINBUTTON << ") Cheat!" << endl; //TODO
+
+    //line 3
+	cout << "              (" << gameMgr->SOUTHBUTTON << ") move South" << endl;
 	cout << "\n>";
+
 }
 
 bool GameMenu::getAndExecuteCommand() {
@@ -75,13 +85,13 @@ bool GameMenu::getAndExecuteCommand() {
 		switch (choice) {
 				//TODO buy tool, use tool, view board
 			case 'V':
-				gameMgr->displayIslandAndSeeker("local");
+				gameMgr->displayIslandAndSeeker("local", "null");
 				//gameMgr->clear_screen();
 				//gameMgr->theIsland->displayIsland();
 				//gameMgr->theSeeker->display();
 				break;
 			case 'M':
-				gameMgr->displayIslandAndSeeker("full");
+				gameMgr->displayIslandAndSeeker("full", "null");
 				break;
 			case 'C':
 				gameMgr->theSeeker->location = gameMgr->theIsland->jewelTile; 
@@ -109,20 +119,20 @@ bool GameMenu::getAndExecuteCommand() {
 				}else if(choice == gameMgr->EASTBUTTON){
 					gameMgr->theSeeker->move(Seeker::EAST);
 				}else{
-					gameMgr->displayIslandAndSeeker("local");
-					cout << "'" << choice << "' is not a valid command in the game menu..." << endl;
+					//gameMgr->displayIslandAndSeeker("local", "null");
+					cout << endl << "'" << choice << "' is not a valid command in the game menu..." << endl;
 					again = true;
 				}
 		}
 		if(gameMgr->theSeeker->energy <= 0) {
-			gameMgr->displayIslandAndSeeker("endgame");
+			gameMgr->displayIslandAndSeeker("endgame", "null");
 			cout << endl << "You are out of energy!";
 			cout << endl << endl << "GAME OVER" << endl << endl;
 			gameMgr->requestEnter();
 			quit = true;
 		}
 		else if(gameMgr->theSeeker->location == gameMgr->theIsland->jewelTile) {
-			gameMgr->displayIslandAndSeeker("endgame");
+			gameMgr->displayIslandAndSeeker("endgame", "null");
 			cout << GREEN <<  "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
 			cout << BLUE << "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
 			cout << BOLDRED << "YOU WIN!!!!!!!!!!!!!!!!!!!!!" <<endl;
@@ -137,15 +147,16 @@ bool GameMenu::getAndExecuteCommand() {
 
 void GameMenu::shopMenu()
 {
-	do
-	{
-		gameMgr->displayIslandAndSeeker("local");
-	}
-	while(buyTool());
-	gameMgr->displayIslandAndSeeker("local");
+	//do
+	//{
+	//	gameMgr->displayIslandAndSeeker("local", "null");
+	//}
+    string s;
+	while(buyTool(s) == false) {}
+	gameMgr->displayIslandAndSeeker("local", s);
 }
 
-bool GameMenu::buyTool()
+bool GameMenu::buyTool(string& s)
 {
 	int choice = -1;
 	vector<Tool>& resources = gameMgr->theResources->resources; //shortcut for convenience
@@ -199,7 +210,7 @@ bool GameMenu::buyTool()
 	gameMgr->theSeeker->money -= resources[choice].price;
 
 	//add tool to seeker's inventory
-	gameMgr->theSeeker->addTool(&resources[choice]);
+	gameMgr->theSeeker->addTool(&resources[choice], s);
 
 	//switch statement for purchase
 	return true;

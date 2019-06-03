@@ -121,15 +121,15 @@ void ResourcesOptions::displayObstacles(){
 				}
 }
 void ResourcesOptions::printObstacleKey(){
-				cout << "Obstacle key: o = none   ";
+				cout << GRAY << "Obstacle Key: o = none   ";
 				for(auto it = begin(theObstacles); it != end(theObstacles); ++it){
 								if(it->name.compare( "WATER")==0)
 								{
-												cout << it->name << " = " << BLUE << it->symbol << RESET << "   ";
+												cout << GRAY << "    " << it->name << " = " << BLUE << "'" << it->symbol << "'" << RESET;
 								}
 								else
 								{
-												cout << it->name << " = " << OBSTACLE_COLOR << it->symbol << RESET << "   ";
+												cout << GRAY << "    " << it->name << " = " << OBSTACLE_COLOR << "'" << it->symbol << "'" << RESET;
 								}
 				}
 }

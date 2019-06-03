@@ -43,7 +43,7 @@ private:
 
 	bool getAndExecuteCommand();
 	void shopMenu();
-	bool buyTool();
+	bool buyTool(string& s);
 	GameManager* gameMgr;
 
 	//option to quickly quit the game instead of just returning to MainMenu
