@@ -181,41 +181,38 @@ char Seeker::moveObstacle(Tile* nextTile, string& s)
     //if you've got the tool just move
     if (relevantTool)
     {
-      //prompt for ok to lose reduced energy and clear object
-      cout << "You used your " << relevantTool->name << " and " << 
-        theObstacle->energyCost - relevantTool->energySaved << " additional energy" <<
-        " to get past the " << theObstacle->name << endl;
+        //prompt for ok to lose reduced energy and clear object
+        //cout << "You used your " << relevantTool->name << " and " << 
+        //theObstacle->energyCost - relevantTool->energySaved << " additional energy" <<
+        //" to get past the " << theObstacle->name << endl;
 
-      if(relevantTool->singleUse) {
-        //reduce tool count by 1 and/or remove from inventory 
-        if (relevantTool->quantity == 1)
-        {
-          for (auto it = begin(inventory); it != end(inventory); ++it)
-          {
-            if ((*it) == relevantTool)
+        if(relevantTool->singleUse) {
+            //reduce tool count by 1 and/or remove from inventory 
+            if (relevantTool->quantity == 1)
             {
-              inventory.erase(it);
-              break;
+                for (auto it = begin(inventory); it != end(inventory); ++it)
+                {
+                    if ((*it) == relevantTool)
+                    {
+                        inventory.erase(it);
+                        break;
+                    }
+                }
             }
-          }
+            else {
+                relevantTool->quantity -= 1;
+            }
         }
-        else {
-          relevantTool->quantity -= 1;
-        }
-      }
 
-      if (theObstacle->removable)
-      {
-        nextTile->obstacle = NULL;
-      }
-      energy -= theObstacle->energyCost - relevantTool->energySaved;
-      s = "You used your " + relevantTool->name + " to get through the " + theObstacle->name + "\n\n";
-      //cout << "You used your " << relevantTool->name << " to get through the "
-      //<< theObstacle->name;
-      return choice;
-    }
-    energy -= theObstacle->energyCost - relevantTool->energySaved;
-    return 'Y';
+        if (theObstacle->removable)
+        {
+            nextTile->obstacle = NULL;
+        }
+        s = "You used your " + relevantTool->name + " and " + to_string(theObstacle->energyCost - relevantTool->energySaved) + " additional energy to get past the " + theObstacle->name + "\n\n";
+        //cout << "You used your " << relevantTool->name << " to get through the "
+        //<< theObstacle->name;
+        energy -= theObstacle->energyCost - relevantTool->energySaved;
+        return 'Y';
   }
      
   //if they don't have the tool ask them

@@ -295,11 +295,11 @@ void GameManager::initializeGame() {
 	clear_screen();
 	cout << endl << endl << "*****************************" << endl;
 	cout << endl << "You have landed on Frupal Island!" << endl;
-	cout << endl << "As a world-famous treasure seeker, you are seeking the fabled " << MAGENTA << "JEWEL OF ANTIOCH" << RESET << " that is hidden somewhere on the island." << endl; 
+	cout << endl << "You are a world-famous treasure seeker, searching for the fabled " << MAGENTA << "JEWEL OF ANTIOCH" << RESET << " that is hidden somewhere on this island." << endl; 
 	cout << "Use caution! Moving around the island consumes energy. When you run out of energy, the game will end." << endl;
     cout << endl << "As you explore, you will encounter different terrains and obstacles that will require different amounts of energy to cross." << endl;
     cout << "Tools for tackling obstacles are available for purchase, as are power bars for boosting your energy." << endl;
-    cout << endl << "Somewhere on the island is the legendary " << RED << "VORTEX OF CERTAIN DEATH" << RESET << " which will kill you instantly. Be careful where you step!" << endl;
+    cout << endl << "In your travels you may encounter the " << RED << "VORTEX OF CERTAIN DEATH" << RESET << " which will kill you instantly. Be careful where you step!" << endl;
     cout << endl << "Good Luck, Seeker!" << endl;
 	cout << endl << "*****************************" << endl;
 	cout << "\n\n\n";
