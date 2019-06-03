@@ -28,7 +28,7 @@
 2,TREE,5,#,1
 2,BUSH,5,*,1
 2,WATER,0,~,0
-2,VORTEX,100,V,0
+2,VORTEX,100,@,0
 
 
 #Tools consist of: 
