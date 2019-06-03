@@ -121,7 +121,7 @@ void ResourcesOptions::displayObstacles(){
 				}
 }
 void ResourcesOptions::printObstacleKey(){
-				cout << "Obstacle key: ";
+				cout << "Obstacle key: o = none   ";
 				for(auto it = begin(theObstacles); it != end(theObstacles); ++it){
 								if(it->name.compare( "WATER")==0)
 								{

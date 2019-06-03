@@ -80,7 +80,7 @@ void Tile::tileDisplay() const
 				}
 				else
 				{
-								cout << MAGENTA << "The Jewel is here!!!" << RESET << endl;
+								cout << MAGENTAonYELLOW << "The Jewel is here!!!" << RESET << endl;
 				}
 }
 
@@ -101,7 +101,7 @@ void Tile::printIslandTile(Tile* location, string command)
 								if (this == location)
 												cout << BOLDRED << "@" << RESET;
 								else if (treasureChar == 'J' && visited == true)
-												cout << MAGENTA << treasureChar << RESET;
+												cout << MAGENTAonYELLOW << treasureChar << RESET;
 								else if (!visited)
 												cout << GRAY << "X" << RESET;
 								else
@@ -123,7 +123,11 @@ void Tile::printIslandTile(Tile* location, string command)
 								if(!visited)
 												cout <<GRAY<< "E"<<RESET;
 								else
-												cout << MAGENTA << treasureChar <<RESET;
+									if(treasureChar == 'J'){
+										cout << MAGENTAonYELLOW << treasureChar << RESET;
+									}else{
+										cout << MAGENTA << treasureChar <<RESET;
+									}
 				}
 }
 
@@ -137,7 +141,11 @@ void Tile::printIslandTileR2(Tile* location)
 				else
 				{
 								if(obstacle) {
+									if(!obstacle->name.compare("WATER")){
+										cout << BLUE << obstacle->symbol << RESET;
+									}else{	
 												cout << OBSTACLE_COLOR << obstacle->symbol << RESET; 
+									}
 								} else {
 												cout << "o"; // no obstacle;
 								}
@@ -257,15 +265,23 @@ void Board::putInObstacles()
 
 for(auto it = begin(gameMgr->resourcesOptions->theObstacles); it != end(gameMgr->resourcesOptions->theObstacles); ++it){
 	if(it->name.compare("WATER") != 0){
-	for(int i = 0; i < numberEach; ++i){
-		int rand1 = rand()%boardSize;
-		int rand2 = rand()%boardSize;
-		boardArray[rand1][rand2]->obstacle = new Obstacle(it->name, it->energyCost, it->symbol, it->removable);
-		if(!it->name.compare("VORTEX")){
-			i++;
+		for(int i = 0; i < numberEach; ++i){
+			int rand1 = rand()%boardSize;
+			int rand2 = rand()%boardSize;
+			boardArray[rand1][rand2]->obstacle = new Obstacle(it->name, it->energyCost, it->symbol, it->removable);
+			if(!it->name.compare("VORTEX")){
+				i++;
+			}
+		}
+	}else{
+		for(int i = 0; i < boardSize; i++){
+			for(int j = 0; j < boardSize; j++){
+				if(boardArray[i][j]->terrain->getShortName() == 'W'){
+					boardArray[i][j]->obstacle = new Obstacle(it->name, it->energyCost, it->symbol, it->removable);
+				}
+			}
 		}
 	}
-}
 }
 /*
 				for(int i=0; i<numberEach; ++i) //BUSHES
@@ -539,11 +555,11 @@ void Board::displayIsland(string command) const
 				}
 				cout <<endl;
 				cout << BLUE << (command == "local" ? "~~~" : "~") << "=Ocean, " << RESET;
-				cout << YELLOW<<"G=Grassy Meadow," <<CYAN<<" B=Bog,"<< GREEN <<" F=Forrest,"<<CYANonBLUE<<" W=Water"<<RESET;
-				cout << "  SEEKER's location:" <<RED<<" @ " << RESET;
+				cout << YELLOW<<"G=Grassy Meadow," <<CYAN<<" B=Bog,"<< GREEN <<" F=Forrest, "<<CYANonBLUE<<"W=Water"<<RESET;
+				cout << "  SEEKER's location:" <<BOLDRED<<" @ " << RESET;
 				if (command == "local")
 				{
-								cout  <<GRAY<< " (E)xcavation site"<<RESET<<" reveals to " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTA<< "'J' Jewel." <<RESET;
+								cout  <<GRAY<< " (E)xcavation sites"<<RESET<<" reveal " <<MAGENTA << "'n' none" << RESET <<" or "<<MAGENTAonYELLOW<< "'J' Jewel." <<RESET;
 				}
 	
 				cout << endl;
