@@ -515,12 +515,13 @@ void Board::displayIsland(string command) const
 								displayRow(j, command);
 				}
 				cout <<endl;
-				cout << GRAY << "Terrain Key:       " << GRAY << "OCEAN = " << BLUE << (command == "local" ? "'~~~'" : "'~'") << RESET;
-				cout << GRAY <<  "    GRASSY MEADOW = " << YELLOW << "'G'" << GRAY << "    BOG = " << CYAN << "'B'" << GRAY << "    FORREST = " << GREEN << "'F'" << GRAY << "    WATER = " << CYANonBLUE << "'W'" << RESET;
-				cout << endl << GRAY << "SEEKER's Location: '" << BOLDREDonYELLOW <<"&" << RESET <<  GRAY << "' " <<RESET;
+				cout << BOARD_KEY_COLOR << "Terrain Key:       " << BOARD_KEY_COLOR << "OCEAN = " << BLUE << (command == "local" ? "'~~~'" : "'~'") << RESET;
+				cout << BOARD_KEY_COLOR <<  "    GRASSY MEADOW = " << YELLOW << "'G'" << BOARD_KEY_COLOR << "    BOG = " << CYAN << "'B'" << BOARD_KEY_COLOR << 
+						"    FORREST = " << GREEN << "'F'" << BOARD_KEY_COLOR << "    WATER = " << CYANonBLUE << "'W'" << RESET;
+				cout << endl << BOARD_KEY_COLOR << "SEEKER's Location: '" << BOLDREDonYELLOW <<"&" << RESET << BOARD_KEY_COLOR << "' " << RESET;
 				if (command == "local")
 				{
-				cout << endl << GRAY << "Excavation Site:   'E' reveals to " << MAGENTA << "'n' none" << RESET << GRAY << " or " << MAGENTA << "'J' Jewel." << RESET;
+					cout << BOARD_KEY_COLOR << endl << "Excavation Site:   'E' reveals to " << MAGENTA << "'n' none" << RESET << BOARD_KEY_COLOR << " or " << MAGENTA << "'J' Jewel." << RESET;
 				}
                 cout << endl;
 				gameMgr->resourcesOptions->printObstacleKey();

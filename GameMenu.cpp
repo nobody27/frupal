@@ -45,7 +45,7 @@ void GameMenu::display() const {
 
     cout << endl << "***************************************" << endl;
 	cout << "\n";
-	cout << GRAY << "Make Your Choice: " << endl << endl;
+	cout << GAME_MENU_COLOR << "Make Your Choice: " << endl << endl;
 	cout << setw(15) << right << "(" << gameMgr->NORTHBUTTON << ") move North";
 	cout << setw(18) << left << " ";
 	cout << "(" << gameMgr->BUYBUTTON << ") Buy an item";
@@ -59,13 +59,14 @@ void GameMenu::display() const {
 	cout << "               ";
 	cout << " (" << gameMgr->EASTBUTTON << ") move East";
 	cout << setw(4) << " ";
-	cout << GRAY << "(" << gameMgr->QUITBUTTON << ") Quit the program";
+	cout << GAME_MENU_COLOR << "(" << gameMgr->QUITBUTTON << ") Quit the program";
 	cout << "   (" << gameMgr->RETURNBUTTON << ") Return to Menu";
 	cout << "           (" << gameMgr->WINBUTTON << ") Cheat!" << endl; //TODO
 
     //line 3
 	cout << "              (" << gameMgr->SOUTHBUTTON << ") move South" << endl;
 	cout << "\n>";
+	//cout << RESET;
 
 }
 
