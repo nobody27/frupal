@@ -12,7 +12,7 @@ Obstacle::Obstacle(string obstacleName, int cost, char mapSymbol, bool isRemovab
 
 void Obstacle::display(){
 				cout << "\nObstacle name: " << name << 
-								"\nEnergy cose: " << energyCost  <<
+								"\nEnergy cost: " << energyCost  <<
 								"\nSymbol: " << symbol <<
 								"\nRemovable: ";
 				if(removable){
