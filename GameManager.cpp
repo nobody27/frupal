@@ -221,7 +221,7 @@ void GameManager::readConfigFile(string config){
 			singleUse = stoi(value);
 			getline(configFile, value, ',');
 			price = stoi(value);
-			getline(configFile, value, '\n');
+			getline(configFile, value);
 			quantity = stoi(value);
 			//after getting the values, create a tool and push it to the vector	
 			Tool newTool(toolName, obstacleName, energySaved, singleUse, price, quantity);
