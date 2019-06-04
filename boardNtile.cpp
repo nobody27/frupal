@@ -100,7 +100,7 @@ void Tile::printIslandTile(Tile* location, string command)
 				if (command == "full" || command == "endgame")
 				{
 								if (this == location)
-												cout << BOLDRED << "@" << RESET;
+												cout << BOLDREDonYELLOW << "&" << RESET;
 								else if (treasureChar == 'J' && visited == true)
 												cout << MAGENTAonYELLOW << treasureChar << RESET;
 								else if (!visited)
