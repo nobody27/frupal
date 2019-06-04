@@ -315,14 +315,16 @@ void GameManager::displayIslandAndSeeker(string command, string s) {
 		theIsland->visitLocationAndNeighbors(theSeeker->getLocation(), false);
 	theIsland->displayIsland(command);
 	cout << NOTIFICATION_COLOR ;
-    cout << endl << endl << "***************************************" << endl;
-    if (s != "null")
-    {
-        cout << endl; 
-        cout << s << endl;
-    }
-	if (command == "local")
+	if (command != "endgame")
+	{
+    	cout << endl << endl << "***************************************" << endl;
+    	if (s != "null")
+    	{
+       		cout << s << endl;
+    	}
 		theSeeker->display();
+    	cout << endl << endl << "***************************************" << endl;
+	}
 	cout << RESET;
 }
 

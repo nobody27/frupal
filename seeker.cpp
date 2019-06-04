@@ -101,7 +101,7 @@ void Seeker::move(direction_t direction) {
 		//this is water and you don't have a boat.
 		//charge one energy and abort the move
 		energy--;
-		s = "You wade through the water but it is too deep. \nYou think to yourself... I could really use a boat right now...";
+		s = "You wade through the water but it is too deep. \nYou think to yourself... I could really use a boat right now...\n";
 		//gameMgr->requestEnter();
 		gameMgr->displayIslandAndSeeker("local", s); //NEW
 		return;
@@ -126,6 +126,7 @@ void Seeker::move(direction_t direction) {
           s += "You just found $";
           s += to_string(m);
       }
+	  s += "\n";
     }
 	//gameMgr->requestEnter();
 	gameMgr->displayIslandAndSeeker("local", s);
@@ -136,7 +137,7 @@ void Seeker::addTool(Tool* newTool, string& s) {
   //deal with special tools
   if(newTool->name == "POWER BAR") {
 	//eat the power bar, get the energy, don't add it to resources
-    s = "Yum! I feel so much stronger now!";
+    s = "Yum! I feel so much stronger now!\n";
 	energy += newTool->energySaved;
 	//newTool->quantity--;
     return;

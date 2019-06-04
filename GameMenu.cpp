@@ -43,7 +43,7 @@ void GameMenu::display() const {
 	//line 1
 
 
-    cout << endl << "***************************************" << endl;
+//    cout << endl << "***************************************" << endl;
 	cout << "\n";
 	cout << GAME_MENU_COLOR << "Make Your Choice: " << endl;
 	cout << setw(15) << right << "(" << gameMgr->NORTHBUTTON << ") move North";
