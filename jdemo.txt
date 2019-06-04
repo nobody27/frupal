@@ -1,0 +1,19 @@
+1,boardSize,10
+1,startEnergy,100
+1,startMoney,100
+1,hasBoat,0
+1,hasBinoculars,0
+1,binocularCost,25
+1,obstacleDensity,0
+#2,ROCK,5,%,1
+#2,TREE,5,#,1
+#2,BUSH,5,*,1
+2,WATER,0,~,0
+3,BINOCULARS,NONE,0,0,20,0
+3,BOAT,WATER,0,0,20,0
+#3,JACKHAMMER,ROCK,3,0,35,0
+#3,CHAINSAW,TREE,3,0,35,0
+#3,POCKETKNIFE,TREE,1,0,15,0
+#3,WEEDWACKER,BUSH,3,0,35,0
+3,POWER BAR,NONE,20,1,10,0
+
