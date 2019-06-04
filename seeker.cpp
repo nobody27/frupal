@@ -79,20 +79,20 @@ void Seeker::move(direction_t direction) {
     Tile* nextTile = nullptr; 
     Obstacle* theObstacle = nullptr;
     if (y >= theIsland->size() ) {
-		cout << endl << "You cannot move north!" << endl;
-    return;
+		gameMgr->displayIslandAndSeeker("local", "You cannot move north!\n");
+    	return;
     }
 	else if (y < 0 ) {
-		cout << endl << "You cannot move south!" << endl;
-    return;
+		gameMgr->displayIslandAndSeeker("local", "You cannot move south!\n");
+    	return;
     }
 	else if (x >= theIsland->size() ) {
-		cout << endl << "You cannot move east!" << endl;
-    return;
+		gameMgr->displayIslandAndSeeker("local", "You cannot move east!\n");
+    	return;
     }
 	else if (x < 0 ) {
-		cout << endl << "You cannot move west!" << endl;
-    return;
+		gameMgr->displayIslandAndSeeker("local", "You cannot move west!\n");
+    	return;
     }
     string s;
     nextTile = theIsland->getLocation(x,y);

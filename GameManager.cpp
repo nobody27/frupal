@@ -323,7 +323,7 @@ void GameManager::displayIslandAndSeeker(string command, string s) {
        		cout << s << endl;
     	}
 		theSeeker->display();
-    	cout << endl << endl << "***************************************" << endl;
+    	cout << endl << "***************************************" << endl;
 	}
 	cout << RESET;
 }

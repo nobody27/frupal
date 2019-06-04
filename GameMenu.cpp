@@ -120,8 +120,8 @@ bool GameMenu::getAndExecuteCommand() {
 				}else if(choice == gameMgr->EASTBUTTON){
 					gameMgr->theSeeker->move(Seeker::EAST);
 				}else{
-					//gameMgr->displayIslandAndSeeker("local", "null");
-					cout << endl << "'" << choice << "' is not a valid command in the game menu..." << endl;
+					string s =  "'"  + to_string(choice) + "' is not a valid command in the game menu...\n"; 
+					gameMgr->displayIslandAndSeeker("local", s);
 					again = true;
 				}
 		}
