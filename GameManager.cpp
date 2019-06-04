@@ -314,6 +314,7 @@ void GameManager::displayIslandAndSeeker(string command, string s) {
 	else
 		theIsland->visitLocationAndNeighbors(theSeeker->getLocation(), false);
 	theIsland->displayIsland(command);
+	cout << NOTIFICATION_COLOR ;
     cout << endl << endl << "***************************************" << endl;
     if (s != "null")
     {
@@ -322,6 +323,7 @@ void GameManager::displayIslandAndSeeker(string command, string s) {
     }
 	if (command == "local")
 		theSeeker->display();
+	cout << RESET;
 }
 
 void GameManager::requestEnter() const {

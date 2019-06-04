@@ -153,7 +153,7 @@ void GameMenu::shopMenu()
 	//	gameMgr->displayIslandAndSeeker("local", "null");
 	//}
     string s;
-	while(buyTool(s) == false) {}
+	while(buyTool(s)) {}
 	gameMgr->displayIslandAndSeeker("local", s);
 }
 
