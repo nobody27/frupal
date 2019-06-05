@@ -152,15 +152,15 @@ void GameMenu::shopMenu()
 	//{
 	//	gameMgr->displayIslandAndSeeker("local", "null");
 	//}
-    string s;
+    string s = "null";
 	while(buyTool(s)) {}
 	gameMgr->displayIslandAndSeeker("local", s);
+
 }
 
-bool GameMenu::buyTool(string& s)
+void GameMenu::displayShop()
 {
-	int choice = -1;
-	vector<Tool>& resources = gameMgr->theResources->resources; //shortcut for convenience
+	//vector<Tool>& resources = gameMgr->theResources->resources; //shortcut for convenience
 	cout << "entering shop" << endl;
 	gameMgr->theSeeker->displayTools();
 	cout << endl << "**Tools for sale**" << endl << endl;
@@ -170,24 +170,50 @@ bool GameMenu::buyTool(string& s)
 	//TODO command to buy an item
 	cout << endl << "Money: $" << gameMgr->theSeeker->money << endl << endl;
 
-	int numRes = static_cast<int>(resources.size());
+}
 
+bool GameMenu::buyTool(string& s)
+{
+	int choice = -1;
+	vector<Tool>& resources = gameMgr->theResources->resources; //shortcut for convenience
+/*
+	displayShop();
+	gameMgr->theSeeker->displayTools();
+	cout << endl << "**Tools for sale**" << endl << endl;
+	gameMgr->theResources->displayResources();
+	cout << endl << left << 0 << " " << "**EXIT SHOP**" << endl;
+	//TODO display tools and available money
+	//TODO command to buy an item
+	cout << endl << "Money: $" << gameMgr->theSeeker->money << endl << endl;
+*/
+	int numRes = static_cast<int>(resources.size());
+	//s = "null";
 	//make sure its a valid choice and they have enough money
-	while(choice < 0 || choice > numRes+1 || 
+	while(choice < 0 || choice > numRes || 
 			(choice != 0 && gameMgr->theSeeker->money <
-			 resources[choice-1].price) )
+			 resources[choice - 1].price) )
 	{
+		gameMgr->displayIslandAndSeeker("local", s);	
+		displayShop();
 		cout << "Enter valid choice you can afford: ";
 		cin >> choice;
 		if(cin.fail()) {
 			cin.clear();
 			cin.ignore(100, '\n');
-      return false;
+      		s = "That is not a valid option. Exiting Shop...\n";
+			return false;
+		} else if (choice < 0 || choice > numRes) {
+			s = "Please choose a tool index between 1 and " + to_string(numRes)  + " or choose 0 to exit.\n";
+		} else if (choice != 0 && gameMgr->theSeeker->money < resources[choice - 1].price) {
+			s = "Sorry, you do not have enough money to buy this tool.\n";
+		} else {
+			s = "null";
 		}
 	}
 
 	if(choice == 0)
 	{
+		s = "Thank you for shopping at FrupalMart. Please come again soon.\n";
 		return false;
 	}
 
@@ -201,12 +227,10 @@ bool GameMenu::buyTool(string& s)
   {
     if(resources[choice].name == (*it)->name && !resources[choice].singleUse)
     {
-      cout << "you already have this multi-use tool!" << endl; 
+      s = "you already have this multi-use tool!\n"; 
       return true;
     }
   }
-
-
 	//subtract the cost from the seekers money
 	gameMgr->theSeeker->money -= resources[choice].price;
 

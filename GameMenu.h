@@ -42,6 +42,7 @@ private:
 	// Q - exit (quit quit)
 
 	bool getAndExecuteCommand();
+	void displayShop();
 	void shopMenu();
 	bool buyTool(string& s);
 	GameManager* gameMgr;
