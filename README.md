@@ -5,8 +5,8 @@ Developers: Elyse, Jessica, John, Leior and Max
 
 Overview:
 This is a text based game in which the treasure seeker (displayed as the '&' symbol)
-can move around on the island of frupal in search of the Jewels ofAntioch. Each step 
-potetially reveals more of the island and potentially increases their amount of gold
+can move around on the island of frupal in search of the Jewels of Antioch. Each step 
+potentially reveals more of the island and potentially increases their amount of gold
 which can be used to buy tools to help surmount obstacles found on the island.
 Beware, moving around depletes your energy and if you run out then the game is over!
 
@@ -29,11 +29,11 @@ A quick option to build and immediately begin a default game: make itso
 
 Playing the game:
 The available options in each stage of the game will always be printed on the screan.
-each command consists of a single charachter, often an index as shown in the menu
+each command consists of a single character, often an index as shown in the menu
 that is printed on the screen.
 
 It is possible to modify configurations from the "Options" menu, though once the game
-has started (my selecting the "Play" command from the main menu only some of the 
+has started (by selecting the "Play" command from the main menu) only some of the 
 configuration options will be available.
 
 Custom tools, obstacles, starting conditions, and levels of difficulty may be loaded
